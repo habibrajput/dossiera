@@ -430,7 +430,7 @@ describe('builder attachment persistence', () => {
       target: { value: 'RECOVERABLE OUTREACH' },
     });
 
-    await act(async () => screen.getByRole('button', { name: 'nav.backToDashboard' }).click());
+    await act(async () => screen.getByRole('button', { name: 'nav.backToResumeBoard' }).click());
 
     expect(updateOutreachMessage).toHaveBeenCalledWith('a', 'RECOVERABLE OUTREACH');
     expect(push).not.toHaveBeenCalled();
@@ -452,7 +452,7 @@ describe('builder attachment persistence', () => {
     });
     try {
       fireEvent.change(input, { target: { value: 'UNSAVED OUTREACH' } });
-      await act(async () => screen.getByRole('button', { name: 'nav.backToDashboard' }).click());
+      await act(async () => screen.getByRole('button', { name: 'nav.backToResumeBoard' }).click());
       expect(screen.getByText('builder.leaveWithoutDraft.description')).toBeInTheDocument();
       expect(screen.getByDisplayValue('UNSAVED OUTREACH')).toBeInTheDocument();
       expect(screen.queryByText('builder.leaveWithLocalDraft.description')).not.toBeInTheDocument();
@@ -537,7 +537,7 @@ it.each(['cover-letter', 'outreach'])(
     fireEvent.change(editor, { target: { value: 'FIRST' } });
     await act(async () => screen.getByRole('button', { name: 'common.save' }).click());
     fireEvent.change(editor, { target: { value: 'SECOND' } });
-    await act(async () => screen.getByRole('button', { name: 'nav.backToDashboard' }).click());
+    await act(async () => screen.getByRole('button', { name: 'nav.backToResumeBoard' }).click());
     expect(save).toHaveBeenCalledTimes(1);
     await act(async () => first.resolve());
     expect(save).toHaveBeenNthCalledWith(2, 'a', 'SECOND');
@@ -546,7 +546,7 @@ it.each(['cover-letter', 'outreach'])(
     expect(push).not.toHaveBeenCalled();
     expect(save).toHaveBeenNthCalledWith(3, 'a', 'FINAL');
     await act(async () => third.resolve());
-    expect(push).toHaveBeenCalledWith('/dashboard');
+    expect(push).toHaveBeenCalledWith('/resume-board');
   }
 );
 
@@ -656,7 +656,7 @@ it('retains a matching restored attachment backup when replacement storage write
   });
   try {
     fireEvent.click(screen.getByRole('button', { name: 'builder.draftRecovery.restoreDraft' }));
-    await act(async () => screen.getByRole('button', { name: 'nav.backToDashboard' }).click());
+    await act(async () => screen.getByRole('button', { name: 'nav.backToResumeBoard' }).click());
     expect(screen.getByText('builder.leaveWithLocalDraft.description')).toBeInTheDocument();
     expect(screen.getByDisplayValue('RECOVERABLE')).toBeInTheDocument();
   } finally {

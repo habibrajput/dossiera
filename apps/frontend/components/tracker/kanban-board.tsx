@@ -86,7 +86,7 @@ export function KanbanBoard() {
   const load = async () => {
     try {
       const data = await listApplications();
-      // Ensure all seven keys exist even if the server omits an empty one.
+      // Ensure all nine keys exist even if the server omits an empty one.
       setColumns({ ...emptyColumns(), ...data.columns });
       setError(null);
     } catch {

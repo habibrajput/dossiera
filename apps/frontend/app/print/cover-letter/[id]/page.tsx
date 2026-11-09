@@ -6,6 +6,7 @@
  */
 
 import { API_BASE } from '@/lib/api/client';
+import { getBackendRequestHeaders } from '@/lib/api/server';
 import { translate } from '@/lib/i18n/server';
 import { resolveLocale } from '@/lib/i18n/locale';
 
@@ -40,6 +41,7 @@ interface CoverLetterData {
 async function fetchCoverLetterData(resumeId: string): Promise<CoverLetterData> {
   const res = await fetch(`${API_BASE}/resumes?resume_id=${encodeURIComponent(resumeId)}`, {
     cache: 'no-store',
+    headers: await getBackendRequestHeaders(),
   });
   if (!res.ok) {
     throw new Error(`Failed to load resume (status ${res.status}).`);

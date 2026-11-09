@@ -40,6 +40,11 @@ export function PageFrame({
         'relative isolate flex w-full items-start justify-center bg-canvas px-4 py-12 md:px-8',
         height === 'screen' ? 'h-dvh overflow-hidden' : 'min-h-screen'
       )}
+      style={
+        height === 'screen'
+          ? { height: 'var(--app-viewport-height, 100dvh)' }
+          : { minHeight: 'var(--app-viewport-height, 100vh)' }
+      }
     >
       <BackgroundEffect effect={effect} intensity={effectIntensity} />
       <div

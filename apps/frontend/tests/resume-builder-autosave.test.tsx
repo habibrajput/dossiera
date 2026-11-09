@@ -303,7 +303,7 @@ describe('resume builder autosave', () => {
     expect(localStorage.getItem('resume_builder_draft:res-1')).toBeNull();
 
     await act(async () => {
-      screen.getByRole('button', { name: 'nav.backToDashboard' }).click();
+      screen.getByRole('button', { name: 'nav.backToResumeBoard' }).click();
       await vi.advanceTimersByTimeAsync(0);
       await Promise.resolve();
     });

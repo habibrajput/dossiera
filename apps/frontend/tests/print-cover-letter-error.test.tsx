@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { render } from '@testing-library/react';
 
+vi.mock('next/headers', () => ({ headers: vi.fn().mockResolvedValue(new Headers()) }));
+
 import PrintCoverLetterPage from '@/app/print/cover-letter/[id]/page';
 
 describe('print cover letter page', () => {

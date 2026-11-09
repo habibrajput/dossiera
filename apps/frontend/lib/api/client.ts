@@ -142,8 +142,23 @@ export async function apiFetch(
   }, timeout);
 
   try {
-    const request = fetch(url, { ...options, signal: controller.signal }).then(bufferResponse);
-    return await Promise.race([request, cancellation]);
+    const request = fetch(url, {
+      ...options,
+      credentials: options?.credentials ?? 'include',
+      signal: controller.signal,
+    }).then(bufferResponse);
+    const response = await Promise.race([request, cancellation]);
+    if (
+      response.status === 401 &&
+      !isAbsoluteUrl &&
+      normalizedEndpoint !== '/auth/login' &&
+      typeof window !== 'undefined' &&
+      window.location.pathname !== '/login'
+    ) {
+      const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      window.location.assign(`/login?next=${encodeURIComponent(returnTo)}`);
+    }
+    return response;
   } catch (error) {
     if (error instanceof Error && error.name === 'AbortError') {
       if (callerSignal?.aborted) {

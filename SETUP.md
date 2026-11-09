@@ -196,6 +196,26 @@ FRONTEND_BASE_URL=http://localhost:3000
 CORS_ORIGINS=["http://localhost:3000", "http://127.0.0.1:3000"]
 ```
 
+#### Optional: require a password to open Resume Matcher
+
+Set `AUTH_PASSWORD_HASH` to protect every application page and API route with the password-only login page. The only public endpoints are login/session handling and the lightweight health check used by Docker.
+
+From `apps/backend`, generate a salted PBKDF2 hash without putting your plaintext password in `.env`:
+
+```bash
+uv run python -m app.auth
+```
+
+The command prompts for and confirms the password, then prints a line like this (the actual value will be different):
+
+```env
+AUTH_PASSWORD_HASH=pbkdf2_sha256$600000$<salt>$<hash>
+```
+
+Copy the complete generated line into `apps/backend/.env`, restart both servers, and open <http://localhost:3000>. You will be redirected to `/login`. Sessions expire after seven days by default; change `AUTH_SESSION_TTL_SECONDS` if needed. Leave `AUTH_PASSWORD_HASH` blank to keep authentication disabled for a local-only installation.
+
+For Docker Compose, put `AUTH_PASSWORD_HASH` in the repository-root `.env` file so Compose passes it to the container. In this root file only, escape every `$` in the generated hash as `$$` (for example, `pbkdf2_sha256$$600000$$<salt>$$<hash>`); Compose otherwise treats parts of the hash as variable names. The backend receives the normal single-`$` value. Never commit the root or backend `.env` file.
+
 #### Install Python dependencies
 
 ```bash

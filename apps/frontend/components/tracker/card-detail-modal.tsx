@@ -13,13 +13,21 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Dropdown } from '@/components/ui/dropdown';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Alert } from '@/components/ui/alert';
 import { StatusIndicator } from '@/components/ui/status-indicator';
 import { useTranslations } from '@/lib/i18n';
 import { formatDate } from '@/lib/format-date';
-import { getApplicationDetail, updateApplication, type ApplicationDetail } from '@/lib/api/tracker';
+import {
+  APPLICATION_STATUS_ORDER,
+  getApplicationDetail,
+  updateApplication,
+  type ApplicationDetail,
+  type ApplicationStatus,
+} from '@/lib/api/tracker';
 
 interface CardDetailModalProps {
   applicationId: string | null;
@@ -39,6 +47,9 @@ export function CardDetailModal({
   const [detail, setDetail] = useState<ApplicationDetail | null>(null);
   const [loading, setLoading] = useState(false);
   const [notes, setNotes] = useState('');
+  const [status, setStatus] = useState<ApplicationStatus>('applied');
+  const [deadline, setDeadline] = useState('');
+  const [appliedAt, setAppliedAt] = useState('');
   const [savingNotes, setSavingNotes] = useState(false);
   const [notesError, setNotesError] = useState<string | null>(null);
 
@@ -54,6 +65,9 @@ export function CardDetailModal({
         if (cancelled) return;
         setDetail(data);
         setNotes(data.notes ?? '');
+        setStatus(data.status);
+        setDeadline(data.deadline_at?.slice(0, 10) ?? '');
+        setAppliedAt(data.applied_at?.slice(0, 10) ?? '');
         setNotesError(null);
       })
       .catch(() => {
@@ -77,7 +91,12 @@ export function CardDetailModal({
     setSavingNotes(true);
     setNotesError(null);
     try {
-      await updateApplication(applicationId, { notes });
+      await updateApplication(applicationId, {
+        notes,
+        status,
+        deadline_at: deadline || null,
+        applied_at: appliedAt || null,
+      });
       onUpdated();
     } catch {
       // Show a generic message — never echo raw backend error text inline,
@@ -115,6 +134,37 @@ export function CardDetailModal({
                     {formatDate(detail.applied_at, locale, { month: 'short', year: 'numeric' })}
                   </span>
                 )}
+              </div>
+
+              <Dropdown
+                label={t('tracker.modal.status')}
+                options={APPLICATION_STATUS_ORDER.map((option) => ({
+                  id: option,
+                  label: t(`tracker.columns.${option}`),
+                }))}
+                value={status}
+                onChange={(value) => setStatus(value as ApplicationStatus)}
+              />
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="space-y-1">
+                  <Label htmlFor="card-applied-at">{t('tracker.modal.appliedAt')}</Label>
+                  <Input
+                    id="card-applied-at"
+                    type="date"
+                    value={appliedAt}
+                    onChange={(event) => setAppliedAt(event.target.value)}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="card-deadline">{t('tracker.modal.deadline')}</Label>
+                  <Input
+                    id="card-deadline"
+                    type="date"
+                    value={deadline}
+                    onChange={(event) => setDeadline(event.target.value)}
+                  />
+                </div>
               </div>
 
               <div className="space-y-1">

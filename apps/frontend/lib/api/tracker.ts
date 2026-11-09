@@ -1,14 +1,16 @@
 import { apiFetch, apiPost, apiPatch, apiDelete } from './client';
 
-// The seven stable Kanban columns (keys are decoupled from i18n labels).
+// The nine stable Kanban columns (keys are decoupled from i18n labels).
 export type ApplicationStatus =
   | 'saved'
   | 'applied'
   | 'no_response'
   | 'response'
   | 'interview'
+  | 'offer'
   | 'accepted'
-  | 'rejected';
+  | 'rejected'
+  | 'declined';
 
 export const APPLICATION_STATUS_ORDER: ApplicationStatus[] = [
   'saved',
@@ -16,8 +18,10 @@ export const APPLICATION_STATUS_ORDER: ApplicationStatus[] = [
   'no_response',
   'response',
   'interview',
+  'offer',
   'accepted',
   'rejected',
+  'declined',
 ];
 
 export interface Application {
@@ -29,6 +33,11 @@ export interface Application {
   company: string | null;
   role: string | null;
   applied_at: string | null;
+  deadline_at?: string | null;
+  heard_back_at?: string | null;
+  interview_at?: string | null;
+  offer_at?: string | null;
+  status_changed_at?: string | null;
   notes: string | null;
   position: number;
   created_at: string;
@@ -54,6 +63,7 @@ export interface ManualApplicationCreate {
   role?: string;
   status?: ApplicationStatus;
   notes?: string;
+  deadline_at?: string;
 }
 
 export interface ApplicationUpdate {
@@ -62,7 +72,8 @@ export interface ApplicationUpdate {
   notes?: string;
   company?: string;
   role?: string;
-  applied_at?: string;
+  applied_at?: string | null;
+  deadline_at?: string | null;
 }
 
 export interface ApplicationActionResponse {

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { AgentPromptDialog } from '@/components/agent/agent-prompt-dialog';
-import DashboardPage from '@/app/(default)/dashboard/page';
+import DashboardPage from '@/app/(default)/resume-board/page';
 import type { ResumeListItem } from '@/lib/api/resume';
 import { AGENT_REFRESH_INTERVAL_MS } from '@/hooks/use-agent-refresh';
 

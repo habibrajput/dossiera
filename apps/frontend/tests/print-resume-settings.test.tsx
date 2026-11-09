@@ -11,6 +11,7 @@ vi.mock('@/components/dashboard/resume-component', () => ({
     return <div data-testid="resume" />;
   },
 }));
+vi.mock('next/headers', () => ({ headers: vi.fn().mockResolvedValue(new Headers()) }));
 
 import PrintResumePage from '@/app/print/resumes/[id]/page';
 

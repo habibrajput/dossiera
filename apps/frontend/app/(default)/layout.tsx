@@ -5,6 +5,7 @@ import { LocalizedErrorBoundary } from '@/components/common/error-boundary';
 import { MotionProvider } from '@/components/common/motion-provider';
 import { EffectsProvider } from '@/lib/context/effects-context';
 import { BlockDissolveProvider } from '@/components/effects/block-dissolve-provider';
+import { AppShell } from '@/components/navigation/app-shell';
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,7 +16,7 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
             <MotionProvider>
               <EffectsProvider>
                 <BlockDissolveProvider>
-                  <main className="min-h-screen flex flex-col">{children}</main>
+                  <AppShell>{children}</AppShell>
                 </BlockDissolveProvider>
               </EffectsProvider>
             </MotionProvider>

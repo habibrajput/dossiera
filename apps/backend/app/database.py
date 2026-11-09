@@ -64,6 +64,14 @@ QueueDeleteOutcome = Literal["deleted", "missing", "in_progress"]
 # A user keeps at most this many master resumes (career tracks).
 MAX_MASTER_RESUMES = 5
 
+# Status milestones are recorded once and retained if a card later moves backward
+# or reaches a terminal stage. They power historical funnel analytics.
+_HEARD_BACK_STATUSES = frozenset(
+    {"response", "interview", "offer", "accepted", "rejected", "declined"}
+)
+_INTERVIEW_STATUSES = frozenset({"interview", "offer", "accepted"})
+_OFFER_STATUSES = frozenset({"offer", "accepted"})
+
 # A resume's formatting remembers the save order of this many recent builder sessions.
 TEMPLATE_SETTINGS_SESSIONS_KEPT = 20
 
@@ -296,6 +304,11 @@ class Database:
             "company": row.company,
             "role": row.role,
             "applied_at": row.applied_at,
+            "deadline_at": row.deadline_at,
+            "heard_back_at": row.heard_back_at,
+            "interview_at": row.interview_at,
+            "offer_at": row.offer_at,
+            "status_changed_at": row.status_changed_at,
             "notes": row.notes,
             "position": row.position,
             "created_at": row.created_at,
@@ -1168,6 +1181,28 @@ class Database:
             if row.position != index:
                 row.position = index
 
+    @staticmethod
+    def _record_status_transition(row: Application, new_status: str, now: str) -> None:
+        """Stamp first-time milestones before assigning a card's new status."""
+        old_status = row.status
+        if old_status == new_status:
+            return
+        if old_status == "saved" and new_status != "saved" and row.applied_at is None:
+            row.applied_at = now
+        if row.heard_back_at is None and (
+            old_status in _HEARD_BACK_STATUSES or new_status in _HEARD_BACK_STATUSES
+        ):
+            row.heard_back_at = now
+        if row.interview_at is None and (
+            old_status in _INTERVIEW_STATUSES or new_status in _INTERVIEW_STATUSES
+        ):
+            row.interview_at = now
+        if row.offer_at is None and (
+            old_status in _OFFER_STATUSES or new_status in _OFFER_STATUSES
+        ):
+            row.offer_at = now
+        row.status_changed_at = now
+
     async def _insert_application(
         self,
         session: AsyncSession,
@@ -1179,6 +1214,7 @@ class Database:
         company: str | None = None,
         role: str | None = None,
         applied_at: str | None = None,
+        deadline_at: str | None = None,
         notes: str | None = None,
     ) -> Application:
         """Stage one card with shared date and ordering rules, without committing."""
@@ -1195,6 +1231,11 @@ class Database:
             company=company,
             role=role,
             applied_at=applied_at,
+            deadline_at=deadline_at,
+            heard_back_at=now if status in _HEARD_BACK_STATUSES else None,
+            interview_at=now if status in _INTERVIEW_STATUSES else None,
+            offer_at=now if status in _OFFER_STATUSES else None,
+            status_changed_at=now,
             notes=notes,
             position=position,
             created_at=now,
@@ -1212,6 +1253,7 @@ class Database:
         company: str | None = None,
         role: str | None = None,
         notes: str | None = None,
+        deadline_at: str | None = None,
     ) -> dict[str, Any]:
         """Commit a pasted job and its tracker card together, or roll back both."""
         async with self._write_session() as session:
@@ -1234,6 +1276,7 @@ class Database:
                 company=company,
                 role=role,
                 notes=notes,
+                deadline_at=deadline_at,
             )
             await session.commit()
             return self._application_to_dict(row)
@@ -1247,6 +1290,7 @@ class Database:
         company: str | None = None,
         role: str | None = None,
         applied_at: str | None = None,
+        deadline_at: str | None = None,
         notes: str | None = None,
     ) -> dict[str, Any]:
         """Create a tracker card, deduped on (job_id, resume_id).
@@ -1283,6 +1327,7 @@ class Database:
                 company=company,
                 role=role,
                 applied_at=applied_at,
+                deadline_at=deadline_at,
                 notes=notes,
             )
             try:
@@ -1344,17 +1389,12 @@ class Database:
             new_status = updates.get("status", old_status)
             target_position = updates.get("position", None)
 
-            for key in ("company", "role", "applied_at", "notes"):
+            for key in ("company", "role", "applied_at", "deadline_at", "notes"):
                 if key in updates:
                     setattr(row, key, updates[key])
 
-            if (
-                old_status == "saved"
-                and new_status != "saved"
-                and row.applied_at is None
-                and "applied_at" not in updates
-            ):
-                row.applied_at = _now()
+            if "status" in updates:
+                self._record_status_transition(row, new_status, _now())
 
             moved = "status" in updates or "position" in updates
             if moved:
@@ -1398,12 +1438,7 @@ class Database:
                 if row is None:
                     continue
                 affected_old.add(row.status)
-                if (
-                    row.status == "saved"
-                    and status != "saved"
-                    and row.applied_at is None
-                ):
-                    row.applied_at = _now()
+                self._record_status_transition(row, status, _now())
                 row.status = status
                 row.position = 20_000_000 + moved  # provisional, renumbered below
                 row.updated_at = _now()

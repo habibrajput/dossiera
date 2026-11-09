@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 vi.mock('@/components/dashboard/resume-component', () => ({
   default: () => <div data-testid="resume" />,
 }));
+vi.mock('next/headers', () => ({ headers: vi.fn().mockResolvedValue(new Headers()) }));
 
 import PrintResumePage from '@/app/print/resumes/[id]/page';
 

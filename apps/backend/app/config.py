@@ -329,6 +329,11 @@ class Settings(BaseSettings):
             raise ValueError(f"Invalid LOG_LLM: {value}. Allowed: {ALLOWED_LOG_LEVELS}")
         return value
 
+    # Password-only application authentication. Blank keeps local instances open;
+    # setting a PBKDF2 hash enables login and protects pages and API routes.
+    auth_password_hash: str = ""
+    auth_session_ttl_seconds: int = Field(default=604800, ge=300, le=2592000)
+
     # Server Configuration
     host: str = "127.0.0.1"
     port: int = 8000

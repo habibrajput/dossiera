@@ -14,7 +14,7 @@ from sqlalchemy.engine import Connection, Engine
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.schema import CreateColumn
 
-from app.models import Base, Improvement, Resume
+from app.models import Base, Application, Improvement, Resume
 
 __all__ = [
     "Base",
@@ -110,6 +110,19 @@ def _add_missing_column(
     conn.exec_driver_sql(f"ALTER TABLE {table} ADD COLUMN {ddl}")
 
 
+def _add_application_columns(conn: Connection, schema: str | None = None) -> None:
+    """Add dashboard metadata columns to pre-existing tracker databases."""
+    columns = (
+        Application.__table__.c.deadline_at,
+        Application.__table__.c.heard_back_at,
+        Application.__table__.c.interview_at,
+        Application.__table__.c.offer_at,
+        Application.__table__.c.status_changed_at,
+    )
+    for column in columns:
+        _add_missing_column(conn, column, schema)
+
+
 def _init_postgres(engine: Engine, schema: str | None) -> None:
     """Create the schema and tables once, even when several processes start together."""
     with engine.begin() as conn:
@@ -123,6 +136,7 @@ def _init_postgres(engine: Engine, schema: str | None) -> None:
         _add_missing_column(conn, Improvement.__table__.c.ats_score, schema)
         _add_missing_column(conn, Improvement.__table__.c.forced_keywords, schema)
         _add_missing_column(conn, Resume.__table__.c.template_settings, schema)
+        _add_application_columns(conn, schema)
 
 
 def init_models_sync(engine: Engine, schema: str | None = None) -> None:
@@ -165,6 +179,7 @@ def init_models_sync(engine: Engine, schema: str | None = None) -> None:
         _add_missing_column(conn, Improvement.__table__.c.ats_score)
         _add_missing_column(conn, Improvement.__table__.c.forced_keywords)
         _add_missing_column(conn, Resume.__table__.c.template_settings)
+        _add_application_columns(conn)
 
         preview_columns = (
             conn.exec_driver_sql("PRAGMA table_info(tailoring_previews)")

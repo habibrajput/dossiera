@@ -30,6 +30,14 @@ from playwright.async_api import (
     TimeoutError as PlaywrightTimeoutError,
 )
 
+from app.auth import (
+    PRINT_SESSION_TTL_SECONDS,
+    SESSION_COOKIE_NAME,
+    auth_enabled,
+    create_session,
+    revoke_session,
+)
+
 logger = logging.getLogger(__name__)
 
 _T = TypeVar("_T")
@@ -606,6 +614,35 @@ def _close_all_sockets(url: str) -> Callable[[WebSocketRoute], Awaitable[None]]:
     return handle
 
 
+async def _add_print_session_cookie(page: Page, url: str) -> str | None:
+    """Give a headless print page a short-lived session, never a public bypass."""
+    if not auth_enabled():
+        return None
+    parsed = urlsplit(url)
+    if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        return None
+
+    token = create_session(ttl_seconds=PRINT_SESSION_TTL_SECONDS)
+    try:
+        await page.context.add_cookies(
+            [
+                {
+                    "name": SESSION_COOKIE_NAME,
+                    "value": token,
+                    "domain": parsed.hostname,
+                    "path": "/",
+                    "httpOnly": True,
+                    "secure": parsed.scheme == "https",
+                    "sameSite": "Lax",
+                }
+            ]
+        )
+    except BaseException:
+        revoke_session(token)
+        raise
+    return token
+
+
 async def _render_with_browser(
     browser: Browser,
     url: str,
@@ -622,7 +659,9 @@ async def _render_with_browser(
         browser.new_page(), work_deadline, "page creation"
     )
     render_error: BaseException | None = None
+    print_session_token: str | None = None
     try:
+        print_session_token = await _add_print_session_cookie(page, url)
         await _await_before_deadline(
             page.route("**/*", _same_origin_only(url, page, work_deadline)),
             work_deadline,
@@ -645,6 +684,7 @@ async def _render_with_browser(
         render_error = error
         raise
     finally:
+        revoke_session(print_session_token)
         cleanup_deadline = min(
             total_deadline,
             asyncio.get_running_loop().time() + _PDF_CLEANUP_RESERVE_SECONDS,

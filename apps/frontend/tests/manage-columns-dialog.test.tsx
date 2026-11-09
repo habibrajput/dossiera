@@ -80,7 +80,7 @@ describe('ManageColumnsDialog', () => {
       />
     );
 
-    expect(screen.getAllByRole('switch')).toHaveLength(7);
+    expect(screen.getAllByRole('switch')).toHaveLength(9);
   });
 
   it('reports toggles with the status key', () => {

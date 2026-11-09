@@ -18,6 +18,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app import __version__
 from app.ai_budget import operation_error_content
+from app.auth import AuthMiddleware
 from app.config import settings
 from app.database import DatabaseBusyError, db
 from app.host_guard import HostGuardMiddleware
@@ -25,6 +26,7 @@ from app.pdf import close_pdf_renderer
 from app.routers import (
     applications_router,
     ats_router,
+    auth_router,
     chatgpt_callback_router,
     chatgpt_router,
     config_router,
@@ -133,6 +135,8 @@ async def database_busy_handler(
     )
 
 
+# Authentication runs inside CORS so browsers receive readable 401 responses.
+app.add_middleware(AuthMiddleware)
 # CORS middleware - origins configurable via CORS_ORIGINS env var
 app.add_middleware(
     CORSMiddleware,
@@ -145,6 +149,7 @@ app.add_middleware(
 app.add_middleware(HostGuardMiddleware, allowed_hosts=settings.effective_allowed_hosts)
 
 # Include routers
+app.include_router(auth_router, prefix="/api/v1")
 app.include_router(health_router, prefix="/api/v1")
 app.include_router(config_router, prefix="/api/v1")
 app.include_router(resumes_router, prefix="/api/v1")

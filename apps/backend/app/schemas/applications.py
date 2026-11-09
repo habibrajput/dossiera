@@ -8,15 +8,17 @@ from pydantic.json_schema import SkipJsonSchema
 
 
 class ApplicationStatus(str, Enum):
-    """The seven stable tracker columns (decoupled from i18n labels)."""
+    """The nine stable tracker columns (decoupled from i18n labels)."""
 
     saved = "saved"
     applied = "applied"
     no_response = "no_response"
     response = "response"
     interview = "interview"
+    offer = "offer"
     accepted = "accepted"
     rejected = "rejected"
+    declined = "declined"
 
 
 # Order the board renders columns in.
@@ -34,6 +36,11 @@ class ApplicationResponse(BaseModel):
     company: str | None = None
     role: str | None = None
     applied_at: str | None = None
+    deadline_at: str | None = None
+    heard_back_at: str | None = None
+    interview_at: str | None = None
+    offer_at: str | None = None
+    status_changed_at: str | None = None
     notes: str | None = None
     position: int
     created_at: str
@@ -52,7 +59,7 @@ class ApplicationDetailResponse(ApplicationResponse):
 
 
 class ApplicationListResponse(BaseModel):
-    """Applications grouped by column. All seven keys are always present."""
+    """Applications grouped by column. All nine keys are always present."""
 
     columns: dict[str, list[ApplicationResponse]]
 
@@ -71,6 +78,7 @@ class ManualApplicationCreate(BaseModel):
     role: str | None = None
     status: ApplicationStatus = ApplicationStatus.applied
     notes: str | None = None
+    deadline_at: str | None = None
 
 
 class ApplicationUpdate(BaseModel):
@@ -82,6 +90,7 @@ class ApplicationUpdate(BaseModel):
     company: str | None = None
     role: str | None = None
     applied_at: str | None = None
+    deadline_at: str | None = None
 
     @field_validator("status")
     @classmethod

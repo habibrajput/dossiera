@@ -55,9 +55,9 @@ describe('resume viewer layout', () => {
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(title).toHaveClass('font-serif', 'uppercase', 'text-4xl');
     expect(container.firstChild as HTMLElement).toHaveClass('relative', 'isolate', 'bg-canvas');
-    expect(screen.getByRole('link', { name: 'nav.backToDashboard' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'nav.backToResumeBoard' })).toHaveAttribute(
       'href',
-      '/dashboard'
+      '/resume-board'
     );
     // The DEFAULT marker is the shared DefaultBadge.
     expect(screen.getByText('resumeViewer.defaultBadge')).toHaveClass('border-ink', 'font-mono');

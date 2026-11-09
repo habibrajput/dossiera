@@ -26,6 +26,10 @@ _ORIGINAL_DATABASE_ENV = {
 }
 os.environ["DATABASE_URL"] = ""
 os.environ["DATABASE_SCHEMA"] = ""
+# Authentication is opt-in. Keep a developer's password hash from changing the
+# behavior of the existing API tests; the auth suite enables it per test.
+_ORIGINAL_AUTH_PASSWORD_HASH = os.environ.get("AUTH_PASSWORD_HASH")
+os.environ["AUTH_PASSWORD_HASH"] = ""
 # The suite's httpx clients address the app as http://test (or http://t); the
 # ChatGPT origin-guard tests model a LAN deployment (192.168.1.5) that opted in.
 _ORIGINAL_ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
@@ -52,6 +56,10 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         os.environ.pop("ALLOWED_HOSTS", None)
     else:
         os.environ["ALLOWED_HOSTS"] = _ORIGINAL_ALLOWED_HOSTS
+    if _ORIGINAL_AUTH_PASSWORD_HASH is None:
+        os.environ.pop("AUTH_PASSWORD_HASH", None)
+    else:
+        os.environ["AUTH_PASSWORD_HASH"] = _ORIGINAL_AUTH_PASSWORD_HASH
     for key, value in _ORIGINAL_DATABASE_ENV.items():
         if value is None:
             os.environ.pop(key, None)

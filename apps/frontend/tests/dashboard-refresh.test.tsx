@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import Dashboard from '@/app/(default)/dashboard/page';
+import Dashboard from '@/app/(default)/resume-board/page';
 import type { fetchResume, ResumeListItem } from '@/lib/api/resume';
 
 const api = vi.hoisted(() => ({ list: vi.fn(), get: vi.fn(), retry: vi.fn(), push: vi.fn() }));

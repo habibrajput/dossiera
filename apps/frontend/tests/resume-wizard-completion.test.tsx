@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import Dashboard from '@/app/(default)/dashboard/page';
+import Dashboard from '@/app/(default)/resume-board/page';
 import { ResumeWizardPage } from '@/components/resume-wizard/resume-wizard-page';
 import { createInitialResumeWizardState } from '@/lib/api/resume-wizard';
 import {

@@ -339,7 +339,7 @@ export default function QueuePage() {
   return (
     <PageFrame>
       <PageHeader>
-        <PageHeader.Back href="/dashboard">{t('common.back')}</PageHeader.Back>
+        <PageHeader.Back href="/resume-board">{t('common.back')}</PageHeader.Back>
         <PageHeader.Title>{t('queue.title')}</PageHeader.Title>
         <PageHeader.Subtitle>{t('queue.subtitle')}</PageHeader.Subtitle>
       </PageHeader>

@@ -1265,7 +1265,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
     const resumeDidSave = await flushResumeChanges(true);
     const attachmentsDidSave = await flushAttachmentChanges();
     if (resumeDidSave && attachmentsDidSave) {
-      router.push('/dashboard');
+      router.push('/resume-board');
     } else {
       setShowLeaveWithLocalDraftDialog(true);
     }
@@ -1273,7 +1273,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
 
   const handleLeaveWithLocalDraft = () => {
     setShowLeaveWithLocalDraftDialog(false);
-    router.push('/dashboard');
+    router.push('/resume-board');
   };
 
   const handleStartRegenerate = async () => {
@@ -1706,7 +1706,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
   const nothingYet = <EmptyState className="px-6" title={t('builder.panels.nothingYet')} />;
 
   return (
-    <div className="h-screen w-full bg-canvas flex justify-center items-center p-2 md:p-4">
+    <div className="h-[calc(100dvh-4rem)] w-full bg-canvas flex justify-center items-center p-2 md:p-4">
       {/* Main Container */}
       <div className="w-full h-full border border-ink bg-canvas shadow-sw-lg flex flex-col">
         {/* Header: one compact toolbar row (owner F2, builder only) */}
@@ -1714,7 +1714,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
           <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
             <Button variant="outline" size="sm" onClick={handleBackToDashboard}>
               <ArrowLeft aria-hidden="true" />
-              {t('nav.backToDashboard')}
+              {t('nav.backToResumeBoard')}
             </Button>
             <PageHeader.Title className="text-2xl leading-tight md:text-3xl">
               {t('nav.builder')}

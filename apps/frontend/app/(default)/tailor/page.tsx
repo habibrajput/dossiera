@@ -173,7 +173,7 @@ export default function TailorPage() {
           ready.find((r) => r.resume_id === storedId) ??
           ready[0];
         if (!initial) {
-          router.push('/dashboard');
+          router.push('/resume-board');
           return;
         }
         setMasters(ready);
@@ -182,7 +182,7 @@ export default function TailorPage() {
         if (cancelled) return;
         const storedId = localStorage.getItem('master_resume_id');
         if (storedId) setMasterResumeId(storedId);
-        else router.push('/dashboard');
+        else router.push('/resume-board');
       }
     })();
 
@@ -584,7 +584,7 @@ export default function TailorPage() {
       className="my-auto"
     >
       <PageHeader className="p-6 md:p-6">
-        <PageHeader.Back href="/dashboard">{t('common.back')}</PageHeader.Back>
+        <PageHeader.Back href="/resume-board">{t('common.back')}</PageHeader.Back>
         <PageHeader.Title>{t('tailor.heroTitle')}</PageHeader.Title>
         <PageHeader.Subtitle>{t('tailor.subtitle')}</PageHeader.Subtitle>
         <PageHeader.Actions>

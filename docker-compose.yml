@@ -28,6 +28,10 @@ services:
       # Extra hostnames the app answers for (comma-separated), besides localhost and the
       # FRONTEND_BASE_URL host, e.g. 192.168.1.20 for LAN access. "*" allows any.
       - ALLOWED_HOSTS=${ALLOWED_HOSTS:-}
+      # Optional password-only login. Generate with `uv run python -m app.auth`
+      # from apps/backend, or leave blank to keep authentication disabled.
+      - AUTH_PASSWORD_HASH=${AUTH_PASSWORD_HASH:-}
+      - AUTH_SESSION_TTL_SECONDS=${AUTH_SESSION_TTL_SECONDS:-604800}
       # Logging configuration: DEBUG, INFO, WARNING, ERROR
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
       #- LOG_LEVEL_FILE=${LOG_LEVEL_FILE:-}

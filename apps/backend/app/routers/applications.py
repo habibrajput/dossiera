@@ -27,7 +27,7 @@ router = APIRouter(prefix="/applications", tags=["Application Tracker"])
 def _group_by_status(
     applications: list[dict[str, Any]],
 ) -> dict[str, list[ApplicationResponse]]:
-    """Group a flat list into the seven columns (all keys always present).
+    """Group a flat list into the nine columns (all keys always present).
 
     A row with an unknown status can't be represented by the enum-backed
     ``ApplicationResponse``; rather than 500 the whole board we skip it (the
@@ -82,6 +82,7 @@ async def create_application(request: ManualApplicationCreate) -> ApplicationRes
             company=company,
             role=role,
             notes=request.notes,
+            deadline_at=request.deadline_at,
         )
     except DatabaseBusyError:
         raise
@@ -148,7 +149,7 @@ async def bulk_update_applications(
 async def update_application(
     application_id: str, request: ApplicationUpdate
 ) -> ApplicationResponse:
-    """Update a card (status/position/notes/company/role/applied_at)."""
+    """Update a card (status/position/notes/company/role/dates)."""
     updates = request.model_dump(exclude_unset=True)
     # Normalize the enum to its stable string value for the data layer.
     if "status" in updates and updates["status"] is not None:

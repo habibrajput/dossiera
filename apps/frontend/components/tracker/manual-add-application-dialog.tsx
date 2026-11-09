@@ -38,6 +38,7 @@ export function ManualAddApplicationDialog({
   const [jobDescription, setJobDescription] = useState('');
   const [company, setCompany] = useState('');
   const [role, setRole] = useState('');
+  const [deadline, setDeadline] = useState('');
   const [status, setStatus] = useState<ApplicationStatus>('applied');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -64,6 +65,7 @@ export function ManualAddApplicationDialog({
     setJobDescription('');
     setCompany('');
     setRole('');
+    setDeadline('');
     setStatus('applied');
     setError(null);
   };
@@ -82,6 +84,7 @@ export function ManualAddApplicationDialog({
         company: company.trim() || undefined,
         role: role.trim() || undefined,
         status,
+        deadline_at: deadline || undefined,
       });
       reset();
       onCreated();
@@ -145,6 +148,16 @@ export function ManualAddApplicationDialog({
                 placeholder={t('tracker.manualAdd.optional')}
               />
             </div>
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="manual-deadline">{t('tracker.manualAdd.deadline')}</Label>
+            <Input
+              id="manual-deadline"
+              type="date"
+              value={deadline}
+              onChange={(event) => setDeadline(event.target.value)}
+            />
           </div>
 
           <Dropdown

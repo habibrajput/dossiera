@@ -220,7 +220,7 @@ export function KanbanBoard() {
       {/* Header — a compact single-row toolbar (not the default PageHeader):
           this is a full-height working view, so the band stays short and the
           board keeps the height. Wraps onto more rows on narrow screens. */}
-      <header className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-3 border-b border-ink px-6 py-3">
+      <header className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-3 border-b border-border px-6 py-3">
         <Link href="/dashboard" className={buttonClass({ variant: 'outline', size: 'sm' })}>
           <ArrowLeft aria-hidden="true" />
           {t('nav.backToDashboard')}
@@ -273,13 +273,13 @@ export function KanbanBoard() {
       </header>
 
       {error && (
-        <div className="shrink-0 border-b border-ink px-6 py-3 md:px-8">
+        <div className="shrink-0 border-b border-border px-6 py-3 md:px-8">
           <Alert tone="error">{error}</Alert>
         </div>
       )}
 
       {selectedIds.size > 0 && (
-        <div className="shrink-0 border-b border-ink px-6 py-3 md:px-8">
+        <div className="shrink-0 border-b border-border px-6 py-3 md:px-8">
           <BulkActionBar
             selectedCount={selectedIds.size}
             onMove={handleBulkMove}
@@ -315,7 +315,7 @@ export function KanbanBoard() {
                   key={status}
                   data-column={status}
                   className={`flex ${
-                    index < visibleStatuses.length - 1 ? 'border-r border-ink' : ''
+                    index < visibleStatuses.length - 1 ? 'border-r border-border' : ''
                   }`}
                 >
                   <KanbanColumn
@@ -336,7 +336,7 @@ export function KanbanBoard() {
       {/* Stage rail — an always-visible map of every stage (with counts) so
           off-screen sections are never lost; click a stage to jump to it. */}
       {!isEmpty && (
-        <div className="flex shrink-0 items-center gap-3 overflow-x-auto border-t border-ink bg-paper px-6 py-2 md:px-8">
+        <div className="flex shrink-0 items-center gap-3 overflow-x-auto border-t border-border bg-paper px-6 py-2 md:px-8">
           {canScrollRight && (
             <span className="flex shrink-0 items-center gap-1 font-mono text-xs font-bold uppercase tracking-wide text-primary">
               {t('tracker.scroll.hint')}

@@ -176,7 +176,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
   };
 
   return (
-    <div className="border border-ink bg-white shadow-sw-nested">
+    <div className="border border-border bg-white shadow-sw-nested">
       {/* Header - Always Visible */}
       <button
         type="button"
@@ -200,7 +200,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
 
       {/* Expandable Content */}
       {isExpanded && (
-        <div id={contentId} className="border-t border-ink p-4 space-y-6">
+        <div id={contentId} className="border-t border-border p-4 space-y-6">
           {/* Template Selection */}
           <div>
             <h4

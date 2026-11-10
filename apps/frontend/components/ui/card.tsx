@@ -8,22 +8,22 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = 'default', noPadding = false, ...props }, ref) => {
-    const baseStyles = 'rounded-none flex flex-col relative overflow-hidden';
+    const baseStyles = 'rounded-lg flex flex-col relative overflow-hidden';
 
     const variants = {
       default: 'bg-canvas',
       // The card itself is not focusable, so it carries no focus ring: the link or button
       // inside owns the ring, and the tile reacts to it with has-[:focus-visible].
       interactive: cn(
-        'bg-canvas border-2 border-transparent cursor-pointer group',
-        'transition-[transform,box-shadow,border-color]',
-        'hover:z-20 hover:border-ink hover:translate-x-px hover:translate-y-px'
+        'bg-canvas border border-transparent cursor-pointer group',
+        'transition-[box-shadow,border-color,background-color]',
+        'hover:z-20 hover:border-border hover:shadow-sw-nested'
       ),
       raised: cn(
-        'bg-white border border-ink shadow-sw-nested transition-[transform,box-shadow]',
-        'hover:translate-x-px hover:translate-y-px hover:shadow-none'
+        'bg-white border border-border shadow-sw-nested transition-[box-shadow,border-color]',
+        'hover:shadow-sw-card'
       ),
-      outline: 'bg-canvas border-2 border-ink',
+      outline: 'bg-canvas border border-border',
       ghost: 'bg-transparent border-none shadow-none',
     };
 

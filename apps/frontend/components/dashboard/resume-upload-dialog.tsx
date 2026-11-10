@@ -321,8 +321,8 @@ export function ResumeUploadDialog({
             className={`
                             relative border-2 border-dashed p-8 text-center transition-colors
                             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-white
-                            ${isDragging ? 'border-primary bg-info-tint' : 'border-steel hover:border-ink hover:bg-white'}
-                            ${currentFile ? 'bg-white border-solid border-ink' : ''}
+                            ${isDragging ? 'border-primary bg-info-tint' : 'border-steel hover:border-border hover:bg-white'}
+                            ${currentFile ? 'bg-white border-solid border-border' : ''}
                             ${canBrowse ? 'cursor-pointer' : 'cursor-default'}
                             ${isRecovering ? 'opacity-70' : ''}
                         `}
@@ -353,7 +353,7 @@ export function ResumeUploadDialog({
             ) : currentFile ? (
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 text-left overflow-hidden">
-                  <div className="w-10 h-10 border border-ink bg-paper flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 border border-border bg-paper flex items-center justify-center shrink-0">
                     <FileIcon aria-hidden="true" className="w-5 h-5 text-ink" />
                   </div>
                   <div className="min-w-0">
@@ -383,7 +383,7 @@ export function ResumeUploadDialog({
               </div>
             ) : (
               <div className="flex flex-col items-center py-4">
-                <div className="w-12 h-12 border border-ink bg-white shadow-sw-nested flex items-center justify-center mb-4">
+                <div className="w-12 h-12 border border-border bg-white shadow-sw-nested flex items-center justify-center mb-4">
                   <UploadSimple aria-hidden="true" className="w-6 h-6 text-ink" />
                 </div>
                 <p id={dropzoneTitleId} className="font-bold text-lg mb-1">

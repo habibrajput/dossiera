@@ -13,7 +13,7 @@ describe('form primitives', () => {
     const field = screen.getByLabelText('field');
     expect(field).toHaveClass(
       'bg-white',
-      'border-ink',
+      'border-border',
       'aria-invalid:border-destructive',
       'focus-visible:border-primary'
     );

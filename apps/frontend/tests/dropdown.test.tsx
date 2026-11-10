@@ -101,7 +101,7 @@ describe('Dropdown', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Stage Alpha' }));
     const alpha = screen.getByRole('option', { name: 'Alpha' });
     expect(alpha).toHaveAttribute('aria-selected', 'true');
-    expect(alpha).toHaveClass('bg-panel');
+    expect(alpha).toHaveClass('bg-accent');
     expect(alpha.textContent).not.toContain('✓');
   });
 

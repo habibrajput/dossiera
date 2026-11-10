@@ -13,8 +13,9 @@ describe('PageFrame + PageHeader', () => {
     expect(container.firstChild).toHaveClass('relative', 'isolate', 'bg-canvas');
     expect(container.firstChild).not.toHaveClass('bg-blueprint');
     expect(screen.getByText('content').parentElement).toHaveClass(
+      'rounded-xl',
       'border',
-      'border-ink',
+      'border-border',
       'shadow-sw-lg',
       'max-w-[104rem]'
     );
@@ -63,7 +64,7 @@ describe('PageFrame + PageHeader', () => {
       </PageHeader>
     );
     expect(screen.getByRole('link', { name: 'Dashboard' })).toHaveAttribute('href', '/dashboard');
-    expect(screen.getByRole('link', { name: 'Dashboard' })).toHaveClass('border-ink', 'h-8');
+    expect(screen.getByRole('link', { name: 'Dashboard' })).toHaveClass('border-border', 'h-8');
     expect(screen.getByRole('heading', { level: 1, name: 'Settings' })).toHaveClass(
       'font-serif',
       'font-bold',

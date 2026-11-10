@@ -29,7 +29,7 @@ export function PanelHeader({
   return (
     <div
       className={cn(
-        'mb-4 flex items-center justify-between gap-4 border-b-2 border-ink pb-2',
+        'mb-4 flex items-center justify-between gap-4 border-b-2 border-border pb-2',
         className
       )}
     >

@@ -36,7 +36,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
     <div
       className={cn(
         'flex items-center justify-between gap-4',
-        variant === 'card' && 'border border-ink bg-white p-4 shadow-sw-nested',
+        variant === 'card' && 'rounded-lg border border-border bg-white p-4 shadow-sw-nested',
         disabled && 'cursor-not-allowed opacity-50',
         className
       )}
@@ -57,7 +57,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         disabled={disabled}
         onClick={() => !disabled && onCheckedChange(!checked)}
         className={cn(
-          'relative inline-flex h-6 w-12 shrink-0 items-center border-2 border-ink transition-colors',
+          'relative inline-flex h-6 w-12 shrink-0 items-center rounded-full border border-border transition-colors',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-canvas',
           'disabled:cursor-not-allowed',
           checked ? 'bg-ink' : 'bg-panel'
@@ -66,7 +66,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         <span
           aria-hidden="true"
           className={cn(
-            'pointer-events-none block h-4 w-4 border border-ink bg-white transition-transform',
+            'pointer-events-none block h-4 w-4 rounded-full bg-white transition-transform',
             checked ? 'translate-x-6' : 'translate-x-1'
           )}
         />

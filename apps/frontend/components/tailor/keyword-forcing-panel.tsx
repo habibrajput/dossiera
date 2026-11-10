@@ -44,7 +44,7 @@ function Chip({
         disabled={disabled}
         onClick={onToggle}
         className={cn(
-          'flex items-center gap-2 border border-ink px-2 py-1 font-mono text-xs transition-colors',
+          'flex items-center gap-2 border border-border px-2 py-1 font-mono text-xs transition-colors',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-canvas',
           'disabled:cursor-not-allowed disabled:opacity-50',
           selected ? 'bg-ink text-white' : 'bg-white text-ink hover:bg-panel'
@@ -101,7 +101,7 @@ export function KeywordForcingPanel({
   return (
     <section
       aria-labelledby="keyword-forcing-heading"
-      className="space-y-4 border-2 border-ink bg-white p-4"
+      className="space-y-4 border-2 border-border bg-white p-4"
     >
       <div>
         <h3
@@ -161,7 +161,7 @@ export function KeywordForcingPanel({
             checked={addToMaster}
             onChange={(event) => setAddToMaster(event.target.checked)}
             disabled={busy}
-            className="size-4 rounded-none border border-ink accent-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+            className="size-4 rounded-md border border-border accent-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
           />
           {t('tailor.forceKeywords.addToMaster')}
         </label>

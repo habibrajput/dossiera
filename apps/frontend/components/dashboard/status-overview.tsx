@@ -31,12 +31,12 @@ export function StatusOverview({ counts }: { counts: Record<DashboardStatus, num
         </Link>
       }
     >
-      <div className="grid grid-cols-2 border-l border-t border-ink sm:grid-cols-4 lg:grid-cols-8">
+      <div className="grid grid-cols-2 border-l border-t border-border sm:grid-cols-4 lg:grid-cols-8">
         {STATUS_ORDER.map((status) => (
           <div
             key={status}
             data-testid={`dashboard-status-${status}`}
-            className="border-b border-r border-ink p-4"
+            className="border-b border-r border-border p-4"
           >
             <p className="font-mono text-xs uppercase text-steel">
               {t(`applicationDashboard.status.${status}`)}

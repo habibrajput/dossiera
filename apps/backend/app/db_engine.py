@@ -14,7 +14,7 @@ from sqlalchemy.engine import Connection, Engine
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.schema import CreateColumn
 
-from app.models import Base, Application, Improvement, Resume
+from app.models import Application, Base, Improvement, Resume
 
 __all__ = [
     "Base",

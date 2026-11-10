@@ -249,12 +249,6 @@ describe('settings page (Swiss sweep)', () => {
       screen.queryByRole('button', { name: 'settings.llmConfiguration.testConnection' })
     ).toBeNull();
     expect(screen.getByText('settings.llmConfiguration.agentNote')).toBeInTheDocument();
-    expect(
-      screen.getByRole('link', { name: 'settings.llmConfiguration.agentGuideLink' })
-    ).toHaveAttribute(
-      'href',
-      expect.stringContaining('SETUP.md#use-resume-matcher-with-a-coding-agent')
-    );
 
     fireEvent.click(screen.getByRole('button', { name: 'common.save' }));
     await waitFor(() =>
@@ -271,12 +265,12 @@ describe('settings page (Swiss sweep)', () => {
 
     chooseSubscription(providers, CLAUDE_CLI_LABEL);
 
-    // Alert tone="warning" renders role="alert" with the 2px warning border.
+    // Alert tone="warning" renders role="alert" with a soft warning border.
     const warning = screen
       .getByText('settings.llmConfiguration.claudeCliWarning')
       .closest('[role="alert"]');
     expect(warning).not.toBeNull();
-    expect(warning).toHaveClass('border-2', 'border-warning', 'bg-warning-tint');
+    expect(warning).toHaveClass('rounded-lg', 'border', 'border-warning', 'bg-warning-tint');
     expect(warning).toHaveTextContent('settings.llmConfiguration.claudeCliWarningTitle');
     expect(warning).toHaveTextContent('settings.llmConfiguration.communityBuilt');
 
@@ -304,7 +298,7 @@ describe('settings page (Swiss sweep)', () => {
     const note = screen
       .getByText('settings.llmConfiguration.chatgptWarning')
       .closest('[role="alert"]');
-    expect(note).toHaveClass('border-2', 'border-warning', 'bg-warning-tint');
+    expect(note).toHaveClass('rounded-lg', 'border', 'border-warning', 'bg-warning-tint');
     expect(note).toHaveTextContent('settings.llmConfiguration.chatgptWarningTitle');
     expect(note).toHaveTextContent('settings.llmConfiguration.communityBuilt');
 
@@ -364,12 +358,6 @@ describe('settings page (Swiss sweep)', () => {
     const dialog = screen.getByRole('dialog', { name: `${copy}.title` });
     expect(dialog).toHaveTextContent(`${copy}.risk`);
     expect(dialog).toHaveTextContent('settings.subscriptionRisk.mcpTitle');
-    expect(
-      within(dialog).getByRole('link', { name: 'settings.subscriptionRisk.mcpLink' })
-    ).toHaveAttribute(
-      'href',
-      expect.stringContaining('SETUP.md#use-resume-matcher-with-a-coding-agent')
-    );
     // Nothing switches until the user accepts.
     expect(within(providers).getByRole('radio', { name: 'OpenAI' })).toHaveAttribute(
       'aria-checked',
@@ -641,7 +629,7 @@ describe('settings page (Swiss sweep)', () => {
       screen.getByText(text)
     );
     for (const box of [...statBoxes, savedKeys, ...detailBlocks]) {
-      expect(box).toHaveClass('border-ink', 'shadow-sw-nested');
+      expect(box).toHaveClass('border-border', 'shadow-sw-nested');
       expect(box).not.toHaveClass('shadow-sw-sm');
     }
 
@@ -782,7 +770,7 @@ describe('settings page (accessibility)', () => {
     const alert = (await screen.findByText('settings.systemStatus.unableToConnect')).closest(
       '[role="alert"]'
     ) as HTMLElement;
-    expect(alert).toHaveClass('border-2', 'border-destructive', 'bg-destructive-tint');
+    expect(alert).toHaveClass('rounded-lg', 'border', 'border-destructive', 'bg-destructive-tint');
     expect(alert).not.toHaveClass('border-dashed');
     expect(alert).toHaveTextContent('settings.systemStatus.expectedAt');
 

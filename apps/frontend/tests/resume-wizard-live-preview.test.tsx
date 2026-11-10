@@ -25,7 +25,7 @@ describe('LivePreview', () => {
       <LivePreview resumeData={createInitialResumeWizardState().resume_data} inferredSkills={[]} />
     );
     const card = screen.getByRole('complementary');
-    expect(card).toHaveClass('border-2', 'border-ink', 'shadow-sw-nested');
+    expect(card).toHaveClass('border-2', 'border-border', 'shadow-sw-nested');
     expect(card).not.toHaveClass('shadow-sw-default');
   });
 

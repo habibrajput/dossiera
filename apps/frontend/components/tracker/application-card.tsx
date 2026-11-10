@@ -75,7 +75,7 @@ export function ApplicationCard({
               </p>
             )}
             {sharedResume && (
-              <span className="mt-1 inline-flex items-center gap-1 border border-ink bg-paper px-1 font-mono text-xs uppercase text-ink-soft">
+              <span className="mt-1 inline-flex items-center gap-1 border border-border bg-paper px-1 font-mono text-xs uppercase text-ink-soft">
                 <Stack aria-hidden="true" className="size-4" />
                 {t('tracker.card.sharedResume')}
               </span>

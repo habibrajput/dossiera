@@ -118,7 +118,7 @@ export function WritingPanel({ resumeData, onApply, agentMode, onAgentPrompt }: 
 
   return (
     <div className="space-y-4">
-      <div className="border-2 border-ink bg-white p-4">
+      <div className="border-2 border-border bg-white p-4">
         <h3 className="mb-2 font-mono text-sm font-bold uppercase">
           {t('builder.writing.aboutTitle')}
         </h3>
@@ -157,7 +157,7 @@ export function WritingPanel({ resumeData, onApply, agentMode, onAgentPrompt }: 
       {proposal && (
         <section
           aria-labelledby="writing-proposal-heading"
-          className="space-y-3 border-2 border-ink bg-white p-4"
+          className="space-y-3 border-2 border-border bg-white p-4"
         >
           <h3
             id="writing-proposal-heading"
@@ -170,7 +170,7 @@ export function WritingPanel({ resumeData, onApply, agentMode, onAgentPrompt }: 
           ) : (
             <ul className="space-y-3">
               {proposal.changes.map((change) => (
-                <li key={change.path} className="border border-ink bg-info-tint p-3">
+                <li key={change.path} className="border border-border bg-info-tint p-3">
                   <p className="font-mono text-xs uppercase tracking-wider text-ink-soft">
                     {where(change.path)}
                   </p>

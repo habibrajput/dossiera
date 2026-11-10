@@ -11,7 +11,6 @@ import { CoverLetterPreview } from './cover-letter-preview';
 import { OutreachPreview } from './outreach-preview';
 import { GeneratePrompt } from './generate-prompt';
 import { InterviewPrepView } from './interview-prep-view';
-import { CommunityLinks } from '@/components/common/community-links';
 import { Button } from '@/components/ui/button';
 import { RetroTabs } from '@/components/ui/retro-tabs';
 import { PageHeader } from '@/components/ui/page-header';
@@ -1708,7 +1707,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
   return (
     <div className="h-[calc(100dvh-4rem)] w-full bg-canvas flex justify-center items-center p-2 md:p-4">
       {/* Main Container */}
-      <div className="w-full h-full border border-ink bg-canvas shadow-sw-lg flex flex-col">
+      <div className="w-full h-full border border-border bg-canvas shadow-sw-lg flex flex-col">
         {/* Header: one compact toolbar row (owner F2, builder only) */}
         <PageHeader className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-3 md:px-6 md:py-3 no-print">
           <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
@@ -1733,9 +1732,6 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            {/* Community links: quiet ghost actions, left of the tab's own actions */}
-            <CommunityLinks variant="builder" />
-
             {/* Resume tab actions */}
             {activeTab === 'resume' && (
               <>
@@ -1840,7 +1836,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
 
         {/* Agent mode: the agent saved a part the user is also editing. */}
         {agentUpdate && (
-          <div className="border-b border-ink px-6 py-3 no-print">
+          <div className="border-b border-border px-6 py-3 no-print">
             <Alert tone="warning" title={t('builder.agentUpdate.conflictTitle')}>
               <p>{t('builder.agentUpdate.conflictBody')}</p>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -1964,7 +1960,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
                     />
                   )}
 
-                  <div className="border-2 border-ink bg-white p-4">
+                  <div className="border-2 border-border bg-white p-4">
                     <h3 className="font-mono text-sm font-bold uppercase mb-2">
                       {t('builder.jdMatch.aboutTitle')}
                     </h3>
@@ -1973,7 +1969,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
                     </p>
                   </div>
 
-                  <div className="border-2 border-ink bg-canvas p-4">
+                  <div className="border-2 border-border bg-canvas p-4">
                     <h3 className="font-mono text-sm font-bold uppercase mb-2">
                       {t('builder.jdMatch.highlightedKeywordsTitle')}
                     </h3>
@@ -2005,7 +2001,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
                     )}
                   </div>
 
-                  <div className="border-2 border-ink bg-white p-4">
+                  <div className="border-2 border-border bg-white p-4">
                     <h3 className="font-mono text-sm font-bold uppercase mb-2">
                       {t('builder.jdMatch.tipsTitle')}
                     </h3>
@@ -2034,7 +2030,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
               {/* ATS Check Info Panel */}
               {activeTab === 'ats-check' && (
                 <div className="space-y-4">
-                  <div className="border-2 border-ink bg-white p-4">
+                  <div className="border-2 border-border bg-white p-4">
                     <h3 className="font-mono text-sm font-bold uppercase mb-2">
                       {t('builder.atsCheck.aboutTitle')}
                     </h3>
@@ -2042,7 +2038,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
                       {t('builder.atsCheck.aboutDescription')}
                     </p>
                   </div>
-                  <div className="border-2 border-ink bg-canvas p-4">
+                  <div className="border-2 border-border bg-canvas p-4">
                     <h3 className="font-mono text-sm font-bold uppercase mb-2">
                       {t('builder.atsCheck.roundTripTitle')}
                     </h3>
@@ -2050,7 +2046,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
                       {t('builder.atsCheck.roundTripDescription')}
                     </p>
                   </div>
-                  <div className="border-2 border-ink bg-white p-4">
+                  <div className="border-2 border-border bg-white p-4">
                     <h3 className="font-mono text-sm font-bold uppercase mb-2">
                       {t('builder.atsCheck.tipsTitle')}
                     </h3>

@@ -85,7 +85,7 @@ export function AgentPromptDialog({
         </DialogHeader>
         <DialogBody className="space-y-4">
           <DialogDescription>{t('agentPrompt.instructions')}</DialogDescription>
-          <pre className="whitespace-pre-wrap break-words rounded-none border border-ink bg-white p-3 font-mono text-xs text-ink-soft shadow-sw-nested">
+          <pre className="whitespace-pre-wrap break-words rounded-md border border-border bg-white p-3 font-mono text-xs text-ink-soft shadow-sw-nested">
             {prompt}
           </pre>
           {HAS_NOTE.has(current) && <DialogDescription>{t(`${key}.note`)}</DialogDescription>}

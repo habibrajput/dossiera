@@ -49,7 +49,7 @@ export function PageFrame({
       <BackgroundEffect effect={effect} intensity={effectIntensity} />
       <div
         className={cn(
-          'flex w-full flex-col border border-ink bg-canvas shadow-sw-lg',
+          'flex w-full flex-col overflow-hidden rounded-xl border border-border bg-canvas shadow-sw-lg',
           WIDTH[width],
           height === 'screen' && 'max-h-full overflow-hidden',
           className

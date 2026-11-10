@@ -35,22 +35,10 @@
     "resumeDeleted": "This resume was deleted. Upload or select another resume."
   },
   "home": {
-    "brandLine1": "Resume",
-    "brandLine2": "Matcher",
-    "docs": "Docs",
     "launchApp": "Launch App"
   },
   "community": {
-    "follow": "Follow @srbhr",
-    "star": "Star",
     "starOnGithub": "Star on GitHub",
-    "sponsor": "Sponsor",
-    "discord": "Discord",
-    "joinDiscord": "Join Discord",
-    "contributors": "Contributors",
-    "settingsPrompt": "Enjoying Resume Matcher?",
-    "sponsorProject": "Sponsor the project",
-    "joinTheDiscord": "Join the Discord",
     "aboutTitle": "About"
   },
   "nav": {
@@ -71,7 +59,11 @@
     "applicationTracker": "Application Tracker",
     "queue": "Tailoring Queue",
     "resumeBoard": "Resume Board",
-    "backToResumeBoard": "Back to Resume Board"
+    "backToResumeBoard": "Back to Resume Board",
+    "profile": "Profile menu",
+    "logout": "Log out",
+    "signingOut": "Signing out",
+    "logoutFailed": "Could not sign out. Please try again."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -517,7 +509,7 @@
           "website": "Website"
         },
         "placeholders": {
-          "projectName": "Resume Matcher",
+          "projectName": "Dossiera",
           "role": "Creator",
           "years": "Mar 2023",
           "github": "github.com/username/project",
@@ -1125,14 +1117,13 @@
       "claudeCliName": "Claude subscription (via Claude Code)",
       "claudeCliShortName": "Claude plan",
       "claudeCliWarningTitle": "Use at your own risk",
-      "claudeCliWarning": "Anthropic doesn't allow third-party apps to route requests through Claude Free, Pro or Max plans, and this option may count as one. Anthropic can enforce that without notice; for guaranteed access, use an Anthropic API key. Resume Matcher never sees or stores your Claude credentials: it runs your own Claude Code CLI, which you sign in to yourself with `claude auth login`. Requests count toward your Claude plan's usage limits, and Anthropic may draw them from usage credits instead.",
+      "claudeCliWarning": "Anthropic doesn't allow third-party apps to route requests through Claude Free, Pro or Max plans, and this option may count as one. Anthropic can enforce that without notice; for guaranteed access, use an Anthropic API key. Dossiera never sees or stores your Claude credentials: it runs your own Claude Code CLI, which you sign in to yourself with `claude auth login`. Requests count toward your Claude plan's usage limits, and Anthropic may draw them from usage credits instead.",
       "communityBuilt": "Community-built feature.",
       "chatgptName": "ChatGPT plan (Sign in with ChatGPT)",
       "agentShortName": "Coding agent",
       "agentName": "Your coding agent (Claude Code, Codex, Cursor or Copilot)",
       "agentNoteTitle": "No API key needed",
       "agentNote": "Your coding agent does the AI work: it reads your resume and job descriptions, writes tailored versions and saves them here with the resume-matcher command. The app makes no AI calls of its own, so its AI buttons give you a prompt to paste into your agent.",
-      "agentGuideLink": "Agent setup guide",
       "chatgptShortName": "ChatGPT plan",
       "chatgptWarningTitle": "Preview",
       "chatgptWarning": "This uses OpenAI's official Sign in with ChatGPT for open-source apps, which is a preview and may change. It works with ChatGPT Plus and Pro. Requests go from your machine directly to OpenAI's API, and the sign-in tokens stay encrypted on this machine. Usage counts toward your ChatGPT plan's limits: on Plus, the five-hour limit is shared with your other apps that use your plan; Pro has no five-hour limit. For guaranteed access, use an OpenAI API key.",
@@ -1194,12 +1185,12 @@
       "disconnect": "Disconnect",
       "manageUsage": "Manage usage",
       "disconnected": "Disconnected from ChatGPT.",
-      "revocationUnconfirmed": "Signed out on this machine, but OpenAI didn't confirm the session ended. You can also disconnect Resume Matcher in ChatGPT settings.",
+      "revocationUnconfirmed": "Signed out on this machine, but OpenAI didn't confirm the session ended. You can also disconnect Dossiera in ChatGPT settings.",
       "returnConnected": "Connected to your ChatGPT plan. Choose a model, then save.",
       "returnCancelled": "ChatGPT sign-in was cancelled.",
       "returnError": "ChatGPT sign-in didn't complete. Try again.",
       "planDeclined": "ChatGPT plan usage wasn't allowed. Continue with ChatGPT again and allow it, or use an OpenAI API key.",
-      "sameMachineOnly": "Sign in from a browser on the machine running Resume Matcher.",
+      "sameMachineOnly": "Sign in from a browser on the machine running Dossiera.",
       "signInFailed": "Couldn't start ChatGPT sign-in. Try again.",
       "disconnectFailed": "Couldn't disconnect ChatGPT. Try again.",
       "statusFailed": "Couldn't check the ChatGPT connection.",
@@ -1210,7 +1201,7 @@
     "subscriptionRisk": {
       "claudeCli": {
         "title": "Use your Claude plan here?",
-        "risk": "Anthropic doesn't allow third-party apps to route requests through Claude Free, Pro or Max plans. Resume Matcher runs your own Claude Code CLI and never sees your credentials, but Anthropic may still treat this as third-party use and can act on your account without notice.",
+        "risk": "Anthropic doesn't allow third-party apps to route requests through Claude Free, Pro or Max plans. Dossiera runs your own Claude Code CLI and never sees your credentials, but Anthropic may still treat this as third-party use and can act on your account without notice.",
         "usage": "Requests count toward your Claude plan's usage limits. This option is community-built and may stop working if Anthropic changes Claude Code or its policy."
       },
       "chatgpt": {
@@ -1219,8 +1210,7 @@
         "usage": "Requests count toward your ChatGPT plan's usage limits, which you share with other apps that use your plan. This option is community-built."
       },
       "mcpTitle": "Recommended: let your coding agent do the work",
-      "mcpBody": "Already use Claude Code, Codex, Cursor or Copilot? Choose Coding agent instead. Your agent does the AI work in its own app, and Resume Matcher saves, checks and renders the result. No API key needed.",
-      "mcpLink": "Agent setup guide",
+      "mcpBody": "Already use Claude Code, Codex, Cursor or Copilot? Choose Coding agent instead. Your agent does the AI work in its own app, and Dossiera saves, checks and renders the result. No API key needed.",
       "alternative": "Prefer guaranteed access? Go back and use an API key or a local model such as Ollama.",
       "back": "No, take me back",
       "accept": "Yes, I accept the risk"
@@ -1495,7 +1485,7 @@
       "upload": {
         "kicker": "Existing File",
         "title": "Upload a resume",
-        "description": "Start from a PDF or DOCX file and let Resume Matcher parse it into your master profile.",
+        "description": "Start from a PDF or DOCX file and let Dossiera parse it into your master profile.",
         "action": "Upload Resume"
       },
       "wizard": {
@@ -1667,7 +1657,7 @@
     }
   },
   "agentPrompt": {
-    "instructions": "Paste this prompt into your coding agent (Claude Code, Codex, Cursor or Copilot) running in the Resume Matcher folder. The agent does the AI work and saves the result here.",
+    "instructions": "Paste this prompt into your coding agent (Claude Code, Codex, Cursor or Copilot) running in the Dossiera folder. The agent does the AI work and saves the result here.",
     "refresh": "This page updates on its own as your agent saves its work.",
     "copy": "Copy prompt",
     "copied": "Copied",
@@ -1677,38 +1667,38 @@
     "getPrompt": "Get prompt for your agent",
     "createMaster": {
       "title": "Create your master resume",
-      "prompt": "Use Resume Matcher to create my master resume from this file: <path to your resume PDF or DOCX>. If I don't have a resume file, ask me questions and build one with me."
+      "prompt": "Use Dossiera to create my master resume from this file: <path to your resume PDF or DOCX>. If I don't have a resume file, ask me questions and build one with me."
     },
     "tailor": {
       "title": "Tailor your resume",
-      "prompt": "Use Resume Matcher to tailor my master resume to this job:\n\n<paste the job description here>",
-      "promptWithJob": "Use Resume Matcher to tailor resume {resumeId} to this job:\n\n{job}",
+      "prompt": "Use Dossiera to tailor my master resume to this job:\n\n<paste the job description here>",
+      "promptWithJob": "Use Dossiera to tailor resume {resumeId} to this job:\n\n{job}",
       "note": "Several jobs? Save each description as a .md or .txt file in the jobs/ folder and ask your agent to tailor your resume for every job there. Each one appears on the dashboard."
     },
     "enhance": {
       "title": "Enhance your resume",
-      "prompt": "Use Resume Matcher to improve the bullet points in resume {resumeId}. Ask me about results, numbers and tools I left out, then update the resume with my answers. Don't add anything I didn't tell you."
+      "prompt": "Use Dossiera to improve the bullet points in resume {resumeId}. Ask me about results, numbers and tools I left out, then update the resume with my answers. Don't add anything I didn't tell you."
     },
     "regenerate": {
       "title": "Rewrite with your agent",
-      "prompt": "Use Resume Matcher to rewrite <which experience, projects or skills> in resume {resumeId}: <what to improve>. Keep every fact true and show me the changes before you save them."
+      "prompt": "Use Dossiera to rewrite <which experience, projects or skills> in resume {resumeId}: <what to improve>. Keep every fact true and show me the changes before you save them."
     },
     "coverLetter": {
       "title": "Write a cover letter",
-      "prompt": "Use Resume Matcher to write a cover letter for resume {resumeId}, for the job it was tailored to, and save it to that resume."
+      "prompt": "Use Dossiera to write a cover letter for resume {resumeId}, for the job it was tailored to, and save it to that resume."
     },
     "outreach": {
       "title": "Write an outreach message",
-      "prompt": "Use Resume Matcher to write a short outreach message to the hiring manager for the job resume {resumeId} was tailored to, and save it to that resume."
+      "prompt": "Use Dossiera to write a short outreach message to the hiring manager for the job resume {resumeId} was tailored to, and save it to that resume."
     },
     "interviewPrep": {
       "title": "Prepare for the interview",
-      "prompt": "Use Resume Matcher to read resume {resumeId} and the job it was tailored to, then help me prepare for the interview: likely questions, the stories to tell and questions to ask them.",
+      "prompt": "Use Dossiera to read resume {resumeId} and the job it was tailored to, then help me prepare for the interview: likely questions, the stories to tell and questions to ask them.",
       "note": "Your agent answers in its own chat. In agent mode, interview prep is not saved to the resume."
     },
     "improveWriting": {
       "title": "Improve the writing",
-      "prompt": "Use Resume Matcher to improve the writing of resume {resumeId}: run two writing rounds (critique every line against the rubric, rewrite the weak ones keeping every fact, verify), then save."
+      "prompt": "Use Dossiera to improve the writing of resume {resumeId}: run two writing rounds (critique every line against the rubric, rewrite the weak ones keeping every fact, verify), then save."
     }
   }
 }

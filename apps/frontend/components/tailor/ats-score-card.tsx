@@ -73,7 +73,7 @@ const clampWidth = (value: number) =>
 
 function ScoreBar({ value }: { value: number }) {
   return (
-    <div className="h-2 w-full border border-ink bg-white">
+    <div className="h-2 w-full border border-border bg-white">
       <div
         className={cn('h-full', BAND_FILL[band(value)])}
         style={{ width: `${clampWidth(value)}%` }}
@@ -137,7 +137,7 @@ export function ATSScoreCard({ atsScore, template, previousScore }: ATSScoreCard
   return (
     <section
       aria-labelledby="ats-score-heading"
-      className="space-y-6 border border-ink bg-white p-6 shadow-sw-nested"
+      className="space-y-6 border border-border bg-white p-6 shadow-sw-nested"
     >
       <div className="flex items-end justify-between gap-4">
         <h2 id="ats-score-heading" className="font-serif text-xl font-bold text-ink">

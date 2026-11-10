@@ -174,7 +174,7 @@ export function ApplicationDashboard() {
               ? t('applicationDashboard.encouragement')
               : t('applicationDashboard.startEncouragement')}
           </p>
-          <div className="mt-5 flex flex-wrap items-center gap-3">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
             <span className="font-mono text-xs font-bold uppercase text-ink">
               {t('applicationDashboard.showing')}
             </span>

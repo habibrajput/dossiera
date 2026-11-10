@@ -95,9 +95,9 @@ export function QuestionCard({
   };
 
   return (
-    <section className="border-2 border-ink bg-white shadow-sw-nested">
+    <section className="border-2 border-border bg-white shadow-sw-nested">
       <div
-        className="flex gap-1 border-b-2 border-ink p-2"
+        className="flex gap-1 border-b-2 border-border p-2"
         role="progressbar"
         aria-valuemin={0}
         aria-valuemax={totalSegments}
@@ -110,8 +110,8 @@ export function QuestionCard({
             key={index}
             className={
               index < progress.current
-                ? 'h-2 flex-1 border border-ink bg-ink'
-                : 'h-2 flex-1 border border-ink bg-white'
+                ? 'h-2 flex-1 border border-border bg-ink'
+                : 'h-2 flex-1 border border-border bg-white'
             }
           />
         ))}
@@ -166,7 +166,7 @@ export function QuestionCard({
           <StatusIndicator tone="ready">{t('resumeWizard.readyHint')}</StatusIndicator>
         )}
 
-        <div className="flex flex-wrap gap-3 border-t-2 border-ink pt-6">
+        <div className="flex flex-wrap gap-3 border-t-2 border-border pt-6">
           {isReview ? (
             <>
               <Button

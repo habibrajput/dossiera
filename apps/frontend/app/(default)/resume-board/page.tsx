@@ -47,7 +47,7 @@ const TILE_BUTTON =
   'flex flex-1 flex-col justify-between p-6 text-left md:p-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white';
 // Tile highlight (owner ruling, round 2): hover, or keyboard focus anywhere inside a tile, fills
 // the tile Hyper Blue with white text. There is no ink outline: Card interactive's
-// `hover:border-ink` is overridden here so the 2px border stays transparent, and its 1px press-in
+// `hover:border-border` is overridden here so the 2px border stays transparent, and its 1px press-in
 // is cancelled. Focus adds a 2px inset white ring on the link or button (a primary ring would
 // vanish on the fill). Inherited text turns white with the tile; anything that sets its own
 // colour (steel captions, the spinner, status squares, monogram frames) opts in below so it
@@ -638,7 +638,7 @@ export default function DashboardPage() {
                 >
                   <span
                     className={cn(
-                      'size-12 border-2 border-ink flex items-center justify-center mb-4',
+                      'size-12 border-2 border-border flex items-center justify-center mb-4',
                       TILE_WHITE_BORDER
                     )}
                   >
@@ -663,7 +663,7 @@ export default function DashboardPage() {
                 <div className="flex justify-between items-start mb-6">
                   <div
                     className={cn(
-                      'size-12 border-2 border-ink bg-primary text-white flex items-center justify-center',
+                      'size-12 border-2 border-border bg-primary text-white flex items-center justify-center',
                       TILE_WHITE_BORDER
                     )}
                   >
@@ -761,7 +761,7 @@ export default function DashboardPage() {
                   <div className="flex justify-between items-start mb-6">
                     <div
                       className={cn(
-                        'size-12 border-2 border-ink bg-primary text-white flex items-center justify-center',
+                        'size-12 border-2 border-border bg-primary text-white flex items-center justify-center',
                         TILE_WHITE_BORDER
                       )}
                     >
@@ -850,7 +850,7 @@ export default function DashboardPage() {
                   <div className="flex justify-between items-start mb-6">
                     <div
                       className={cn(
-                        'size-12 border-2 border-ink text-white flex items-center justify-center',
+                        'size-12 border-2 border-border text-white flex items-center justify-center',
                         TILE_WHITE_BORDER,
                         monogramFill
                       )}

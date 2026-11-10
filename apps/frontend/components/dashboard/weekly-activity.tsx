@@ -32,9 +32,9 @@ export function WeeklyActivity({ weekly, started, sent }: WeeklyActivityProps) {
         </Button>
       }
     >
-      <div className="flex gap-5 font-mono text-xs uppercase text-ink-soft">
+      <div className="flex gap-6 font-mono text-xs uppercase text-ink-soft">
         <span className="flex items-center gap-2">
-          <span className="size-3 border border-ink bg-panel" aria-hidden="true" />
+          <span className="size-3 border border-border bg-panel" aria-hidden="true" />
           {t('applicationDashboard.started')}
         </span>
         <span className="flex items-center gap-2">
@@ -44,11 +44,11 @@ export function WeeklyActivity({ weekly, started, sent }: WeeklyActivityProps) {
       </div>
 
       {showNumbers ? (
-        <div className="mt-5 overflow-x-auto">
+        <div className="mt-6 overflow-x-auto">
           <table className="w-full border-collapse text-left text-sm">
             <caption className="sr-only">{summary}</caption>
             <thead>
-              <tr className="border-b border-ink font-mono text-xs uppercase">
+              <tr className="border-b border-border font-mono text-xs uppercase">
                 <th scope="col" className="py-2">
                   {t('applicationDashboard.week')}
                 </th>
@@ -75,11 +75,11 @@ export function WeeklyActivity({ weekly, started, sent }: WeeklyActivityProps) {
         </div>
       ) : (
         <div
-          className="mt-5 overflow-x-auto"
+          className="mt-6 overflow-x-auto"
           role="img"
           aria-label={t('applicationDashboard.weeklyChartLabel', { started, sent })}
         >
-          <div className="flex h-56 min-w-max items-end gap-4 border-b border-ink px-1 pt-6">
+          <div className="flex h-56 min-w-max items-end gap-4 border-b border-border px-1 pt-6">
             {weekly.map((week) => (
               <div
                 key={week.key}
@@ -87,7 +87,7 @@ export function WeeklyActivity({ weekly, started, sent }: WeeklyActivityProps) {
               >
                 <div className="flex h-full items-end justify-center gap-1" aria-hidden="true">
                   {[
-                    { count: week.started, className: 'border border-ink bg-panel' },
+                    { count: week.started, className: 'border border-border bg-panel' },
                     { count: week.sent, className: 'bg-ink' },
                   ].map((bar, index) => (
                     <div
@@ -100,7 +100,7 @@ export function WeeklyActivity({ weekly, started, sent }: WeeklyActivityProps) {
                     />
                   ))}
                 </div>
-                <span className="mt-2 whitespace-nowrap pb-2 font-mono text-[10px] uppercase text-steel">
+                <span className="mt-2 whitespace-nowrap pb-2 font-mono text-xs uppercase text-steel">
                   {formatWeek(week.startsAt)}
                 </span>
               </div>

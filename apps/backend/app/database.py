@@ -1182,12 +1182,23 @@ class Database:
                 row.position = index
 
     @staticmethod
-    def _record_status_transition(row: Application, new_status: str, now: str) -> None:
+    def _record_status_transition(
+        row: Application,
+        new_status: str,
+        now: str,
+        *,
+        applied_at_supplied: bool = False,
+    ) -> None:
         """Stamp first-time milestones before assigning a card's new status."""
         old_status = row.status
         if old_status == new_status:
             return
-        if old_status == "saved" and new_status != "saved" and row.applied_at is None:
+        if (
+            old_status == "saved"
+            and new_status != "saved"
+            and row.applied_at is None
+            and not applied_at_supplied
+        ):
             row.applied_at = now
         if row.heard_back_at is None and (
             old_status in _HEARD_BACK_STATUSES or new_status in _HEARD_BACK_STATUSES
@@ -1394,7 +1405,12 @@ class Database:
                     setattr(row, key, updates[key])
 
             if "status" in updates:
-                self._record_status_transition(row, new_status, _now())
+                self._record_status_transition(
+                    row,
+                    new_status,
+                    _now(),
+                    applied_at_supplied="applied_at" in updates,
+                )
 
             moved = "status" in updates or "position" in updates
             if moved:

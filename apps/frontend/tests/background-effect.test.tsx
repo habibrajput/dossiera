@@ -64,7 +64,7 @@ describe('PageFrame with the effect', () => {
     expect(outer).not.toHaveClass('bg-blueprint');
     const field = screen.getByTestId('field');
     expect(field.parentElement).toBe(outer);
-    expect(screen.getByText('content').parentElement).toHaveClass('bg-canvas', 'border-ink');
+    expect(screen.getByText('content').parentElement).toHaveClass('bg-canvas', 'border-border');
   });
 
   it('leaves plain Canvas when effects are off', () => {

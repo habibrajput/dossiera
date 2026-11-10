@@ -71,9 +71,9 @@ function EnhancementCard({ enhancement }: EnhancementCardProps) {
       : t('enrichment.itemType.project');
 
   return (
-    <div className="border-2 border-ink bg-white shadow-sw-nested">
+    <div className="border-2 border-border bg-white shadow-sw-nested">
       {/* Card header */}
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-ink bg-paper">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-paper">
         <span className="font-mono text-sm font-bold uppercase">{itemTypeLabel}</span>
         <span aria-hidden="true" className="text-ink-soft">
           |

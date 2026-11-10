@@ -35,7 +35,7 @@ export function ApplicationFunnel({ analytics }: { analytics: DashboardAnalytics
         </Button>
       }
     >
-      <div className="grid grid-cols-3 divide-x divide-ink border-y border-ink text-center">
+      <div className="grid grid-cols-3 divide-x divide-border border-y border-border text-center">
         <div className="p-3">
           <p className="font-mono text-xs uppercase text-steel">{t('applicationDashboard.sent')}</p>
           <p className="mt-1 font-serif text-3xl font-bold text-ink">{sent}</p>
@@ -60,7 +60,7 @@ export function ApplicationFunnel({ analytics }: { analytics: DashboardAnalytics
         <table className="mt-6 w-full border-collapse text-left text-sm">
           <caption className="sr-only">{t('applicationDashboard.funnelTitle')}</caption>
           <thead>
-            <tr className="border-b border-ink font-mono text-xs uppercase">
+            <tr className="border-b border-border font-mono text-xs uppercase">
               <th scope="col" className="py-2">
                 {t('applicationDashboard.stage')}
               </th>

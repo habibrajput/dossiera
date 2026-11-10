@@ -149,9 +149,9 @@ export function EnrichmentModal({ resumeId, isOpen, onClose, onComplete }: Enric
 
       {/* Modal container - 80% viewport with padding */}
       <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8">
-        <div className="relative w-full h-full max-w-[1200px] bg-white border border-ink shadow-sw-lg flex flex-col overflow-hidden">
+        <div className="relative w-full h-full max-w-[1200px] bg-white border border-border shadow-sw-lg flex flex-col overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-ink bg-paper">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-paper">
             <h2
               id={titleId}
               className="font-serif text-2xl font-bold uppercase leading-tight tracking-tight text-balance text-ink"

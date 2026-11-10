@@ -45,7 +45,7 @@ describe('MasterResumeChoiceDialog', () => {
     const upload = screen.getByText('resumeWizard.entry.upload.title').closest('section')!;
     const wizard = screen.getByText('resumeWizard.entry.wizard.title').closest('section')!;
     for (const card of [upload, wizard]) {
-      expect(card).toHaveClass('border', 'border-ink', 'shadow-sw-nested');
+      expect(card).toHaveClass('border', 'border-border', 'shadow-sw-nested');
       expect(card.className).not.toMatch(/border-2|border-black|shadow-sw-default/);
     }
     expect(upload.className).toBe(wizard.className);

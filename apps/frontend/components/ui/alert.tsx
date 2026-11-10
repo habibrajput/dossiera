@@ -16,13 +16,13 @@ export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
   ref?: React.Ref<HTMLDivElement>;
 }
 
-/** Swiss alert: 2px tone border on a tint, mono label, ink-soft body, no shadow. Server-safe. */
+/** Soft alert: tone hairline, tinted surface and comfortable radius. Server-safe. */
 export function Alert({ tone = 'info', title, children, className, ref, ...props }: AlertProps) {
   return (
     <div
       ref={ref}
       role={tone === 'error' || tone === 'warning' ? 'alert' : 'status'}
-      className={cn('rounded-none border-2 p-4', TONE[tone].box, className)}
+      className={cn('rounded-lg border p-4', TONE[tone].box, className)}
       {...props}
     >
       {title && (

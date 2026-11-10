@@ -264,7 +264,8 @@ describe('saved uploads with failed HTTP responses', () => {
     const pending = await screen.findByRole('status');
     expect(pending).toHaveTextContent('dashboard.status.processing');
     // The pending message is the shared info Alert, not a hand-rolled bordered paragraph.
-    expect(pending.className).toMatch(/border-2/);
+    expect(pending.className).toMatch(/rounded-lg/);
+    expect(pending.className).toMatch(/\bborder\b/);
     expect(pending.className).toMatch(/bg-info-tint/);
     expect(onComplete).not.toHaveBeenCalled();
     expect(screen.getByRole('button', { name: 'dashboard.deleteResume' })).toBeEnabled();
@@ -480,7 +481,7 @@ describe('drop zone keyboard access', () => {
     const mark = screen
       .getByRole('button', { name: 'dashboard.uploadDialog.dropzoneTitle' })
       .querySelector('svg')!.parentElement!;
-    expect(mark).toHaveClass('border', 'border-ink', 'shadow-sw-nested');
+    expect(mark).toHaveClass('border', 'border-border', 'shadow-sw-nested');
     expect(mark).not.toHaveClass('shadow-sw-default');
   });
 

@@ -142,11 +142,11 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   if (!isMounted) {
     return (
       <div className={cn('space-y-1', className)}>
-        <div className="flex items-center gap-1 p-1 border border-black bg-panel h-9" />
+        <div className="flex items-center gap-1 rounded-md border border-border bg-muted p-1" />
         <div
           className={cn(
-            'w-full border border-black bg-white',
-            'px-3 py-2 text-sm text-steel rounded-none'
+            'w-full rounded-md border border-border bg-white',
+            'px-3 py-2 text-sm text-ink'
           )}
           style={{ minHeight }}
         >
@@ -165,9 +165,9 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
       <RichTextToolbar editor={editor} onLinkClick={handleLinkClick} />
       <div
         className={cn(
-          'w-full border border-black bg-white',
-          'px-3 py-2 text-sm text-black rounded-none',
-          'focus-within:ring-1 focus-within:ring-primary',
+          'w-full rounded-md border border-border bg-white',
+          'px-3 py-2 text-sm text-ink',
+          'focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20',
           '[&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-[36px]',
           '[&_.ProseMirror_p]:m-0',
           '[&_.ProseMirror_a]:text-primary [&_.ProseMirror_a]:underline'

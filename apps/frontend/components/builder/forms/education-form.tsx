@@ -73,7 +73,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ data, onChange }) 
       ) : (
         <SortableItemList id="education-items" items={data} onReorder={onChange} animateItems>
           {(item) => (
-            <div className="p-6 border border-ink bg-paper relative group">
+            <div className="p-6 border border-border bg-paper relative group">
               <Button
                 variant="ghost"
                 size="icon"

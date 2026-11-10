@@ -37,7 +37,6 @@ import { API_URL } from '@/lib/api/client';
 import { CHATGPT_RETURN_OUTCOMES, type ChatGptReturnOutcome } from '@/lib/api/chatgpt';
 import { ChatGptConnection } from '@/components/settings/chatgpt-connection';
 import {
-  AGENT_SETUP_URL,
   SubscriptionRiskDialog,
   type SubscriptionProvider,
 } from '@/components/settings/subscription-risk-dialog';
@@ -54,7 +53,7 @@ import { SegmentedControl } from '@/components/ui/segmented-control';
 import { BrandIcon, hasBrandIcon } from '@/components/ui/brand-icon';
 import { PageFrame } from '@/components/ui/page-frame';
 import { PageHeader } from '@/components/ui/page-header';
-import { SettingsAbout, SettingsSupportStrip } from '@/components/settings/community';
+import { SettingsAbout } from '@/components/settings/community';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Dropdown } from '@/components/ui/dropdown';
 import {
@@ -74,7 +73,6 @@ import {
   Monitor,
   Trash,
   Warning,
-  ArrowSquareOut,
 } from '@phosphor-icons/react';
 import { useLanguage } from '@/lib/context/language-context';
 import { useTranslations } from '@/lib/i18n';
@@ -821,8 +819,6 @@ export default function SettingsPage() {
         </PageHeader>
 
         <div className="px-8 py-8 md:px-12 space-y-8">
-          <SettingsSupportStrip />
-
           {/* API Key Not Configured Warning */}
           {!statusLoading && systemStatus && !systemStatus.llm_configured && (
             <Alert tone="warning">
@@ -888,7 +884,7 @@ export default function SettingsPage() {
               <div className="@container">
                 <div className="grid grid-cols-2 @3xl:grid-cols-4 gap-4">
                   {/* LLM Status */}
-                  <div className="border border-ink bg-white p-4 shadow-sw-nested">
+                  <div className="border border-border bg-white p-4 shadow-sw-nested">
                     <div className="flex items-center gap-2 mb-2">
                       <HardDrives className="w-4 h-4 text-steel" />
                       <span className="font-mono text-xs uppercase text-steel">
@@ -903,7 +899,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* Database Status */}
-                  <div className="border border-ink bg-white p-4 shadow-sw-nested">
+                  <div className="border border-border bg-white p-4 shadow-sw-nested">
                     <div className="flex items-center gap-2 mb-2">
                       <Database className="w-4 h-4 text-steel" />
                       <span className="font-mono text-xs uppercase text-steel">
@@ -916,7 +912,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* Resumes Count */}
-                  <div className="border border-ink bg-white p-4 shadow-sw-nested">
+                  <div className="border border-border bg-white p-4 shadow-sw-nested">
                     <div className="flex items-center gap-2 mb-2">
                       <FileText className="w-4 h-4 text-steel" />
                       <span className="font-mono text-xs uppercase text-steel">
@@ -929,7 +925,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* Jobs Count */}
-                  <div className="border border-ink bg-white p-4 shadow-sw-nested">
+                  <div className="border border-border bg-white p-4 shadow-sw-nested">
                     <div className="flex items-center gap-2 mb-2">
                       <Briefcase className="w-4 h-4 text-steel" />
                       <span className="font-mono text-xs uppercase text-steel">
@@ -947,7 +943,7 @@ export default function SettingsPage() {
             {/* Additional Stats Row */}
             {systemStatus && (
               <div className="grid grid-cols-2 gap-4">
-                <div className="border border-ink bg-white p-4 shadow-sw-nested">
+                <div className="border border-border bg-white p-4 shadow-sw-nested">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="font-mono text-xs uppercase text-steel">
                       {t('settings.statusCards.improvements')}
@@ -957,7 +953,7 @@ export default function SettingsPage() {
                     {systemStatus.database_stats.total_improvements}
                   </span>
                 </div>
-                <div className="border border-ink bg-white p-4 shadow-sw-nested">
+                <div className="border border-border bg-white p-4 shadow-sw-nested">
                   <div className="flex items-center gap-2 mb-2">
                     <FileText className="w-4 h-4 text-steel" />
                     <span className="font-mono text-xs uppercase text-steel">
@@ -1023,15 +1019,6 @@ export default function SettingsPage() {
               {usesAgent ? (
                 <Alert tone="info" title={t('settings.llmConfiguration.agentNoteTitle')}>
                   <p>{t('settings.llmConfiguration.agentNote')}</p>
-                  <a
-                    href={AGENT_SETUP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-2 inline-flex items-center gap-1 font-mono text-xs uppercase tracking-wider text-primary underline-offset-4 hover:underline"
-                  >
-                    {t('settings.llmConfiguration.agentGuideLink')}
-                    <ArrowSquareOut aria-hidden="true" className="size-3" />
-                  </a>
                 </Alert>
               ) : usesLocalCli ? (
                 <>
@@ -1132,7 +1119,7 @@ export default function SettingsPage() {
               {/* Saved per-provider keys — each provider keeps its own encrypted
                   key, so switching providers never wipes another's. */}
               {apiKeyStatuses.some((s) => s.configured) && (
-                <div className="space-y-2 border border-ink bg-paper p-3 shadow-sw-nested">
+                <div className="space-y-2 border border-border bg-paper p-3 shadow-sw-nested">
                   <p className="font-mono text-xs uppercase tracking-wider text-ink-soft">
                     {t('settings.apiKeys.savedTitle')}
                   </p>
@@ -1327,7 +1314,7 @@ export default function SettingsPage() {
                             <summary className="cursor-pointer font-mono text-xs uppercase tracking-wider text-ink-soft hover:text-ink">
                               {item.label}
                             </summary>
-                            <pre className="mt-1 whitespace-pre-wrap break-words rounded-none border border-ink bg-white p-3 font-mono text-xs text-ink-soft shadow-sw-nested">
+                            <pre className="mt-1 whitespace-pre-wrap break-words rounded-md border border-border bg-white p-3 font-mono text-xs text-ink-soft shadow-sw-nested">
                               {item.value}
                             </pre>
                           </details>
@@ -1336,7 +1323,7 @@ export default function SettingsPage() {
                             <p className="font-mono text-xs uppercase tracking-wider text-ink-soft">
                               {item.label}
                             </p>
-                            <pre className="mt-1 whitespace-pre-wrap break-words rounded-none border border-ink bg-white p-3 font-mono text-xs text-ink-soft shadow-sw-nested">
+                            <pre className="mt-1 whitespace-pre-wrap break-words rounded-md border border-border bg-white p-3 font-mono text-xs text-ink-soft shadow-sw-nested">
                               {item.value}
                             </pre>
                           </div>
@@ -1672,15 +1659,9 @@ export default function SettingsPage() {
         </div>
 
         {/* Footer */}
-        <div className="bg-canvas p-4 border-t border-ink flex justify-between items-center">
+        <div className="bg-canvas p-4 border-t border-border flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Image
-              src="/logo.svg"
-              alt="Resume Matcher"
-              width={20}
-              height={20}
-              className="w-5 h-5"
-            />
+            <Image src="/logo.svg" alt="Dossiera" width={20} height={20} className="w-5 h-5" />
             <span className="font-mono text-xs text-steel">{getVersionString().toUpperCase()}</span>
           </div>
           <div className="flex items-center gap-2">

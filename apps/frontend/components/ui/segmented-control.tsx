@@ -91,17 +91,17 @@ export function SegmentedControl<T extends string>({
             onClick={() => onChange(item.value)}
             onKeyDown={(event) => onKeyDown(event, index)}
             className={cn(
-              'rounded-none border border-ink font-mono uppercase tracking-wider transition-colors',
+              'rounded-md border border-border transition-colors',
               'focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-canvas',
               keepsOutline ? 'focus-visible:ring-offset-4' : 'focus-visible:outline-none',
               'disabled:cursor-not-allowed disabled:opacity-50',
               size === 'sm' ? 'min-h-8 px-3 text-xs' : 'min-h-10 px-4 text-sm',
               variant === 'fill' &&
-                (selected ? 'bg-ink text-white' : 'bg-white text-ink hover:bg-panel'),
+                (selected ? 'bg-ink text-white' : 'bg-white text-ink hover:bg-accent'),
               variant === 'outline' &&
                 cn(
                   'bg-white p-2 text-ink',
-                  selected ? 'outline-2 outline-offset-2 outline-ink' : 'hover:bg-panel'
+                  selected ? 'outline-2 outline-offset-2 outline-ink' : 'hover:bg-accent'
                 )
             )}
           >

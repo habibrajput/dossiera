@@ -13,35 +13,17 @@ const shadows = Object.fromEntries(
     value.trim(),
   ])
 );
-// x y blur spread colour
-const parse = (value: string) => {
-  const [x, y, blur, spread, ...colour] = value.split(/\s+/);
-  return { x, y, blur, spread, colour: colour.join(' ') };
-};
-
-describe('Swiss shadow tokens', () => {
-  it('defines the solid roles and the nested role', () => {
+describe('soft shadow tokens', () => {
+  it('defines the elevation roles', () => {
     expect(Object.keys(shadows).sort()).toEqual(['card', 'default', 'lg', 'nested', 'sm', 'xl']);
   });
 
-  it('never blurs or spreads a shadow', () => {
-    for (const value of Object.values(shadows)) {
-      const { blur, spread } = parse(value);
-      expect(blur).toBe('0px');
-      expect(spread).toBe('0px');
-    }
-  });
-
-  it('keeps floating and pressable roles solid ink and the nested role translucent ink', () => {
-    for (const name of ['sm', 'default', 'lg', 'xl', 'card']) {
-      expect(parse(shadows[name]).colour).toBe('#000000');
-    }
-    expect(parse(shadows.nested)).toEqual({
-      x: '4px',
-      y: '4px',
-      blur: '0px',
-      spread: '0px',
-      colour: 'rgb(0 0 0 / 0.15)',
-    });
+  it('uses low-opacity, layered elevation rather than hard ink offsets', () => {
+    expect(shadows.sm).toBe('0 1px 2px 0 rgb(0 0 0 / 0.05)');
+    expect(shadows.default).toBe('0 2px 4px 0 rgb(0 0 0 / 0.05), 0 1px 2px 0 rgb(0 0 0 / 0.04)');
+    expect(shadows.card).toBe('0 4px 12px -4px rgb(0 0 0 / 0.08)');
+    expect(shadows.lg).toBe('0 8px 24px -6px rgb(0 0 0 / 0.1)');
+    expect(shadows.xl).toBe('0 16px 40px -12px rgb(0 0 0 / 0.14)');
+    expect(shadows.nested).toBe('0 1px 2px 0 rgb(0 0 0 / 0.04), 0 2px 8px -2px rgb(0 0 0 / 0.06)');
   });
 });

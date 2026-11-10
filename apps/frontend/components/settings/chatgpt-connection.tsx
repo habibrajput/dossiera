@@ -156,7 +156,7 @@ export function ChatGptConnection({
   const showPlanDeclined = status?.plan_declined && outcome !== 'plan_declined';
 
   return (
-    <div className="space-y-4 border border-ink bg-white p-4 shadow-sw-nested">
+    <div className="space-y-4 border border-border bg-white p-4 shadow-sw-nested">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <span className="flex min-w-0 flex-wrap items-center gap-2">
           {status === null ? (

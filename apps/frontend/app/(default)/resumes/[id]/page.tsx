@@ -629,7 +629,7 @@ export default function ResumeViewerPage() {
       <div className="px-8 py-6 md:px-12 md:py-8">
         {/* Resume Viewer */}
         <div className="flex justify-center pb-4">
-          <div className="no-print w-full max-w-[250mm] border border-ink">
+          <div className="no-print w-full max-w-[250mm] border border-border">
             <PaginatedPreview
               resumeData={localizedResumeData || resumeData}
               settings={templateSettings}

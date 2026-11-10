@@ -122,7 +122,7 @@ const classes = (el: Element) => classAttr(el).split(/\s+/);
 
 /**
  * Owner ruling (round 2): hover or keyboard focus inside a tile fills it Hyper Blue and turns its
- * text white. There is no ink outline (Card interactive's hover:border-ink is overridden, so the
+ * text white. There is no ink outline (Card interactive's hover:border-border is overridden, so the
  * border stays transparent) and no 1px press-in.
  */
 function expectBlueFillTile(card: HTMLElement): void {
@@ -137,7 +137,7 @@ function expectBlueFillTile(card: HTMLElement): void {
       'hover:translate-y-0',
     ])
   );
-  expect(card.className).not.toMatch(/border-ink/);
+  expect(card.className).not.toMatch(/border-border/);
   expect(card.className).not.toMatch(/translate-[xy]-px/);
   expect(card.className).not.toMatch(/bg-white/);
 }
@@ -320,8 +320,8 @@ describe('dashboard tiles are keyboard-reachable', () => {
       section.compareDocumentPosition(firstTile) & Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
 
-    // The visible "Resume Matcher" text next to the logo already names it.
-    expect(screen.queryByAltText('Resume Matcher')).toBeNull();
+    // The visible "Dossiera" text next to the logo already names it.
+    expect(screen.queryByAltText('Dossiera')).toBeNull();
   });
 
   it('makes the add-track tile a native button', async () => {
@@ -434,7 +434,7 @@ describe('dashboard tile highlight and the one blue action', () => {
         'group-focus-visible/setup:translate-x-0',
       ])
     );
-    expect(card.className).not.toMatch(/border-ink|translate-[xy]-px|bg-white/);
+    expect(card.className).not.toMatch(/border-border|translate-[xy]-px|bg-white/);
     expectWhiteRing(card, 'group-focus-visible/setup:');
     for (const text of [
       screen.getByText('dashboard.setupRequiredTitle'),
@@ -456,12 +456,13 @@ describe('dashboard tile highlight and the one blue action', () => {
     expect(document.querySelectorAll('button.bg-primary, a.bg-primary')).toHaveLength(1);
 
     // The tile is not highlighted: only the + button reacts to the pointer, through the Button
-    // primitive's own hover (darker blue, 1px press-in) and its primary focus ring.
+    // primitive's own darker-blue hover and its primary focus ring.
     expect(classes(create)).toEqual(
       expect.arrayContaining([
         'hover:bg-primary-hover',
-        'hover:translate-x-px',
-        'hover:translate-y-px',
+        'shadow-sw-sm',
+        'hover:shadow-sw-sm',
+        'active:shadow-none',
         'focus-visible:ring-primary',
       ])
     );

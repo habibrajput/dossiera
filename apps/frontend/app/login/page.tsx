@@ -3,7 +3,7 @@ import { LoginForm } from '@/components/auth/login-form';
 import { safeReturnTo } from '@/lib/auth';
 
 export const metadata: Metadata = {
-  title: 'Sign in | Resume Matcher',
+  title: 'Sign in | Dossiera',
 };
 
 type LoginPageProps = {
@@ -17,11 +17,11 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-canvas p-4 md:p-8">
       <section
-        className="w-full max-w-md border border-ink bg-white p-6 shadow-sw-lg md:p-12"
+        className="w-full max-w-md border border-border bg-white p-6 shadow-sw-lg md:p-12"
         aria-labelledby="login-title"
       >
         <p className="font-mono text-xs font-bold uppercase tracking-widest text-primary">
-          Resume / Matcher
+          Dossiera
         </p>
         <h1
           id="login-title"

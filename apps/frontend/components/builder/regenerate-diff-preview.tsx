@@ -124,7 +124,7 @@ export const RegenerateDiffPreview: React.FC<RegenerateDiffPreviewProps> = ({
           {/* Diff Content */}
           <div className="space-y-4">
             {regeneratedItems.map((item) => (
-              <div key={item.item_id} className="border border-ink">
+              <div key={item.item_id} className="border border-border">
                 {/* Item Header */}
                 <button
                   type="button"
@@ -151,24 +151,24 @@ export const RegenerateDiffPreview: React.FC<RegenerateDiffPreviewProps> = ({
 
                 {/* Item Diff Content */}
                 {expandedItems.has(item.item_id) && (
-                  <div className="border-t border-ink">
+                  <div className="border-t border-border">
                     {/* Change Summary */}
                     {item.diff_summary && (
-                      <div className="p-3 border-b border-ink">
+                      <div className="p-3 border-b border-border">
                         <p className="font-mono text-xs text-ink">{item.diff_summary}</p>
                       </div>
                     )}
 
                     {/* Original Content */}
-                    <div className="p-4 border-b border-ink">
+                    <div className="p-4 border-b border-border">
                       <div className="font-mono text-xs uppercase tracking-wider text-steel mb-2 flex items-center gap-2">
                         <span
                           aria-hidden="true"
-                          className="size-3 bg-destructive border border-ink"
+                          className="size-3 bg-destructive border border-border"
                         />
                         {t('builder.regenerate.diffPreview.originalLabel')}
                       </div>
-                      <div className="border-2 border-ink bg-white p-3 space-y-1">
+                      <div className="border-2 border-border bg-white p-3 space-y-1">
                         {item.original_content.length > 0 ? (
                           item.original_content.map((content, idx) => (
                             <p key={idx} className="text-sm text-destructive line-through">
@@ -187,10 +187,13 @@ export const RegenerateDiffPreview: React.FC<RegenerateDiffPreviewProps> = ({
                     {/* New Content */}
                     <div className="p-4">
                       <div className="font-mono text-xs uppercase tracking-wider text-steel mb-2 flex items-center gap-2">
-                        <span aria-hidden="true" className="size-3 bg-success border border-ink" />
+                        <span
+                          aria-hidden="true"
+                          className="size-3 bg-success border border-border"
+                        />
                         {t('builder.regenerate.diffPreview.newLabel')}
                       </div>
-                      <div className="border-2 border-ink bg-white p-3 space-y-1">
+                      <div className="border-2 border-border bg-white p-3 space-y-1">
                         {item.new_content.length > 0 ? (
                           item.new_content.map((content, idx) => (
                             <p key={idx} className="text-sm text-success">
@@ -214,7 +217,7 @@ export const RegenerateDiffPreview: React.FC<RegenerateDiffPreviewProps> = ({
 
         {/* Pinned status: stays visible while the diff list scrolls */}
         {error || regenerateErrors.length > 0 ? (
-          <div className="shrink-0 space-y-2 border-t border-ink px-6 py-3">
+          <div className="shrink-0 space-y-2 border-t border-border px-6 py-3">
             {error ? (
               <Alert tone={needsRefresh ? 'warning' : 'error'} className="px-4 py-3">
                 {needsRefresh

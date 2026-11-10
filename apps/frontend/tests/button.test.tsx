@@ -29,10 +29,10 @@ describe('Button', () => {
       </Link>
     );
     expect(screen.getByRole('link', { name: 'Back' })).toHaveClass(
-      'border-ink',
+      'border-border',
       'h-8',
       'shadow-sw-sm',
-      'rounded-none'
+      'rounded-md'
     );
   });
 

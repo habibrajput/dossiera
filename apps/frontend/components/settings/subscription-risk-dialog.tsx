@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { ArrowSquareOut } from '@phosphor-icons/react';
 import { Alert } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,9 +16,6 @@ import { useTranslations } from '@/lib/i18n';
 
 /** Providers that run on the user's own subscription instead of an API key. */
 export type SubscriptionProvider = 'claude_cli' | 'chatgpt';
-
-export const AGENT_SETUP_URL =
-  'https://github.com/srbhr/Resume-Matcher/blob/main/SETUP.md#use-resume-matcher-with-a-coding-agent';
 
 const COPY: Record<SubscriptionProvider, string> = {
   claude_cli: 'settings.subscriptionRisk.claudeCli',
@@ -62,15 +58,6 @@ export function SubscriptionRiskDialog({
           <DialogDescription>{t(`${copy}.usage`)}</DialogDescription>
           <Alert tone="info" title={t('settings.subscriptionRisk.mcpTitle')}>
             <p>{t('settings.subscriptionRisk.mcpBody')}</p>
-            <a
-              href={AGENT_SETUP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-1 font-mono text-xs uppercase tracking-wider text-primary underline-offset-4 hover:underline"
-            >
-              {t('settings.subscriptionRisk.mcpLink')}
-              <ArrowSquareOut aria-hidden="true" className="size-3" />
-            </a>
           </Alert>
           <DialogDescription>{t('settings.subscriptionRisk.alternative')}</DialogDescription>
         </DialogBody>

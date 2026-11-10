@@ -38,7 +38,7 @@ export function LoginForm({ returnTo }: { returnTo: string }) {
         setError('Unable to sign in right now. Please try again.');
       }
     } catch {
-      setError('Unable to reach Resume Matcher. Check that the backend is running.');
+      setError('Unable to reach Dossiera. Check that the backend is running.');
     } finally {
       setSubmitting(false);
     }

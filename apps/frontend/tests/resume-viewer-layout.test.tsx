@@ -60,7 +60,7 @@ describe('resume viewer layout', () => {
       '/resume-board'
     );
     // The DEFAULT marker is the shared DefaultBadge.
-    expect(screen.getByText('resumeViewer.defaultBadge')).toHaveClass('border-ink', 'font-mono');
+    expect(screen.getByText('resumeViewer.defaultBadge')).toHaveClass('border-border', 'font-mono');
   });
 
   it('keeps Enhance as the only primary action, with no decorative icon', async () => {
@@ -76,7 +76,7 @@ describe('resume viewer layout', () => {
     expect(primaries).toEqual([enhance]);
     const download = screen.getByRole('button', { name: 'resumeViewer.downloadResume' });
     expect(download).not.toHaveClass('bg-success');
-    expect(download).toHaveClass('bg-canvas', 'border-ink');
+    expect(download).toHaveClass('bg-canvas', 'border-border');
   });
 
   it('renames through an icon button and the Input primitive', async () => {
@@ -90,7 +90,7 @@ describe('resume viewer layout', () => {
 
     const input = screen.getByRole('textbox', { name: 'resumeViewer.renameTitle' });
     expect(input).toHaveValue('SWE track');
-    expect(input).toHaveClass('border-ink', 'bg-white');
+    expect(input).toHaveClass('border-border', 'bg-white');
     expect(input).toHaveAttribute('maxLength', '80');
   });
 

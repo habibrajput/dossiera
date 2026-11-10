@@ -22,7 +22,7 @@ const RichTextEditor = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="min-h-[100px] border border-ink bg-transparent" aria-busy="true" />
+      <div className="min-h-[100px] border border-border bg-transparent" aria-busy="true" />
     ),
   }
 );

@@ -68,7 +68,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({ value, onCha
           type="button"
           onClick={() => onChange(template.id)}
           aria-pressed={value === template.id}
-          className={`group flex flex-col items-center p-3 border border-ink bg-white transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-canvas ${
+          className={`group flex flex-col items-center p-3 border border-border bg-white transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-canvas ${
             value === template.id
               ? 'outline-2 outline-offset-2 outline-ink'
               : 'hover:bg-canvas focus-visible:outline-none'

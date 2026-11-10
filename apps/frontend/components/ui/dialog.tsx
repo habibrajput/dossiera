@@ -280,7 +280,7 @@ const DialogContent: React.FC<DialogContentProps> = ({
               }}
               className={cn(
                 'relative flex max-h-[90vh] w-full flex-col overflow-hidden',
-                'rounded-none border border-ink bg-white shadow-sw-lg outline-none',
+                'rounded-lg border border-border bg-white shadow-sw-lg outline-none',
                 SIZE_CLASS[size],
                 className
               )}
@@ -315,7 +315,7 @@ interface DialogPartProps {
 const DialogHeader: React.FC<DialogPartProps> = ({ className, children }) => (
   <div
     className={cn(
-      'flex shrink-0 flex-col gap-2 border-b border-ink px-6 pt-6 pb-4 pr-14 text-left',
+      'flex shrink-0 flex-col gap-2 border-b border-border px-6 pt-6 pb-4 pr-14 text-left',
       className
     )}
   >
@@ -332,7 +332,7 @@ const DialogBody: React.FC<DialogPartProps> = ({ className, children }) => (
 const DialogFooter: React.FC<DialogPartProps> = ({ className, children }) => (
   <div
     className={cn(
-      'flex shrink-0 flex-row items-center justify-end gap-3 border-t border-ink bg-panel px-6 py-4',
+      'flex shrink-0 flex-row items-center justify-end gap-3 border-t border-border bg-muted px-6 py-4',
       className
     )}
   >

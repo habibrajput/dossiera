@@ -57,7 +57,7 @@ describe('ResumeWizardPage', () => {
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(/Hi — I'll help you/);
     expect(
       screen.getByRole('button', { name: 'resumeWizard.actions.backToDashboard' })
-    ).toHaveClass('border-ink', 'h-8');
+    ).toHaveClass('border-border', 'h-8');
   });
 
   it('submits the intro answer and shows the next question', async () => {

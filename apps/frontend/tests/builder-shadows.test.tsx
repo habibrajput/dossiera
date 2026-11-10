@@ -52,7 +52,7 @@ describe('paper sheets', () => {
         <p>Resume</p>
       </PageContainer>
     );
-    expectSheet(container.querySelector('.border-ink') as HTMLElement);
+    expectSheet(container.querySelector('.border-border') as HTMLElement);
   });
 });
 

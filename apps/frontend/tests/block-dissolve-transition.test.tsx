@@ -513,13 +513,8 @@ describe('Hero', () => {
 
   it('runs the effect from the Launch CTA only', async () => {
     renderHero();
-    const [github, docs, launch] = screen.getAllByRole('link');
+    const [launch] = screen.getAllByRole('link');
     expect(launch).toHaveAttribute('href', '/dashboard');
-
-    expect(await tap(github)).toBe(false);
-    expect(await tap(docs)).toBe(false);
-    expect(push).not.toHaveBeenCalled();
-    expect(overlay()).toBeNull();
 
     expect(await tap(launch)).toBe(true);
     expect(push).not.toHaveBeenCalled(); // Home is covered first

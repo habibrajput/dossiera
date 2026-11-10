@@ -283,7 +283,7 @@ describe('builder footer', () => {
 
     // The module label and its logo are gone with the bar.
     expect(screen.queryByText('builder.footer.moduleLabel')).not.toBeInTheDocument();
-    expect(screen.queryByAltText('Resume Matcher')).not.toBeInTheDocument();
+    expect(screen.queryByAltText('Dossiera')).not.toBeInTheDocument();
 
     // The frame's last child is the content grid, which takes the freed height (flex-1) so the
     // panels fill the frame down to its border with no gap left behind.

@@ -169,7 +169,7 @@ export function CardDetailModal({
 
               <div className="space-y-1">
                 <Label>{t('tracker.modal.jobDescription')}</Label>
-                <div className="max-h-48 overflow-y-auto whitespace-pre-wrap border border-ink bg-canvas p-3 text-sm">
+                <div className="max-h-48 overflow-y-auto whitespace-pre-wrap border border-border bg-canvas p-3 text-sm">
                   {detail.job_content || t('tracker.modal.noJobDescription')}
                 </div>
               </div>

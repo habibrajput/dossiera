@@ -6,8 +6,6 @@ const rulesIn = (src: string, file = 'components/demo/demo.tsx'): string[] =>
 
 describe('Swiss guard rules', () => {
   it.each([
-    ['radius', '<div className="rounded-lg" />'],
-    ['radius', '<div className="p-2 rounded" />'],
     ['soft-shadow', '<div className="shadow-md" />'],
     ['soft-shadow', '<div className="shadow-[0_1px_2px_black]" />'],
     ['gradient', '<div className="bg-gradient-to-r" />'],
@@ -46,8 +44,8 @@ describe('Swiss guard rules', () => {
   });
 
   it.each([
-    '<div className="rounded-none shadow-sw-sm hover:shadow-none" />',
-    '<div className="bg-primary text-white border-ink p-3 gap-4 px-6 mt-12" />',
+    '<div className="rounded-lg shadow-sw-sm hover:shadow-none" />',
+    '<div className="bg-primary text-white border-border p-3 gap-4 px-6 mt-12" />',
     '/* bg-[#1D4ED8] rounded-lg */ <div />',
     '// shadow-md and #ffffff in a comment\n<div />',
     '<a href="https://github.com/srbhr/Resume-Matcher">x</a>',
@@ -74,7 +72,8 @@ describe('Swiss guard rules', () => {
   });
 
   it('reports 1-based line numbers', () => {
-    const [hit] = scanSource('components/x.tsx', 'a\nb\n<div className="rounded-lg" />');
+    const [hit] = scanSource('components/x.tsx', 'a\nb\n<div className="shadow-md" />');
     expect(hit.line).toBe(3);
+    expect(hit.rule).toBe('soft-shadow');
   });
 });

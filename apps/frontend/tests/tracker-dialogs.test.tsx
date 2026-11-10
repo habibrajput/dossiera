@@ -128,7 +128,8 @@ describe('CardDetailModal', () => {
     vi.mocked(getApplicationDetail).mockResolvedValue(detail);
     render(<CardDetailModal applicationId="a1" open onOpenChange={vi.fn()} onUpdated={vi.fn()} />);
 
-    expect(await screen.findByText('tracker.columns.interview')).toBeInTheDocument();
+    const stageLabels = await screen.findAllByText('tracker.columns.interview');
+    expect(stageLabels).toHaveLength(2);
     const expected = new Intl.DateTimeFormat('de', { month: 'short', year: 'numeric' }).format(
       new Date(detail.applied_at as string)
     );

@@ -3,11 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { Card, CardTitle } from '@/components/ui/card';
 
 describe('Card', () => {
-  it('presses in on hover instead of lifting', () => {
+  it('highlights interactive cards with a soft border and elevation', () => {
     render(<Card variant="interactive" data-testid="c" />);
     const card = screen.getByTestId('c');
-    expect(card).toHaveClass('hover:translate-x-px', 'hover:translate-y-px', 'hover:border-ink');
-    expect(card.className).not.toMatch(/-translate-|transition-all|hover:shadow-sw/);
+    expect(card).toHaveClass('rounded-lg', 'hover:border-border', 'hover:shadow-sw-nested');
+    expect(card.className).not.toMatch(/translate-|transition-all/);
   });
 
   it('leaves the focus ring to the link or button inside, since the card itself is not focusable', () => {
@@ -23,9 +23,10 @@ describe('Card', () => {
   it('offers a raised resting frame for cards on bare canvas', () => {
     render(<Card variant="raised" data-testid="c" />);
     expect(screen.getByTestId('c')).toHaveClass(
+      'rounded-lg',
       'bg-white',
       'border',
-      'border-ink',
+      'border-border',
       'shadow-sw-nested'
     );
   });

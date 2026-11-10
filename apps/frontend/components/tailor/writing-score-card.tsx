@@ -47,7 +47,7 @@ export function WritingScoreCard({ writing, resume }: WritingScoreCardProps) {
   return (
     <section
       aria-labelledby="writing-score-heading"
-      className="space-y-6 border border-ink bg-white p-6 shadow-sw-nested"
+      className="space-y-6 border border-border bg-white p-6 shadow-sw-nested"
     >
       <div className="flex items-end justify-between gap-4">
         <div>
@@ -93,7 +93,7 @@ export function WritingScoreCard({ writing, resume }: WritingScoreCardProps) {
           </p>
           <ul className="space-y-3">
             {lines.map(([path, lineFindings]) => (
-              <li key={path} className="border border-ink bg-paper p-3">
+              <li key={path} className="border border-border bg-paper p-3">
                 <p className="font-mono text-xs uppercase tracking-wider text-ink-soft">
                   {where(path)}
                 </p>
@@ -108,7 +108,7 @@ export function WritingScoreCard({ writing, resume }: WritingScoreCardProps) {
                         'border px-2 py-1 font-mono text-xs',
                         finding.severity === 'hard'
                           ? 'border-destructive bg-destructive-tint text-destructive'
-                          : 'border-ink bg-white text-ink-soft'
+                          : 'border-border bg-white text-ink-soft'
                       )}
                     >
                       <span className="sr-only">

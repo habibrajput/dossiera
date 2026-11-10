@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Briefcase,
-  Buildings,
   Envelope,
   Files,
   MagnifyingGlass,
@@ -15,12 +14,12 @@ import {
 import { buttonClass } from '@/components/ui/button';
 import { useTranslations } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
+import { ProfileMenu } from './profile-menu';
 
 const NAV_ITEMS = [
   { href: '/dashboard', labelKey: 'nav.dashboard', icon: SquaresFour },
   { href: '/resume-board', labelKey: 'nav.resumeBoard', icon: Files },
   { href: '/find-jobs', labelKey: 'nav.findJobs', icon: MagnifyingGlass },
-  { href: '/startups', labelKey: 'nav.startups', icon: Buildings },
   { href: '/agent', labelKey: 'nav.agent', icon: Robot },
   { href: '/tracker', labelKey: 'nav.applications', icon: Briefcase },
   { href: '/inbox', labelKey: 'nav.inbox', icon: Envelope },
@@ -31,7 +30,7 @@ export function TopNav() {
   const { t } = useTranslations();
 
   return (
-    <header className="sticky top-0 z-40 h-16 shrink-0 border-b border-ink bg-canvas">
+    <header className="sticky top-0 z-40 h-16 shrink-0 border-b border-border bg-canvas/90 backdrop-blur-sm">
       <div className="mx-auto flex h-full max-w-[104rem] items-center gap-4 px-4 md:px-8">
         <Link
           href="/dashboard"
@@ -40,7 +39,7 @@ export function TopNav() {
         >
           <Image src="/logo.svg" alt="" width={24} height={24} className="size-6" />
           <span className="hidden font-mono text-sm font-bold uppercase tracking-tight text-ink lg:inline">
-            Resume Matcher
+            Dossiera
           </span>
         </Link>
 
@@ -67,6 +66,7 @@ export function TopNav() {
             );
           })}
         </nav>
+        <ProfileMenu />
       </div>
     </header>
   );

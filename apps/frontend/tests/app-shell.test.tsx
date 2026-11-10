@@ -23,11 +23,14 @@ vi.mock('@/lib/i18n', () => ({
   }),
 }));
 
+vi.mock('@/components/navigation/profile-menu', () => ({
+  ProfileMenu: () => <div data-testid="profile-menu" />,
+}));
+
 const destinations = [
   ['Dashboard', '/dashboard'],
   ['Resume Board', '/resume-board'],
   ['Find jobs', '/find-jobs'],
-  ['Startups', '/startups'],
   ['Agent', '/agent'],
   ['Applications', '/tracker'],
   ['Inbox', '/inbox'],
@@ -42,7 +45,7 @@ describe('TopNav', () => {
     navigation.pathname = '/dashboard';
   });
 
-  it('renders all seven destinations as links in the requested order', () => {
+  it('renders all six destinations as links in the requested order', () => {
     render(<TopNav />);
 
     const links = within(getPrimaryNavigation()).getAllByRole('link');
@@ -86,6 +89,7 @@ describe('AppShell', () => {
     );
 
     expect(getPrimaryNavigation()).toBeInTheDocument();
+    expect(screen.getByTestId('profile-menu')).toBeInTheDocument();
     const main = screen.getByRole('main');
     expect(main).toHaveTextContent('Page content');
     expect(main.style.getPropertyValue('--app-viewport-height')).toBe('calc(100dvh - 4rem)');
@@ -100,6 +104,7 @@ describe('AppShell', () => {
     );
 
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('profile-menu')).not.toBeInTheDocument();
     expect(screen.getByRole('main')).toHaveTextContent('Landing content');
   });
 });

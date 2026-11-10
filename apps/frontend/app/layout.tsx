@@ -73,10 +73,11 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: 'Resume Matcher',
-  description: 'Build your resume with Resume Matcher',
-  applicationName: 'Resume Matcher',
-  keywords: ['resume', 'matcher', 'job', 'application'],
+  title: 'Dossiera',
+  description: 'Build your resume with Dossiera',
+  applicationName: 'Dossiera',
+  keywords: ['resume', 'job', 'application'],
+  icons: { icon: '/logo.svg' },
 };
 
 export const viewport: Viewport = { themeColor: THEME_COLOR };

@@ -37,19 +37,17 @@ function application(
 }
 
 function columns(cards: Application[]): ApplicationColumns {
-  const columns = Object.fromEntries(
-    Object.entries({
-      saved: [],
-      applied: [],
-      no_response: [],
-      response: [],
-      interview: [],
-      offer: [],
-      accepted: [],
-      rejected: [],
-      declined: [],
-    })
-  ) as ApplicationColumns;
+  const columns: ApplicationColumns = {
+    saved: [],
+    applied: [],
+    no_response: [],
+    response: [],
+    interview: [],
+    offer: [],
+    accepted: [],
+    rejected: [],
+    declined: [],
+  };
   for (const card of cards) columns[card.status].push(card);
   return columns;
 }

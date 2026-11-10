@@ -9,7 +9,10 @@ type Children = { children: React.ReactNode };
 function PageHeaderRoot({ className, children }: Children & { className?: string }) {
   return (
     <header
-      className={cn('relative z-30 shrink-0 border-b border-ink bg-canvas p-8 md:p-12', className)}
+      className={cn(
+        'relative z-30 shrink-0 border-b border-border bg-canvas p-8 md:p-12',
+        className
+      )}
     >
       {children}
     </header>

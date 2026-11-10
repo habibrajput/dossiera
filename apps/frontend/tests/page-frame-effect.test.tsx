@@ -73,7 +73,7 @@ describe('PageFrame effect prop', () => {
   it('keeps the frame opaque and the page on plain Canvas whichever effect sits behind', async () => {
     render(framed({ effect: 'bitrate', children: <p>content</p> }));
     await screen.findByTestId('retro-bitrate');
-    expect(screen.getByText('content').parentElement).toHaveClass('bg-canvas', 'border-ink');
+    expect(screen.getByText('content').parentElement).toHaveClass('bg-canvas', 'border-border');
   });
 
   it('renders no effect of either kind when background effects are off', async () => {

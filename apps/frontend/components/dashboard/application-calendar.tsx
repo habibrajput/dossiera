@@ -82,9 +82,12 @@ export function ApplicationCalendar({ events, now, onOpen }: ApplicationCalendar
       <h3 className="mb-4 text-center font-mono text-sm font-bold uppercase text-ink">
         {monthLabel}
       </h3>
-      <div className="grid grid-cols-7 border-l border-t border-ink text-center">
+      <div className="grid grid-cols-7 border-l border-t border-border text-center">
         {weekdays.map((weekday, index) => (
-          <div key={index} className="border-b border-r border-ink bg-panel p-2 font-mono text-xs">
+          <div
+            key={index}
+            className="border-b border-r border-border bg-panel p-2 font-mono text-xs"
+          >
             {weekday}
           </div>
         ))}
@@ -100,7 +103,7 @@ export function ApplicationCalendar({ events, now, onOpen }: ApplicationCalendar
               aria-label={new Intl.DateTimeFormat(locale, { dateStyle: 'full' }).format(day.date)}
               onClick={() => setSelectedKey(day.key)}
               className={cn(
-                'relative min-h-11 border-b border-r border-ink p-2 font-mono text-sm focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary',
+                'relative min-h-11 border-b border-r border-border p-2 font-mono text-sm focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary',
                 day.inMonth ? 'text-ink' : 'text-steel',
                 today && 'font-bold underline',
                 selected ? 'bg-ink text-white' : 'hover:bg-panel'
@@ -121,7 +124,7 @@ export function ApplicationCalendar({ events, now, onOpen }: ApplicationCalendar
         })}
       </div>
 
-      <div className="mt-5">
+      <div className="mt-6">
         <h4 className="font-mono text-xs font-bold uppercase text-ink">
           {selectedKey
             ? new Intl.DateTimeFormat(locale, { dateStyle: 'full' }).format(
@@ -173,7 +176,7 @@ export function ApplicationCalendar({ events, now, onOpen }: ApplicationCalendar
           </ul>
         )}
       </div>
-      <p className="mt-5 font-mono text-xs text-steel">
+      <p className="mt-6 font-mono text-xs text-steel">
         {t('applicationDashboard.timeZone', { timeZone })}
       </p>
     </DashboardSection>

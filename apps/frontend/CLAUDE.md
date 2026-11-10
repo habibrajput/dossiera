@@ -13,7 +13,8 @@ App Router under `app/`. A `(default)` route group wraps the main app in provide
 | Route | File | Type | Purpose |
 |-------|------|------|---------|
 | `/` | `app/(default)/page.tsx` | Server | Landing — renders `<Hero/>` |
-| `/dashboard` | `app/(default)/dashboard/page.tsx` | Client | Resume list, upload, delete, retry, status grid |
+| `/dashboard` | `app/(default)/dashboard/page.tsx` | Client | Application analytics driven by tracker data |
+| `/resume-board` | `app/(default)/resume-board/page.tsx` | Client | Resume list, upload, delete, retry, status grid |
 | `/builder` | `app/(default)/builder/page.tsx` | Client wrapper → `components/builder/resume-builder.tsx` | Master-resume editor (forms, drag-drop sections, templates, AI regenerate, cover letter / outreach) |
 | `/tailor` | `app/(default)/tailor/page.tsx` | Client | Paste JD → preview/confirm tailored resume (diff modal) |
 | `/tracker` | `app/(default)/tracker/page.tsx` | Client | Kanban application tracker — 7-column board (drag/drop, bulk ops, manual add) |

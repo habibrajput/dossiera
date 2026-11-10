@@ -77,7 +77,7 @@ export function TailorProgress({
   return (
     <section
       aria-labelledby="tailor-progress-heading"
-      className="space-y-3 border border-ink bg-white p-4 shadow-sw-nested"
+      className="space-y-3 border border-border bg-white p-4 shadow-sw-nested"
     >
       <div className="flex items-center justify-between gap-4">
         <h2
@@ -103,7 +103,7 @@ export function TailorProgress({
                 className={cn(
                   'flex size-6 shrink-0 items-center justify-center border',
                   state === 'done' && 'border-success bg-success-tint text-success',
-                  state === 'current' && 'border-ink bg-ink text-white',
+                  state === 'current' && 'border-border bg-ink text-white',
                   state === 'pending' && 'border-panel-hover bg-paper text-ink-soft'
                 )}
               >

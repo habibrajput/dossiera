@@ -149,14 +149,14 @@ describe('RegenerateDialog', () => {
     const row = screen.getByRole('button', { name: /Senior Software Engineer/i });
     const box = row.querySelector('span[aria-hidden="true"]') as HTMLElement;
     expect(row).toHaveAttribute('aria-pressed', 'false');
-    expect(box).toHaveClass('size-6', 'border', 'border-ink', 'bg-white');
+    expect(box).toHaveClass('size-6', 'border', 'border-border', 'bg-white');
 
     fireEvent.click(row);
 
     expect(row).toHaveAttribute('aria-pressed', 'true');
     expect(row).toHaveClass('bg-panel');
     expect(row).not.toHaveClass('bg-info-tint');
-    expect(box).toHaveClass('border-ink', 'bg-ink');
+    expect(box).toHaveClass('border-border', 'bg-ink');
     expect(box).not.toHaveClass('bg-primary', 'border-primary');
     // 16px check glyph: nothing below the icon floor.
     expect(box.querySelector('svg')).toHaveClass('size-4', 'text-white');

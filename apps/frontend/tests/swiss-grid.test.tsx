@@ -8,12 +8,12 @@ vi.mock('@/lib/i18n', () => ({
 }));
 
 describe('SwissGrid', () => {
-  it('shows the app version beside the brand name in the footer, in the label face', () => {
+  it('shows the Dossiera name beside the version in the footer, in the label face', () => {
     render(<SwissGrid>{null}</SwissGrid>);
 
     const version = screen.getByText(`v${APP_VERSION}`);
     expect(version).toHaveClass('text-steel');
-    const brand = screen.getByText('Resume Matcher');
+    const brand = screen.getByText('Dossiera');
     expect(version.parentElement).toBe(brand.parentElement);
     // The footer row sets the label face for the brand line and the version alike.
     expect(brand.closest('.font-mono')).toContainElement(version);
@@ -40,23 +40,12 @@ describe('SwissGrid', () => {
     expect(link.parentElement).toHaveClass('flex-wrap');
   });
 
-  it('closes the page with a slim community strip under the footer row', () => {
+  it('closes without a community strip', () => {
     render(<SwissGrid>{null}</SwissGrid>);
 
-    const strip = screen.getByRole('link', { name: 'community.follow' }).closest('div');
-    for (const name of [
-      'community.follow',
-      'community.star',
-      'community.sponsor',
-      'community.discord',
-      'community.contributors',
-    ]) {
-      expect(strip).toContainElement(screen.getByRole('link', { name }));
-    }
-    // A separate row after the footer, so the footer's own layout is untouched.
     const footer = screen.getByRole('link', { name: 'nav.queue' }).closest('div.border-t');
-    expect(footer).not.toContainElement(strip);
-    expect(footer!.nextElementSibling).toBe(strip);
-    expect(strip).toHaveClass('border-t', 'border-ink', 'bg-canvas');
+    expect(footer).not.toBeNull();
+    expect(screen.queryByRole('link', { name: 'community.follow' })).toBeNull();
+    expect(document.querySelector('a[href*="github.com"], a[href*="discord"]')).toBeNull();
   });
 });

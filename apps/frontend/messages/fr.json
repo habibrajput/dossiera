@@ -35,22 +35,10 @@
     "resumeDeleted": "Ce CV a été supprimé. Importez ou sélectionnez un autre CV."
   },
   "home": {
-    "brandLine1": "Resume",
-    "brandLine2": "Matcher",
-    "docs": "Documentation",
     "launchApp": "Lancer l'application"
   },
   "community": {
-    "follow": "Suivre @srbhr",
-    "star": "Mettre une étoile",
     "starOnGithub": "Mettre une étoile sur GitHub",
-    "sponsor": "Sponsoriser",
-    "discord": "Discord",
-    "joinDiscord": "Rejoindre Discord",
-    "contributors": "Contributeurs",
-    "settingsPrompt": "Vous aimez Resume Matcher ?",
-    "sponsorProject": "Sponsorisez le projet",
-    "joinTheDiscord": "Rejoignez le Discord",
     "aboutTitle": "À propos"
   },
   "nav": {
@@ -71,7 +59,11 @@
     "applicationTracker": "Suivi des candidatures",
     "queue": "File d'adaptation",
     "resumeBoard": "Tableau des CV",
-    "backToResumeBoard": "Retour au tableau des CV"
+    "backToResumeBoard": "Retour au tableau des CV",
+    "profile": "Menu de profil",
+    "logout": "Se déconnecter",
+    "signingOut": "Déconnexion",
+    "logoutFailed": "Impossible de se déconnecter. Réessayez."
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -517,7 +509,7 @@
           "website": "Site web"
         },
         "placeholders": {
-          "projectName": "Resume Matcher",
+          "projectName": "Dossiera",
           "role": "Créateur",
           "years": "Mars 2023",
           "github": "github.com/utilisateur/projet",
@@ -1125,14 +1117,13 @@
       "claudeCliName": "Abonnement Claude (via Claude Code)",
       "claudeCliShortName": "Forfait Claude",
       "claudeCliWarningTitle": "À vos risques",
-      "claudeCliWarning": "Anthropic n'autorise pas les applications tierces à faire passer des requêtes par les forfaits Claude Free, Pro ou Max, et cette option pourrait en relever. Anthropic peut faire respecter cette règle sans préavis ; pour un accès garanti, utilisez une clé API Anthropic. Resume Matcher ne voit ni ne stocke jamais vos identifiants Claude : il exécute votre propre CLI Claude Code, à laquelle vous vous connectez vous-même avec `claude auth login`. Les requêtes comptent dans les limites d'utilisation de votre forfait Claude, et Anthropic peut les imputer à des crédits d'utilisation à la place.",
+      "claudeCliWarning": "Anthropic n'autorise pas les applications tierces à faire passer des requêtes par les forfaits Claude Free, Pro ou Max, et cette option pourrait en relever. Anthropic peut faire respecter cette règle sans préavis ; pour un accès garanti, utilisez une clé API Anthropic. Dossiera ne voit ni ne stocke jamais vos identifiants Claude : il exécute votre propre CLI Claude Code, à laquelle vous vous connectez vous-même avec `claude auth login`. Les requêtes comptent dans les limites d'utilisation de votre forfait Claude, et Anthropic peut les imputer à des crédits d'utilisation à la place.",
       "communityBuilt": "Fonctionnalité créée par la communauté.",
       "chatgptName": "Forfait ChatGPT (Se connecter avec ChatGPT)",
       "agentShortName": "Agent de code",
       "agentName": "Votre agent de code (Claude Code, Codex, Cursor ou Copilot)",
       "agentNoteTitle": "Aucune clé d'API nécessaire",
       "agentNote": "Votre agent de code fait le travail d'IA : il lit votre CV et les offres d'emploi, rédige les versions adaptées et les enregistre ici avec la commande resume-matcher. L'application ne fait aucun appel d'IA elle-même, donc ses boutons d'IA vous donnent un prompt à coller dans votre agent.",
-      "agentGuideLink": "Guide de configuration de l'agent",
       "chatgptShortName": "Forfait ChatGPT",
       "chatgptWarningTitle": "Aperçu",
       "chatgptWarning": "Utilise Sign in with ChatGPT, la connexion officielle d'OpenAI pour les applications open source, qui est en aperçu et peut changer. Elle fonctionne avec ChatGPT Plus et Pro. Les requêtes partent de votre machine directement vers l'API d'OpenAI, et les jetons de connexion restent chiffrés sur cette machine. L'utilisation est décomptée des limites de votre forfait ChatGPT : avec Plus, la limite de cinq heures est partagée avec vos autres applications qui utilisent votre forfait ; Pro n'a pas de limite de cinq heures. Pour un accès garanti, utilisez une clé API OpenAI.",
@@ -1194,12 +1185,12 @@
       "disconnect": "Déconnecter",
       "manageUsage": "Gérer l'utilisation",
       "disconnected": "Déconnecté de ChatGPT.",
-      "revocationUnconfirmed": "Déconnecté sur cette machine, mais OpenAI n'a pas confirmé la fin de la session. Vous pouvez aussi déconnecter Resume Matcher dans les paramètres de ChatGPT.",
+      "revocationUnconfirmed": "Déconnecté sur cette machine, mais OpenAI n'a pas confirmé la fin de la session. Vous pouvez aussi déconnecter Dossiera dans les paramètres de ChatGPT.",
       "returnConnected": "Connecté à votre forfait ChatGPT. Choisissez un modèle, puis enregistrez.",
       "returnCancelled": "La connexion avec ChatGPT a été annulée.",
       "returnError": "La connexion avec ChatGPT n'a pas abouti. Réessayez.",
       "planDeclined": "L'utilisation du forfait ChatGPT n'a pas été autorisée. Continuez à nouveau avec ChatGPT et autorisez-la, ou utilisez une clé API OpenAI.",
-      "sameMachineOnly": "Connectez-vous depuis un navigateur sur la machine qui exécute Resume Matcher.",
+      "sameMachineOnly": "Connectez-vous depuis un navigateur sur la machine qui exécute Dossiera.",
       "signInFailed": "Impossible de lancer la connexion avec ChatGPT. Réessayez.",
       "disconnectFailed": "Impossible de déconnecter ChatGPT. Réessayez.",
       "statusFailed": "Impossible de vérifier la connexion à ChatGPT.",
@@ -1210,7 +1201,7 @@
     "subscriptionRisk": {
       "claudeCli": {
         "title": "Utiliser votre forfait Claude ici ?",
-        "risk": "Anthropic n'autorise pas les applications tierces à faire passer des requêtes par les forfaits Claude Free, Pro ou Max. Resume Matcher exécute votre propre CLI Claude Code et ne voit jamais vos identifiants, mais Anthropic peut quand même considérer cela comme un usage tiers et agir sur votre compte sans préavis.",
+        "risk": "Anthropic n'autorise pas les applications tierces à faire passer des requêtes par les forfaits Claude Free, Pro ou Max. Dossiera exécute votre propre CLI Claude Code et ne voit jamais vos identifiants, mais Anthropic peut quand même considérer cela comme un usage tiers et agir sur votre compte sans préavis.",
         "usage": "Les requêtes comptent dans les limites d'utilisation de votre forfait Claude. Cette option est créée par la communauté et peut cesser de fonctionner si Anthropic modifie Claude Code ou sa politique."
       },
       "chatgpt": {
@@ -1219,8 +1210,7 @@
         "usage": "Les requêtes comptent dans les limites d'utilisation de votre forfait ChatGPT, partagées avec les autres applications qui utilisent votre forfait. Cette option est créée par la communauté."
       },
       "mcpTitle": "Recommandé : laissez votre agent de code faire le travail",
-      "mcpBody": "Vous utilisez déjà Claude Code, Codex, Cursor ou Copilot ? Choisissez plutôt Agent de code. Votre agent fait le travail d'IA dans sa propre application, et Resume Matcher enregistre, vérifie et met en page le résultat. Aucune clé d'API nécessaire.",
-      "mcpLink": "Guide de configuration de l'agent",
+      "mcpBody": "Vous utilisez déjà Claude Code, Codex, Cursor ou Copilot ? Choisissez plutôt Agent de code. Votre agent fait le travail d'IA dans sa propre application, et Dossiera enregistre, vérifie et met en page le résultat. Aucune clé d'API nécessaire.",
       "alternative": "Vous préférez un accès garanti ? Revenez en arrière et utilisez une clé API ou un modèle local comme Ollama.",
       "back": "Non, revenir",
       "accept": "Oui, j'accepte le risque"
@@ -1495,7 +1485,7 @@
       "upload": {
         "kicker": "Fichier existant",
         "title": "Téléverser un CV",
-        "description": "Commencez avec un fichier PDF ou DOCX et laissez Resume Matcher l'analyser dans votre profil principal.",
+        "description": "Commencez avec un fichier PDF ou DOCX et laissez Dossiera l'analyser dans votre profil principal.",
         "action": "Téléverser un CV"
       },
       "wizard": {
@@ -1667,7 +1657,7 @@
     }
   },
   "agentPrompt": {
-    "instructions": "Collez ce prompt dans votre agent de code (Claude Code, Codex, Cursor ou Copilot) ouvert dans le dossier Resume Matcher. L'agent fait le travail d'IA et enregistre le résultat ici.",
+    "instructions": "Collez ce prompt dans votre agent de code (Claude Code, Codex, Cursor ou Copilot) ouvert dans le dossier Dossiera. L'agent fait le travail d'IA et enregistre le résultat ici.",
     "refresh": "Cette page se met à jour toute seule à mesure que votre agent enregistre son travail.",
     "copy": "Copier le prompt",
     "copied": "Copié",
@@ -1677,38 +1667,38 @@
     "getPrompt": "Obtenir le prompt pour votre agent",
     "createMaster": {
       "title": "Créez votre CV principal",
-      "prompt": "Utilise Resume Matcher pour créer mon CV principal à partir de ce fichier : <chemin de votre CV en PDF ou DOCX>. Si je n'ai pas de fichier de CV, pose-moi des questions et crée-le avec moi."
+      "prompt": "Utilise Dossiera pour créer mon CV principal à partir de ce fichier : <chemin de votre CV en PDF ou DOCX>. Si je n'ai pas de fichier de CV, pose-moi des questions et crée-le avec moi."
     },
     "tailor": {
       "title": "Adaptez votre CV",
-      "prompt": "Utilise Resume Matcher pour adapter mon CV principal à cette offre :\n\n<collez ici l'offre d'emploi>",
-      "promptWithJob": "Utilise Resume Matcher pour adapter le CV {resumeId} à cette offre :\n\n{job}",
+      "prompt": "Utilise Dossiera pour adapter mon CV principal à cette offre :\n\n<collez ici l'offre d'emploi>",
+      "promptWithJob": "Utilise Dossiera pour adapter le CV {resumeId} à cette offre :\n\n{job}",
       "note": "Plusieurs offres ? Enregistrez chacune dans un fichier .md ou .txt du dossier jobs/ et demandez à votre agent d'adapter votre CV à chaque offre de ce dossier. Chaque CV apparaît dans le tableau de bord."
     },
     "enhance": {
       "title": "Améliorez votre CV",
-      "prompt": "Utilise Resume Matcher pour améliorer les puces du CV {resumeId}. Interroge-moi sur les résultats, chiffres et outils que j'ai omis, puis mets à jour le CV avec mes réponses. N'ajoute rien que je ne t'aie pas dit."
+      "prompt": "Utilise Dossiera pour améliorer les puces du CV {resumeId}. Interroge-moi sur les résultats, chiffres et outils que j'ai omis, puis mets à jour le CV avec mes réponses. N'ajoute rien que je ne t'aie pas dit."
     },
     "regenerate": {
       "title": "Réécrire avec votre agent",
-      "prompt": "Utilise Resume Matcher pour réécrire <quelle expérience, quels projets ou quelles compétences> dans le CV {resumeId} : <ce qu'il faut améliorer>. Garde tous les faits exacts et montre-moi les changements avant de les enregistrer."
+      "prompt": "Utilise Dossiera pour réécrire <quelle expérience, quels projets ou quelles compétences> dans le CV {resumeId} : <ce qu'il faut améliorer>. Garde tous les faits exacts et montre-moi les changements avant de les enregistrer."
     },
     "coverLetter": {
       "title": "Rédiger une lettre de motivation",
-      "prompt": "Utilise Resume Matcher pour rédiger une lettre de motivation pour le CV {resumeId}, pour l'offre à laquelle il est adapté, et enregistre-la dans ce CV."
+      "prompt": "Utilise Dossiera pour rédiger une lettre de motivation pour le CV {resumeId}, pour l'offre à laquelle il est adapté, et enregistre-la dans ce CV."
     },
     "outreach": {
       "title": "Rédiger un message de prise de contact",
-      "prompt": "Utilise Resume Matcher pour rédiger un court message au recruteur de l'offre à laquelle le CV {resumeId} est adapté, et enregistre-le dans ce CV."
+      "prompt": "Utilise Dossiera pour rédiger un court message au recruteur de l'offre à laquelle le CV {resumeId} est adapté, et enregistre-le dans ce CV."
     },
     "interviewPrep": {
       "title": "Préparer l'entretien",
-      "prompt": "Utilise Resume Matcher pour lire le CV {resumeId} et l'offre à laquelle il est adapté, puis aide-moi à préparer l'entretien : questions probables, exemples à raconter et questions à leur poser.",
+      "prompt": "Utilise Dossiera pour lire le CV {resumeId} et l'offre à laquelle il est adapté, puis aide-moi à préparer l'entretien : questions probables, exemples à raconter et questions à leur poser.",
       "note": "Votre agent répond dans sa propre conversation. En mode agent, la préparation à l'entretien n'est pas enregistrée dans le CV."
     },
     "improveWriting": {
       "title": "Améliorer la rédaction",
-      "prompt": "Utilise Resume Matcher pour améliorer la rédaction du CV {resumeId} : fais deux tours de rédaction (relis chaque ligne selon la grille, réécris les plus faibles en gardant chaque fait, vérifie), puis enregistre."
+      "prompt": "Utilise Dossiera pour améliorer la rédaction du CV {resumeId} : fais deux tours de rédaction (relis chaque ligne selon la grille, réécris les plus faibles en gardant chaque fait, vérifie), puis enregistre."
     }
   }
 }

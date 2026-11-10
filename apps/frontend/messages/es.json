@@ -35,22 +35,10 @@
     "resumeDeleted": "Este currículum se eliminó. Sube o selecciona otro."
   },
   "home": {
-    "brandLine1": "Currículum",
-    "brandLine2": "Matcher",
-    "docs": "Guía de uso",
     "launchApp": "Iniciar app"
   },
   "community": {
-    "follow": "Seguir a @srbhr",
-    "star": "Destacar",
     "starOnGithub": "Destacar en GitHub",
-    "sponsor": "Patrocinar",
-    "discord": "Discord",
-    "joinDiscord": "Unirse a Discord",
-    "contributors": "Colaboradores",
-    "settingsPrompt": "¿Te gusta Resume Matcher?",
-    "sponsorProject": "Patrocina el proyecto",
-    "joinTheDiscord": "Únete al Discord",
     "aboutTitle": "Acerca de"
   },
   "nav": {
@@ -71,7 +59,11 @@
     "applicationTracker": "Seguimiento de candidaturas",
     "queue": "Cola de adaptación",
     "resumeBoard": "Tablero de CV",
-    "backToResumeBoard": "Volver al tablero de CV"
+    "backToResumeBoard": "Volver al tablero de CV",
+    "profile": "Menú de perfil",
+    "logout": "Cerrar sesión",
+    "signingOut": "Cerrando sesión",
+    "logoutFailed": "No se pudo cerrar la sesión. Inténtalo de nuevo."
   },
   "dashboard": {
     "title": "Panel",
@@ -517,7 +509,7 @@
           "website": "Sitio web"
         },
         "placeholders": {
-          "projectName": "Resume Matcher",
+          "projectName": "Dossiera",
           "role": "Creador",
           "years": "Mar 2023",
           "github": "github.com/usuario/proyecto",
@@ -1125,14 +1117,13 @@
       "claudeCliName": "Suscripción a Claude (vía Claude Code)",
       "claudeCliShortName": "Plan Claude",
       "claudeCliWarningTitle": "Úsalo bajo tu propio riesgo",
-      "claudeCliWarning": "Anthropic no permite que aplicaciones de terceros envíen solicitudes a través de los planes Claude Free, Pro o Max, y esta opción podría considerarse una de ellas. Anthropic puede aplicar esta norma sin previo aviso; para un acceso garantizado, usa una clave de API de Anthropic. Resume Matcher nunca ve ni almacena tus credenciales de Claude: ejecuta tu propia CLI de Claude Code, en la que inicias sesión tú mismo con `claude auth login`. Las solicitudes cuentan para los límites de uso de tu plan de Claude, y Anthropic puede cargarlas a créditos de uso en su lugar.",
+      "claudeCliWarning": "Anthropic no permite que aplicaciones de terceros envíen solicitudes a través de los planes Claude Free, Pro o Max, y esta opción podría considerarse una de ellas. Anthropic puede aplicar esta norma sin previo aviso; para un acceso garantizado, usa una clave de API de Anthropic. Dossiera nunca ve ni almacena tus credenciales de Claude: ejecuta tu propia CLI de Claude Code, en la que inicias sesión tú mismo con `claude auth login`. Las solicitudes cuentan para los límites de uso de tu plan de Claude, y Anthropic puede cargarlas a créditos de uso en su lugar.",
       "communityBuilt": "Función creada por la comunidad.",
       "chatgptName": "Plan de ChatGPT (Iniciar sesión con ChatGPT)",
       "agentShortName": "Agente de código",
       "agentName": "Tu agente de código (Claude Code, Codex, Cursor o Copilot)",
       "agentNoteTitle": "No necesitas clave de API",
       "agentNote": "Tu agente de código hace el trabajo de IA: lee tu currículum y las descripciones de empleo, escribe las versiones adaptadas y las guarda aquí con el comando resume-matcher. La aplicación no hace llamadas de IA propias, así que sus botones de IA te dan un prompt para pegar en tu agente.",
-      "agentGuideLink": "Guía de configuración del agente",
       "chatgptShortName": "Plan ChatGPT",
       "chatgptWarningTitle": "Versión preliminar",
       "chatgptWarning": "Usa Sign in with ChatGPT, el inicio de sesión oficial de OpenAI para apps de código abierto, que está en versión preliminar y puede cambiar. Funciona con ChatGPT Plus y Pro. Las solicitudes van desde tu equipo directamente a la API de OpenAI, y los tokens de inicio de sesión se guardan cifrados en este equipo. El uso cuenta para los límites de tu plan de ChatGPT: en Plus, el límite de cinco horas se comparte con tus otras apps que usan tu plan; Pro no tiene límite de cinco horas. Para un acceso garantizado, usa una clave API de OpenAI.",
@@ -1194,12 +1185,12 @@
       "disconnect": "Desconectar",
       "manageUsage": "Gestionar uso",
       "disconnected": "Desconectado de ChatGPT.",
-      "revocationUnconfirmed": "Se cerró la sesión en este equipo, pero OpenAI no confirmó que la sesión terminara. También puedes desconectar Resume Matcher en la configuración de ChatGPT.",
+      "revocationUnconfirmed": "Se cerró la sesión en este equipo, pero OpenAI no confirmó que la sesión terminara. También puedes desconectar Dossiera en la configuración de ChatGPT.",
       "returnConnected": "Conectado a tu plan de ChatGPT. Elige un modelo y guarda.",
       "returnCancelled": "Se canceló el inicio de sesión con ChatGPT.",
       "returnError": "No se completó el inicio de sesión con ChatGPT. Inténtalo de nuevo.",
       "planDeclined": "No se permitió el uso del plan de ChatGPT. Continúa con ChatGPT de nuevo y permítelo, o usa una clave API de OpenAI.",
-      "sameMachineOnly": "Inicia sesión desde un navegador en el equipo donde se ejecuta Resume Matcher.",
+      "sameMachineOnly": "Inicia sesión desde un navegador en el equipo donde se ejecuta Dossiera.",
       "signInFailed": "No se pudo iniciar el inicio de sesión con ChatGPT. Inténtalo de nuevo.",
       "disconnectFailed": "No se pudo desconectar ChatGPT. Inténtalo de nuevo.",
       "statusFailed": "No se pudo comprobar la conexión con ChatGPT.",
@@ -1210,7 +1201,7 @@
     "subscriptionRisk": {
       "claudeCli": {
         "title": "¿Usar tu plan de Claude aquí?",
-        "risk": "Anthropic no permite que aplicaciones de terceros envíen solicitudes a través de los planes Claude Free, Pro o Max. Resume Matcher ejecuta tu propia CLI de Claude Code y nunca ve tus credenciales, pero Anthropic podría considerarlo uso de terceros y tomar medidas sobre tu cuenta sin previo aviso.",
+        "risk": "Anthropic no permite que aplicaciones de terceros envíen solicitudes a través de los planes Claude Free, Pro o Max. Dossiera ejecuta tu propia CLI de Claude Code y nunca ve tus credenciales, pero Anthropic podría considerarlo uso de terceros y tomar medidas sobre tu cuenta sin previo aviso.",
         "usage": "Las solicitudes cuentan para los límites de uso de tu plan de Claude. Esta opción la creó la comunidad y puede dejar de funcionar si Anthropic cambia Claude Code o su política."
       },
       "chatgpt": {
@@ -1219,8 +1210,7 @@
         "usage": "Las solicitudes cuentan para los límites de uso de tu plan de ChatGPT, que compartes con otras aplicaciones que usan tu plan. Esta opción la creó la comunidad."
       },
       "mcpTitle": "Recomendado: deja que tu agente de código haga el trabajo",
-      "mcpBody": "¿Ya usas Claude Code, Codex, Cursor o Copilot? Elige Agente de código. Tu agente hace el trabajo de IA en su propia aplicación, y Resume Matcher guarda, revisa y genera el resultado. No necesitas clave de API.",
-      "mcpLink": "Guía de configuración del agente",
+      "mcpBody": "¿Ya usas Claude Code, Codex, Cursor o Copilot? Elige Agente de código. Tu agente hace el trabajo de IA en su propia aplicación, y Dossiera guarda, revisa y genera el resultado. No necesitas clave de API.",
       "alternative": "¿Prefieres un acceso garantizado? Vuelve y usa una clave de API o un modelo local como Ollama.",
       "back": "No, volver",
       "accept": "Sí, acepto el riesgo"
@@ -1495,7 +1485,7 @@
       "upload": {
         "kicker": "Archivo existente",
         "title": "Subir un currículum",
-        "description": "Empieza con un archivo PDF o DOCX y deja que Resume Matcher lo convierta en tu perfil maestro.",
+        "description": "Empieza con un archivo PDF o DOCX y deja que Dossiera lo convierta en tu perfil maestro.",
         "action": "Subir currículum"
       },
       "wizard": {
@@ -1667,7 +1657,7 @@
     }
   },
   "agentPrompt": {
-    "instructions": "Pega este prompt en tu agente de código (Claude Code, Codex, Cursor o Copilot) abierto en la carpeta de Resume Matcher. El agente hace el trabajo de IA y guarda el resultado aquí.",
+    "instructions": "Pega este prompt en tu agente de código (Claude Code, Codex, Cursor o Copilot) abierto en la carpeta de Dossiera. El agente hace el trabajo de IA y guarda el resultado aquí.",
     "refresh": "Esta página se actualiza sola a medida que tu agente guarda su trabajo.",
     "copy": "Copiar prompt",
     "copied": "Copiado",
@@ -1677,38 +1667,38 @@
     "getPrompt": "Obtener prompt para tu agente",
     "createMaster": {
       "title": "Crea tu currículum principal",
-      "prompt": "Usa Resume Matcher para crear mi currículum principal a partir de este archivo: <ruta a tu currículum en PDF o DOCX>. Si no tengo un archivo de currículum, hazme preguntas y créalo conmigo."
+      "prompt": "Usa Dossiera para crear mi currículum principal a partir de este archivo: <ruta a tu currículum en PDF o DOCX>. Si no tengo un archivo de currículum, hazme preguntas y créalo conmigo."
     },
     "tailor": {
       "title": "Adapta tu currículum",
-      "prompt": "Usa Resume Matcher para adaptar mi currículum principal a este empleo:\n\n<pega aquí la descripción del empleo>",
-      "promptWithJob": "Usa Resume Matcher para adaptar el currículum {resumeId} a este empleo:\n\n{job}",
+      "prompt": "Usa Dossiera para adaptar mi currículum principal a este empleo:\n\n<pega aquí la descripción del empleo>",
+      "promptWithJob": "Usa Dossiera para adaptar el currículum {resumeId} a este empleo:\n\n{job}",
       "note": "¿Varios empleos? Guarda cada descripción como archivo .md o .txt en la carpeta jobs/ y pide a tu agente que adapte tu currículum a cada empleo de esa carpeta. Cada uno aparece en el panel."
     },
     "enhance": {
       "title": "Mejora tu currículum",
-      "prompt": "Usa Resume Matcher para mejorar las viñetas del currículum {resumeId}. Pregúntame por los resultados, cifras y herramientas que omití, y luego actualiza el currículum con mis respuestas. No añadas nada que no te haya dicho."
+      "prompt": "Usa Dossiera para mejorar las viñetas del currículum {resumeId}. Pregúntame por los resultados, cifras y herramientas que omití, y luego actualiza el currículum con mis respuestas. No añadas nada que no te haya dicho."
     },
     "regenerate": {
       "title": "Reescribe con tu agente",
-      "prompt": "Usa Resume Matcher para reescribir <qué experiencia, proyectos o habilidades> en el currículum {resumeId}: <qué mejorar>. Mantén todos los datos verídicos y muéstrame los cambios antes de guardarlos."
+      "prompt": "Usa Dossiera para reescribir <qué experiencia, proyectos o habilidades> en el currículum {resumeId}: <qué mejorar>. Mantén todos los datos verídicos y muéstrame los cambios antes de guardarlos."
     },
     "coverLetter": {
       "title": "Escribe una carta de presentación",
-      "prompt": "Usa Resume Matcher para escribir una carta de presentación para el currículum {resumeId}, para el empleo al que se adaptó, y guárdala en ese currículum."
+      "prompt": "Usa Dossiera para escribir una carta de presentación para el currículum {resumeId}, para el empleo al que se adaptó, y guárdala en ese currículum."
     },
     "outreach": {
       "title": "Escribe un mensaje de contacto",
-      "prompt": "Usa Resume Matcher para escribir un mensaje breve al responsable de contratación del empleo al que se adaptó el currículum {resumeId}, y guárdalo en ese currículum."
+      "prompt": "Usa Dossiera para escribir un mensaje breve al responsable de contratación del empleo al que se adaptó el currículum {resumeId}, y guárdalo en ese currículum."
     },
     "interviewPrep": {
       "title": "Prepárate para la entrevista",
-      "prompt": "Usa Resume Matcher para leer el currículum {resumeId} y el empleo al que se adaptó, y ayúdame a preparar la entrevista: preguntas probables, las historias que contar y preguntas para hacerles.",
+      "prompt": "Usa Dossiera para leer el currículum {resumeId} y el empleo al que se adaptó, y ayúdame a preparar la entrevista: preguntas probables, las historias que contar y preguntas para hacerles.",
       "note": "Tu agente responde en su propio chat. En modo agente, la preparación de la entrevista no se guarda en el currículum."
     },
     "improveWriting": {
       "title": "Mejorar la redacción",
-      "prompt": "Usa Resume Matcher para mejorar la redacción del currículum {resumeId}: haz dos rondas de redacción (revisa cada línea con la rúbrica, reescribe las débiles conservando cada hecho, verifica) y guarda."
+      "prompt": "Usa Dossiera para mejorar la redacción del currículum {resumeId}: haz dos rondas de redacción (revisa cada línea con la rúbrica, reescribe las débiles conservando cada hecho, verifica) y guarda."
     }
   }
 }

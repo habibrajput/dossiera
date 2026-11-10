@@ -172,7 +172,7 @@ export function Dropdown({
           aria-labelledby={label ? `${labelId} ${valueId}` : valueId}
           onClick={() => (isOpen ? close(false) : openAt(selectedIndex >= 0 ? selectedIndex : 0))}
           onKeyDown={onTriggerKeyDown}
-          className="flex h-10 w-full items-center justify-between gap-2 rounded-none border border-ink bg-white px-3 text-left font-mono text-sm focus-visible:border-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex h-10 w-full items-center justify-between gap-2 rounded-md border border-border bg-white px-3 text-left text-sm transition-[border-color,box-shadow] focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <span
             id={valueId}
@@ -212,7 +212,7 @@ export function Dropdown({
               }}
               style={{ transformOrigin: flipUp ? 'bottom' : 'top' }}
               className={cn(
-                'absolute left-0 right-0 z-50 max-h-64 divide-y divide-ink overflow-y-auto rounded-none border border-ink bg-white shadow-sw-default',
+                'absolute left-0 right-0 z-50 max-h-64 divide-y divide-border overflow-y-auto rounded-lg border border-border bg-white shadow-sw-default',
                 flipUp ? 'bottom-full mb-1' : 'top-full mt-1'
               )}
             >
@@ -231,10 +231,10 @@ export function Dropdown({
                     onClick={() => choose(option.id)}
                     onKeyDown={(event) => onOptionKeyDown(event, index)}
                     className={cn(
-                      'flex w-full items-start justify-between gap-2 px-3 py-2 text-left font-mono text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary',
+                      'flex w-full items-start justify-between gap-2 px-3 py-2 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary',
                       isSelected
-                        ? 'bg-panel font-bold text-ink'
-                        : 'bg-white text-ink hover:bg-panel'
+                        ? 'bg-accent font-medium text-ink'
+                        : 'bg-white text-ink hover:bg-accent'
                     )}
                   >
                     <span className="min-w-0 flex-1">

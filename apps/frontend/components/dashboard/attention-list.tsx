@@ -33,11 +33,11 @@ export function AttentionList({
       {items.length === 0 ? (
         <p className="py-6 text-sm text-ink-soft">{t('applicationDashboard.attentionEmpty')}</p>
       ) : (
-        <ul className="divide-y divide-ink border-y border-ink">
+        <ul className="divide-y divide-border border-y border-border">
           {items.map((item) => {
             const { application } = item;
             return (
-              <li key={`${item.kind}-${application.application_id}`} className="py-5">
+              <li key={`${item.kind}-${application.application_id}`} className="py-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
                     <h3 className="font-semibold text-ink">
@@ -81,7 +81,7 @@ export function AttentionList({
         </ul>
       )}
 
-      <div className="mt-6 border-t border-panel pt-5">
+      <div className="mt-6 border-t border-panel pt-6">
         <Label htmlFor="follow-up-days">{t('applicationDashboard.followUpLabel')}</Label>
         <div className="mt-2 flex items-center gap-3">
           <Input

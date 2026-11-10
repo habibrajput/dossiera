@@ -78,7 +78,7 @@ export function AtsScorePanel({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4 border-2 border-ink bg-white p-4">
+      <div className="flex items-center justify-between gap-4 border-2 border-border bg-white p-4">
         <div className="min-w-0 space-y-1">
           {/* Job-match score; the ATS CHECK tab is the separate parse check. */}
           <p className="text-sm text-ink-soft">{t('builder.jdMatch.atsScore.description')}</p>

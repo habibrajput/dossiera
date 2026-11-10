@@ -421,7 +421,7 @@ export default function QueuePage() {
             </p>
           </div>
 
-          <fieldset className="space-y-3 border border-ink bg-white p-4 shadow-sw-nested">
+          <fieldset className="space-y-3 border border-border bg-white p-4 shadow-sw-nested">
             <legend className={cn('px-1', labelClass)}>{t('queue.form.detectedTitle')}</legend>
             <div className="grid gap-3 sm:grid-cols-3">
               <div className="space-y-1">
@@ -617,7 +617,7 @@ function QueueRow({
   const title = item.title || item.role || t('queue.monitor.untitled');
   const failure = item.error && FAILURE_CODES.has(item.error) ? item.error : 'failed';
   return (
-    <li className="space-y-2 border border-ink bg-white p-4 shadow-sw-nested">
+    <li className="space-y-2 border border-border bg-white p-4 shadow-sw-nested">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 space-y-1">
           <p className="font-mono text-sm font-bold break-words text-ink">{title}</p>

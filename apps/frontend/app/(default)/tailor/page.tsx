@@ -597,7 +597,7 @@ export default function TailorPage() {
 
       <ol
         aria-label={t('tailor.steps.label')}
-        className="grid grid-cols-1 divide-y divide-ink border-b border-ink px-6 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+        className="grid grid-cols-1 divide-y divide-border border-b border-border px-6 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
       >
         {STEP_KEYS.map((key, index) => {
           const current = index === 0;
@@ -609,7 +609,7 @@ export default function TailorPage() {
             >
               <span
                 className={cn(
-                  'flex size-6 shrink-0 items-center justify-center border border-ink font-mono text-xs font-bold tabular-nums',
+                  'flex size-6 shrink-0 items-center justify-center border border-border font-mono text-xs font-bold tabular-nums',
                   current ? 'bg-ink text-white' : 'text-ink'
                 )}
               >

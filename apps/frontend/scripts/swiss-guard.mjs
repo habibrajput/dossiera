@@ -24,11 +24,6 @@ const DECORATIVE_ICONS =
 
 export const LINE_RULES = [
   {
-    id: 'radius',
-    re: /(?<![\w-])rounded(?:-(?!none\b)[\w[\]./-]+)?(?![\w-])/g,
-    hint: 'Use rounded-none — Swiss corners are square.',
-  },
-  {
     id: 'soft-shadow',
     re: /(?<![\w-])shadow(?:-(?:sm|md|lg|xl|2xl|inner))?(?![\w-])|(?<![\w-])shadow-\[/g,
     hint: 'Use a hard shadow token: shadow-sw-sm (controls), shadow-sw-default (menus), shadow-sw-lg (dialogs, page frame), shadow-sw-nested (cards inside a page or dialog).',
@@ -77,7 +72,7 @@ export const LINE_RULES = [
   },
   {
     id: 'legacy-token',
-    re: /(?<![\w-])(?:[a-z]+:)*(?:[a-z]+-)?(?:steel-grey|paper-tint|muted-foreground)(?![\w-])|(?<![\w-])(?:bg|text|border)-(?:secondary|background|foreground|muted)(?![\w-])/g,
+    re: /(?<![\w-])(?:[a-z]+:)*(?:[a-z]+-)?(?:steel-grey|paper-tint|muted-foreground)(?![\w-])|(?<![\w-])(?:bg|text|border)-(?:secondary|background|foreground)(?![\w-])/g,
     hint: 'steel-grey→steel, paper-tint→paper, muted-foreground→steel, secondary→panel, background→canvas, foreground→ink.',
   },
   {

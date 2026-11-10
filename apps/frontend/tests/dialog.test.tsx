@@ -175,15 +175,15 @@ describe('Dialog', () => {
     expect(close).toHaveFocus();
   });
 
-  it('applies the size and the Swiss chrome', () => {
+  it('applies the size and soft chrome', () => {
     openDialog();
     expect(screen.getByRole('dialog')).toHaveClass(
       'max-w-md',
       'bg-white',
       'border',
-      'border-ink',
+      'border-border',
       'shadow-sw-lg',
-      'rounded-none'
+      'rounded-lg'
     );
   });
 
@@ -195,12 +195,12 @@ describe('Dialog', () => {
     expect(title.parentElement?.className).not.toContain('text-center');
   });
 
-  it('bands the footer on panel with an ink rule', () => {
+  it('bands the footer on muted with a hairline rule', () => {
     openDialog();
     expect(screen.getByText('save').parentElement).toHaveClass(
-      'bg-panel',
+      'bg-muted',
       'border-t',
-      'border-ink'
+      'border-border'
     );
   });
 

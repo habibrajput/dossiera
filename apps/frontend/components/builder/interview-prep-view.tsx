@@ -25,7 +25,7 @@ interface InterviewPrepViewProps {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="border-2 border-ink bg-white p-4 space-y-3">
+    <section className="border-2 border-border bg-white p-4 space-y-3">
       <div className="border-b border-panel-hover pb-2">
         <h3 className="font-mono text-sm font-bold uppercase tracking-wider">{title}</h3>
       </div>
@@ -55,7 +55,7 @@ function QuestionList({ items }: { items: InterviewPrepQuestion[] }) {
   return (
     <div className="space-y-3">
       {items.map((item, index) => (
-        <div key={`${item.question}-${index}`} className="border border-ink bg-paper p-3">
+        <div key={`${item.question}-${index}`} className="border border-border bg-paper p-3">
           <p className="font-sans text-sm font-bold leading-relaxed">{item.question}</p>
           {item.focus_area && (
             <p className="mt-2 text-xs font-mono uppercase tracking-wide text-ink">
@@ -83,7 +83,7 @@ function SkillGapList({ items }: { items: InterviewPrepSkillGap[] }) {
   return (
     <div className="space-y-3">
       {items.map((item, index) => (
-        <div key={`${item.skill}-${index}`} className="border border-ink bg-paper p-3">
+        <div key={`${item.skill}-${index}`} className="border border-border bg-paper p-3">
           <p className="font-mono text-sm font-bold uppercase">{item.skill}</p>
           <div className="mt-3 space-y-2 text-sm text-ink-soft">
             <p>

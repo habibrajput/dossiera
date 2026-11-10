@@ -59,13 +59,13 @@ describe('KanbanBoard header', () => {
 
     const back = screen.getByRole('link', { name: 'nav.backToDashboard' });
     expect(back).toHaveAttribute('href', '/dashboard');
-    expect(back).toHaveClass('border-ink', 'h-8');
+    expect(back).toHaveClass('border-border', 'h-8');
     expect(back).not.toHaveClass('mb-8');
 
     expect(screen.getByText(/tracker\.subtitle/)).toHaveClass('font-mono', 'text-xs', 'text-steel');
 
     const band = title.closest('header');
-    expect(band).toHaveClass('px-6', 'py-3', 'border-b', 'border-ink');
+    expect(band).toHaveClass('px-6', 'py-3', 'border-b', 'border-border');
     expect(band).not.toHaveClass('p-8', 'md:p-12');
     expect(band).toContainElement(back);
 

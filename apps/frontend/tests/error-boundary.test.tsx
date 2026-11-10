@@ -35,7 +35,7 @@ describe('ErrorBoundary fallback', () => {
 
     const tryAgain = screen.getByRole('button', { name: 'Try Again' });
     expect(tryAgain).toHaveAttribute('type', 'button');
-    expect(tryAgain).toHaveClass('bg-canvas', 'border-ink');
+    expect(tryAgain).toHaveClass('bg-canvas', 'border-border');
     expect(tryAgain).not.toHaveClass('transition-all');
 
     const reload = screen.getByRole('button', { name: 'Reload Page' });
@@ -52,7 +52,7 @@ describe('ErrorBoundary fallback', () => {
     );
 
     const card = (container.firstChild as HTMLElement).firstElementChild as HTMLElement;
-    expect(card).toHaveClass('border', 'border-ink', 'shadow-sw-lg');
+    expect(card).toHaveClass('border', 'border-border', 'shadow-sw-lg');
     expect(card).not.toHaveClass('shadow-sw-default');
   });
 

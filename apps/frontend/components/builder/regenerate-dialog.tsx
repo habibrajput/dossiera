@@ -91,7 +91,7 @@ export const RegenerateDialog: React.FC<RegenerateDialogProps> = ({
 
           {/* Experience Section */}
           {experienceItems.length > 0 && (
-            <div className="border border-ink">
+            <div className="border border-border">
               <button
                 type="button"
                 onClick={() => toggleSection('experience')}
@@ -113,7 +113,7 @@ export const RegenerateDialog: React.FC<RegenerateDialogProps> = ({
                 )}
               </button>
               {expandedSections.has('experience') && (
-                <div className="border-t border-ink">
+                <div className="border-t border-border">
                   {experienceItems.map((item) => (
                     <ItemRow
                       key={item.item_id}
@@ -129,7 +129,7 @@ export const RegenerateDialog: React.FC<RegenerateDialogProps> = ({
 
           {/* Projects Section */}
           {projectItems.length > 0 && (
-            <div className="border border-ink">
+            <div className="border border-border">
               <button
                 type="button"
                 onClick={() => toggleSection('projects')}
@@ -151,7 +151,7 @@ export const RegenerateDialog: React.FC<RegenerateDialogProps> = ({
                 )}
               </button>
               {expandedSections.has('projects') && (
-                <div className="border-t border-ink">
+                <div className="border-t border-border">
                   {projectItems.map((item) => (
                     <ItemRow
                       key={item.item_id}
@@ -167,7 +167,7 @@ export const RegenerateDialog: React.FC<RegenerateDialogProps> = ({
 
           {/* Skills Section */}
           {skillsItem && (
-            <div className="border border-ink">
+            <div className="border border-border">
               <button
                 type="button"
                 onClick={() => toggleSection('skills')}
@@ -186,7 +186,7 @@ export const RegenerateDialog: React.FC<RegenerateDialogProps> = ({
                 )}
               </button>
               {expandedSections.has('skills') && (
-                <div className="border-t border-ink">
+                <div className="border-t border-border">
                   <ItemRow
                     item={skillsItem}
                     isSelected={isSelected(skillsItem)}
@@ -242,7 +242,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, isSelected, onToggle }) => {
       {/* Checkbox */}
       <span
         aria-hidden="true"
-        className={`size-6 shrink-0 border border-ink flex items-center justify-center transition-colors ${
+        className={`size-6 shrink-0 border border-border flex items-center justify-center transition-colors ${
           isSelected ? 'bg-ink' : 'bg-white'
         }`}
       >

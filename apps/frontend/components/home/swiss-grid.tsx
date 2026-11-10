@@ -4,11 +4,10 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ListNumbers, SquaresFour } from '@phosphor-icons/react';
-import { CommunityLinks } from '@/components/common/community-links';
 import { buttonClass } from '@/components/ui/button';
 import { PageFrame } from '@/components/ui/page-frame';
 import { PageHeader } from '@/components/ui/page-header';
-import { APP_VERSION } from '@/lib/config/version';
+import { APP_NAME, APP_VERSION } from '@/lib/config/version';
 import { useTranslations } from '@/lib/i18n';
 
 export const SwissGrid = ({
@@ -36,17 +35,17 @@ export const SwissGrid = ({
         <h2 className="sr-only">{t('dashboard.modulesHeading')}</h2>
         {banner && <div className="space-y-4 p-6">{banner}</div>}
         <div className="p-[1.5px]">
-          <div className="grid grid-cols-1 @2xl:grid-cols-2 @3xl:grid-cols-3 @5xl:grid-cols-5 bg-ink gap-[1px] border-b border-ink">
+          <div className="grid grid-cols-1 @2xl:grid-cols-2 @3xl:grid-cols-3 @5xl:grid-cols-5 bg-ink gap-[1px] border-b border-border">
             {children}
           </div>
         </div>
       </div>
 
       {/* Footer - stays above hovered cards */}
-      <div className="p-4 bg-canvas flex flex-wrap justify-between items-center gap-4 font-mono text-xs text-primary border-t border-ink shrink-0 relative z-30">
+      <div className="p-4 bg-canvas flex flex-wrap justify-between items-center gap-4 font-mono text-xs text-primary border-t border-border shrink-0 relative z-30">
         <div className="flex items-center gap-2">
           <Image src="/logo.svg" alt="" width={20} height={20} className="w-5 h-5" />
-          <span className="uppercase font-bold">Resume Matcher</span>
+          <span className="uppercase font-bold">{APP_NAME}</span>
           <span className="text-steel">v{APP_VERSION}</span>
         </div>
         <div className="flex flex-wrap items-center gap-4">
@@ -71,11 +70,6 @@ export const SwissGrid = ({
             {t('nav.settings')}
           </Link>
         </div>
-      </div>
-
-      {/* Community strip - a slim second row, same canvas and z-layer as the footer */}
-      <div className="px-4 py-2 bg-canvas border-t border-ink shrink-0 relative z-30">
-        <CommunityLinks variant="strip" />
       </div>
     </PageFrame>
   );

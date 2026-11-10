@@ -53,6 +53,12 @@ describe('EmptyState', () => {
 
   it('has a framed variant for empty list slots', () => {
     const { container } = render(<EmptyState variant="framed" title="Empty" />);
-    expect(container.firstChild).toHaveClass('border', 'border-dashed', 'border-steel', 'bg-paper');
+    expect(container.firstChild).toHaveClass(
+      'rounded-md',
+      'border',
+      'border-dashed',
+      'border-border',
+      'bg-muted'
+    );
   });
 });

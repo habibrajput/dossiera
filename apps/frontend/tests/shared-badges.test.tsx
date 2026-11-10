@@ -26,6 +26,6 @@ describe('DefaultBadge', () => {
   it('renders its children as the mono ink-bordered marker', () => {
     render(<DefaultBadge>Default</DefaultBadge>);
     const badge = screen.getByText('Default');
-    expect(badge).toHaveClass('font-mono', 'uppercase', 'border', 'border-ink');
+    expect(badge).toHaveClass('font-mono', 'uppercase', 'border', 'border-border');
   });
 });

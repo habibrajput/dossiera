@@ -165,7 +165,7 @@ export function DiffPreviewModal({
             {t('tailor.diffModal.subtitle')}
           </p>
           {heavyMode && (
-            <p className="mt-1 w-fit border border-ink bg-ink px-2 py-1 font-mono text-xs uppercase tracking-wider text-white">
+            <p className="mt-1 w-fit border border-border bg-ink px-2 py-1 font-mono text-xs uppercase tracking-wider text-white">
               {t('tailor.diffModal.heavyTag')}
             </p>
           )}
@@ -173,7 +173,7 @@ export function DiffPreviewModal({
 
         <DialogBody className="space-y-4">
           {/* Summary cards */}
-          <div className="border-2 border-ink bg-white p-4">
+          <div className="border-2 border-border bg-white p-4">
             <PanelHeader level="h3" title={t('tailor.diffModal.summary')} />
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -371,7 +371,7 @@ export function DiffPreviewModal({
 
         {/* Pinned status: stays visible while the changes list scrolls */}
         {errorMessage && (
-          <div className="shrink-0 space-y-2 border-t border-ink px-6 py-3">
+          <div className="shrink-0 space-y-2 border-t border-border px-6 py-3">
             <Alert tone="error">{errorMessage}</Alert>
           </div>
         )}
@@ -475,7 +475,7 @@ interface ChangeSectionProps {
 
 function ChangeSection({ title, count, isExpanded, onToggle, children }: ChangeSectionProps) {
   return (
-    <div className="border-2 border-ink bg-white">
+    <div className="border-2 border-border bg-white">
       <button
         type="button"
         onClick={onToggle}
@@ -490,7 +490,7 @@ function ChangeSection({ title, count, isExpanded, onToggle, children }: ChangeS
         </div>
       </button>
 
-      {isExpanded && <div className="space-y-3 border-t-2 border-ink p-4">{children}</div>}
+      {isExpanded && <div className="space-y-3 border-t-2 border-border p-4">{children}</div>}
     </div>
   );
 }
@@ -527,7 +527,7 @@ function ChangeItem({ change, highlight = [] }: ChangeItemProps) {
   };
 
   return (
-    <div className={`border border-ink p-3 ${typeBackgrounds[change.change_type]}`}>
+    <div className={`border border-border p-3 ${typeBackgrounds[change.change_type]}`}>
       <div className="flex items-start gap-2">
         <span
           className={`font-mono text-base font-bold uppercase tracking-wider ${typeGlyphColors[change.change_type]}`}

@@ -7,10 +7,9 @@ import { cn } from '@/lib/utils';
  * Swiss International Style Tabs Component
  *
  * Design Principles:
- * - Square corners (rounded-none) - Brutalist aesthetic
+ * - Rounded tabs with a hairline border
  * - Active tab joins its panel (white fill, no bottom border)
- * - Ink borders for high contrast
- * - Monospace uppercase text
+ * - Soft borders for high contrast without heaviness
  */
 
 export interface Tab {
@@ -57,7 +56,7 @@ export const RetroTabs: React.FC<RetroTabsProps> = ({
   };
 
   return (
-    <div role="tablist" {...aria} className={cn('flex gap-0 border-b border-ink', className)}>
+    <div role="tablist" {...aria} className={cn('flex gap-1 border-b border-border', className)}>
       {tabs.map((tab, i) => {
         const isActive = activeTab === tab.id;
         return (
@@ -85,12 +84,10 @@ export const RetroTabs: React.FC<RetroTabsProps> = ({
               }
             }}
             className={cn(
-              '-mb-px border border-b-0 border-ink px-4 py-2 font-mono text-xs uppercase tracking-wider transition-colors',
+              'rounded-t-md border border-b-0 border-border px-4 py-2 text-sm font-medium transition-colors',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-canvas',
-              isActive && 'border-b-white bg-white font-bold text-ink',
-              !isActive &&
-                !tab.disabled &&
-                'bg-panel text-ink-soft hover:bg-panel-hover hover:text-ink',
+              isActive && 'border-b-white bg-white font-medium text-ink',
+              !isActive && !tab.disabled && 'bg-muted text-ink-soft hover:bg-accent hover:text-ink',
               tab.disabled && 'cursor-not-allowed bg-paper text-steel opacity-50'
             )}
           >

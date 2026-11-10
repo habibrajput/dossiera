@@ -16,7 +16,7 @@ describe('Alert', () => {
       </Alert>
     );
     const alert = screen.getByRole(role);
-    expect(alert).toHaveClass('border-2', border, bg, 'rounded-none');
+    expect(alert).toHaveClass('rounded-lg', 'border', border, bg);
     expect(alert.className).not.toMatch(/shadow/);
   });
 

@@ -22,7 +22,9 @@ export function EmptyState({
     <div
       className={cn(
         'flex flex-col items-start gap-2 text-left',
-        variant === 'framed' ? 'border border-dashed border-steel bg-paper p-6' : 'py-6',
+        variant === 'framed'
+          ? 'rounded-md border border-dashed border-border bg-muted p-6'
+          : 'py-6',
         className
       )}
     >

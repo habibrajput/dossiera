@@ -116,7 +116,7 @@ describe('ManageColumnsDialog', () => {
     ).toBeInTheDocument();
     expect(within(rowFor('applied')).getByText('tracker.manageDialog.visible')).toBeInTheDocument();
     expect(screen.getAllByText('tracker.manageDialog.hidden')).toHaveLength(1);
-    expect(screen.getAllByText('tracker.manageDialog.visible')).toHaveLength(6);
+    expect(screen.getAllByText('tracker.manageDialog.visible')).toHaveLength(8);
   });
 
   it('locks the last visible stage and explains why', () => {

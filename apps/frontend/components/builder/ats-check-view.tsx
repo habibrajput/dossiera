@@ -30,7 +30,7 @@ const SECTION_KIND_PARAMS = new Set(['found', 'missing']);
 
 function Box({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="border-2 border-ink bg-white p-4 space-y-3">
+    <section className="border-2 border-border bg-white p-4 space-y-3">
       <div className="border-b border-panel-hover pb-2">
         <h3 className="font-mono text-sm font-bold uppercase tracking-wider">{title}</h3>
       </div>
@@ -87,7 +87,7 @@ export function AtsCheckView({
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between gap-4 border-2 border-ink bg-white p-4">
+      <div className="flex items-center justify-between gap-4 border-2 border-border bg-white p-4">
         <p className="font-mono text-xs uppercase text-steel">
           {t('builder.atsCheck.templateLabel', { template: settings.template })}
         </p>
@@ -121,7 +121,7 @@ export function AtsCheckView({
                 ['content', report.content_score],
               ] as const
             ).map(([key, value]) => (
-              <div key={key} className="border-2 border-ink bg-white p-4">
+              <div key={key} className="border-2 border-border bg-white p-4">
                 <p className="font-mono text-xs font-bold uppercase text-steel">
                   {t(`builder.atsCheck.${key}`)}
                 </p>

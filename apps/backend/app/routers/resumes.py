@@ -3188,8 +3188,10 @@ async def download_cover_letter_pdf(
             status_code=404, detail="No cover letter found for this resume"
         )
 
-    # Build print URL (same pattern as resume PDF)
-    url = f"{settings.frontend_base_url}/print/cover-letter/{resume_id}?pageSize={pageSize}"
+    # Build print URL (same pattern as resume PDF). Render locally so edge auth
+    # never intercepts the request and hands Chromium a login page.
+    print_base = settings.pdf_frontend_base_url.strip().rstrip("/")
+    url = f"{print_base}/print/cover-letter/{resume_id}?pageSize={pageSize}"
     if lang:
         url = f"{url}&lang={lang}"
 

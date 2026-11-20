@@ -77,10 +77,18 @@ def print_margins(fit: PageFitSettings) -> dict[str, int]:
     }
 
 
+def _print_base_url() -> str:
+    """Loopback base URL used by the headless browser, never the public one."""
+    return settings.pdf_frontend_base_url.strip().rstrip("/")
+
+
 def resume_print_url(resume_id: str, fit: PageFitSettings) -> str:
     """Print-route URL for a saved resume (same query as GET /resumes/{id}/pdf)."""
     query = urlencode(fit.to_query())
-    return f"{settings.frontend_base_url}/print/resumes/{resume_id}?{query}"
+    # Bypass Cloudflare Access / other edge auth: the renderer must reach the
+    # Next.js server directly instead of following the public URL back through
+    # the tunnel, where it would get a login page instead of styled HTML.
+    return f"{_print_base_url()}/print/resumes/{resume_id}?{query}"
 
 
 async def measure_page_count(data: dict[str, Any], fit: PageFitSettings) -> int:
@@ -88,7 +96,7 @@ async def measure_page_count(data: dict[str, Any], fit: PageFitSettings) -> int:
     token = render_drafts.put(data)
     try:
         query = urlencode(fit.to_query())
-        url = f"{settings.frontend_base_url}/print/resumes/draft?draft={token}&{query}"
+        url = f"{_print_base_url()}/print/resumes/draft?draft={token}&{query}"
         margins = print_margins(fit)
         # Also wait for the print route's error marker so a missing draft fails fast.
         pdf_bytes = await render_resume_pdf(

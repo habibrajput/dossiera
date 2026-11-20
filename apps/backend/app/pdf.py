@@ -416,20 +416,17 @@ async def _render_page_to_pdf(
     pdf_margins: dict,
     work_deadline: float | None = None,
 ) -> bytes:
-    # NOTE: do NOT use wait_until="networkidle" here. The Next.js dev server
-    # (HMR/Turbopack + RSC streaming) keeps the network busy, so "idle" may
-    # never arrive and goto silently hangs until timeout → 503 (issues
-    # #799/#808), with the failure depending on environment/network noise.
-    # Wait on the real readiness condition instead — document "load", the
-    # resume content selector, and fonts — all bounded by an explicit timeout
-    # so the outcome is deterministic.
+    # The print URL now points at the loopback Next.js server, so the render
+    # never crosses Cloudflare Access (or another edge auth layer). Wait for all
+    # CSS/JS requests to settle before snapshotting, then still gate on the
+    # resume selector and fonts below. Every wait shares one explicit deadline.
     if work_deadline is None:
         work_deadline = asyncio.get_running_loop().time() + (_NAV_TIMEOUT_MS / 1000)
 
     response = await _await_before_deadline(
         page.goto(
             url,
-            wait_until="load",
+            wait_until="networkidle",
             timeout=_stage_timeout_ms(work_deadline),
         ),
         work_deadline,

@@ -383,7 +383,8 @@ PORT=4000 docker compose up -d
 | `PORT` | `3000` | Host port mapped to container port `3000` |
 | `BIND_ADDRESS` | `127.0.0.1` | Host address the port is published on. `127.0.0.1` = this machine only; `0.0.0.0` = every network interface (see below) |
 | `ALLOWED_HOSTS` | — | Extra hostnames the app answers for, comma-separated (e.g. `192.168.1.20`); `*` allows any |
-| `FRONTEND_BASE_URL` | `http://localhost:3000` | The URL you open the app at; its hostname is allowed automatically |
+| `FRONTEND_BASE_URL` | `http://localhost:3000` | The public URL you open the app at; used for browser links and CORS; its hostname is allowed automatically |
+| `PDF_FRONTEND_BASE_URL` | `http://127.0.0.1:3000` | Loopback URL the headless browser uses for PDF rendering; keeps renders off public/SSO-protected routes |
 | `LOG_LEVEL` | `INFO` | Application-wide Python/Uvicorn log level (`ERROR`, `WARNING`, `INFO`, `DEBUG`) |
 | `LOG_LLM` | `WARNING` | LiteLLM log level (`ERROR`, `WARNING`, `INFO`, `DEBUG`) |
 | `LLM_PROVIDER` | `openai` | AI provider (openai, anthropic, gemini, etc.) |
@@ -743,14 +744,35 @@ npm run dev
 Your backend can't reach the frontend. Check:
 
 1. Frontend is running
-2. `FRONTEND_BASE_URL` in `.env` matches your frontend URL
-3. `CORS_ORIGINS` includes your frontend URL
+2. `PDF_FRONTEND_BASE_URL` in `.env` points at the loopback Next.js server (default `http://127.0.0.1:3000`)
+3. `FRONTEND_BASE_URL` and `CORS_ORIGINS` still list the public URL for the browser UI
 
-If frontend runs on port 3001:
+If the frontend runs on port 3001:
 
 ```env
 FRONTEND_BASE_URL=http://localhost:3001
+PDF_FRONTEND_BASE_URL=http://127.0.0.1:3001
 CORS_ORIGINS=["http://localhost:3001", "http://127.0.0.1:3001"]
+```
+
+### Behind Cloudflare Tunnel / Cloudflare Access
+
+Keep the public URL for browser traffic, but render PDFs through loopback so
+Cloudflare Access cannot hand the headless browser its PIN/login page instead of
+the styled print route:
+
+```env
+FRONTEND_BASE_URL=https://rm.habibrajput.com
+PDF_FRONTEND_BASE_URL=http://127.0.0.1:3000
+ALLOWED_HOSTS=rm.habibrajput.com,localhost,127.0.0.1
+CORS_ORIGINS=["https://rm.habibrajput.com", "http://localhost:3000"]
+```
+
+Build the frontend with the public API URL so browser calls stay on the tunnel:
+
+```bash
+cd apps/frontend
+NEXT_PUBLIC_API_URL=https://rm.habibrajput.com npm run build
 ```
 
 ### Chinese / Japanese / Korean text renders as boxes (□□□) in the PDF

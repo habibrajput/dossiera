@@ -335,6 +335,12 @@ class Settings(BaseSettings):
     reload: bool = False
     log_level: Literal["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"] = "INFO"
     frontend_base_url: str = "http://localhost:3000"
+    # The headless browser renders /print/* through this URL, NOT the public
+    # frontend_base_url. It defaults to the loopback Next.js server so a reverse
+    # proxy / SSO layer (Cloudflare Access, Authelia, ...) can't intercept the
+    # internal render and return a login page instead of styled resume HTML.
+    # Override only when the frontend listens somewhere else on the host.
+    pdf_frontend_base_url: str = "http://127.0.0.1:3000"
 
     # Password-only login. Empty hash = auth disabled (the local dev default).
     # The value is a bcrypt hash ($2a$ / $2b$ / $2y$), never the plaintext password.

@@ -8,7 +8,12 @@ import pytest
 from app.schemas.models import PageFitSettings
 from app.services import page_fit
 from app.services.bullet_selector import PageMeasureError
-from app.services.page_fit import RenderDraftStore, count_pdf_pages, measure_page_count
+from app.services.page_fit import (
+    RenderDraftStore,
+    count_pdf_pages,
+    measure_page_count,
+    resume_print_url,
+)
 
 
 def test_draft_store_round_trip_ttl_and_capacity() -> None:
@@ -49,6 +54,35 @@ def test_page_limit_is_lifted_only_in_cv_mode() -> None:
     assert page_fit.page_limit(PageFitSettings(), None) is None
     assert page_fit.page_limit(None, 2) == 2
     assert page_fit.page_limit(PageFitSettings(cv_mode=True), 2) is None
+
+
+def test_print_urls_use_local_renderer_not_the_public_frontend(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """PDF rendering must bypass edge auth even when the UI has a public URL."""
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "frontend_base_url", "https://rm.example.com")
+    monkeypatch.setattr(settings, "pdf_frontend_base_url", "http://127.0.0.1:3000/")
+
+    url = resume_print_url("resume-1", PageFitSettings(lang="en"))
+    assert url.startswith("http://127.0.0.1:3000/print/resumes/resume-1?")
+    assert "lang=en" in url
+    assert "rm.example.com" not in url
+
+
+async def test_measure_uses_local_renderer_url(monkeypatch: pytest.MonkeyPatch) -> None:
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "frontend_base_url", "https://rm.example.com")
+    monkeypatch.setattr(settings, "pdf_frontend_base_url", "http://127.0.0.1:3000")
+    render = AsyncMock(return_value=_pdf(1))
+    monkeypatch.setattr(page_fit, "render_resume_pdf", render)
+
+    await measure_page_count({"summary": "x"}, PageFitSettings())
+    url = render.call_args.args[0]
+    assert url.startswith("http://127.0.0.1:3000/print/resumes/draft?draft=")
+    assert "rm.example.com" not in url
 
 
 def _pdf(pages: int) -> bytes:

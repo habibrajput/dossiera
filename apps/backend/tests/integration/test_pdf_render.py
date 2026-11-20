@@ -10,7 +10,9 @@ rendering failed. These tests give real coverage to the render path:
 The real frontend is not available under test, so the render targets a
 self-contained ``data:`` URL that already contains the ``.resume-print``
 selector. ``networkidle`` and ``wait_for_selector`` both resolve on a static
-data: URL, exercising the same goto → wait → page.pdf flow as production.
+data: URL, exercising the same goto → wait → page.pdf flow as production. The
+renderer now waits for ``networkidle`` so all CSS/JS has settled before it
+snapshots the styled print page.
 
 Real-render tests skip cleanly (never hard-fail) when no Chromium binary can
 be launched.
@@ -177,21 +179,20 @@ class TestResolvePdfMargins:
 
 
 class TestRenderPageWaitStrategy:
-    """#799/#808: rendering must wait on a deterministic readiness condition
-    (document 'load' + the resume content selector + fonts), NOT the
-    environment-fragile 'networkidle' that hangs against the Next.js dev server
-    (HMR/Turbopack/RSC streaming keep the network busy, so idle never arrives →
-    30s timeout → 503). These are browser-free: they mock the Playwright Page.
+    """Rendering targets the loopback frontend, so 'networkidle' is safe: all
+    CSS/JS must finish before the snapshot. The resume selector and font wait
+    below still gate the real readiness condition. Browser-free: the Playwright
+    Page is mocked here.
     """
 
-    async def test_goto_uses_load_with_bounded_timeout(self):
+    async def test_goto_uses_networkidle_with_bounded_timeout(self):
         page = AsyncMock()
         page.pdf.return_value = b"%PDF-1.4 fake"
         await _render_page_to_pdf(
             page, "http://f/print/r", ".resume-print", "A4", {"top": "10mm"}
         )
         _, goto_kwargs = page.goto.call_args
-        assert goto_kwargs.get("wait_until") == "load"
+        assert goto_kwargs.get("wait_until") == "networkidle"
         # An explicit, positive, bounded navigation timeout (not the fragile default).
         timeout = goto_kwargs.get("timeout")
         assert isinstance(timeout, (int, float)) and timeout > 0

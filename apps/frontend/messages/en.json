@@ -36,6 +36,18 @@
     "popupBlocked": "Popup blocked. Please allow popups or open this URL manually: {url}",
     "resumeDeleted": "This resume was deleted. Upload or select another resume."
   },
+  "login": {
+    "title": "Sign in",
+    "subtitle": "Enter the app password to continue",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "App password",
+    "submit": "Sign in",
+    "submitting": "Signing in...",
+    "invalidPassword": "Incorrect password. Try again.",
+    "error": "Could not check your login. Please try again.",
+    "unavailable": "Login is not configured correctly. Contact the app owner.",
+    "signOut": "Sign out"
+  },
   "home": {
     "brandLine1": "Resume",
     "brandLine2": "Matcher",
@@ -63,7 +75,10 @@
     "backToDashboard": "Back to Dashboard",
     "goToSettings": "Go to Settings",
     "applicationTracker": "Application Tracker",
-    "queue": "Tailoring Queue"
+    "queue": "Tailoring Queue",
+    "agent": "Agent",
+    "login": "Login",
+    "main": "Main navigation"
   },
   "dashboard": {
     "title": "Dashboard",

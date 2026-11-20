@@ -30,6 +30,8 @@ from playwright.async_api import (
     TimeoutError as PlaywrightTimeoutError,
 )
 
+from app.auth import SESSION_COOKIE_NAME, create_session_token, is_auth_enabled
+
 logger = logging.getLogger(__name__)
 
 _T = TypeVar("_T")
@@ -629,6 +631,26 @@ async def _render_with_browser(
     )
     render_error: BaseException | None = None
     try:
+        # The print routes are behind the same login as the rest of the app.
+        # Give headless Chromium a short-lived session so its own requests pass
+        # the route guard without needing a real user's cookie.
+        if is_auth_enabled():
+            await _await_before_deadline(
+                page.context.add_cookies(
+                    [
+                        {
+                            "name": SESSION_COOKIE_NAME,
+                            "value": create_session_token(ttl_seconds=300),
+                            "url": url,
+                            "httpOnly": True,
+                            "secure": urlsplit(url).scheme == "https",
+                            "sameSite": "Lax",
+                        }
+                    ]
+                ),
+                work_deadline,
+                "session cookie",
+            )
         await _await_before_deadline(
             page.route("**/*", _same_origin_only(url, page, work_deadline)),
             work_deadline,

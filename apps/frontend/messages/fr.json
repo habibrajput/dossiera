@@ -36,6 +36,18 @@
     "popupBlocked": "Fenêtre contextuelle bloquée. Veuillez autoriser les fenêtres contextuelles ou ouvrir cette URL manuellement : {url}",
     "resumeDeleted": "Ce CV a été supprimé. Importez ou sélectionnez un autre CV."
   },
+  "login": {
+    "title": "Connexion",
+    "subtitle": "Saisissez le mot de passe de l'application pour continuer",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Mot de passe de l'application",
+    "submit": "Se connecter",
+    "submitting": "Connexion...",
+    "invalidPassword": "Mot de passe incorrect. Réessayez.",
+    "error": "Impossible de vérifier la connexion. Réessayez.",
+    "unavailable": "La connexion n'est pas configurée correctement. Contactez le propriétaire de l'application.",
+    "signOut": "Se déconnecter"
+  },
   "home": {
     "brandLine1": "Resume",
     "brandLine2": "Matcher",
@@ -63,7 +75,10 @@
     "backToDashboard": "Retour au tableau de bord",
     "goToSettings": "Accéder aux paramètres",
     "applicationTracker": "Suivi des candidatures",
-    "queue": "File d'adaptation"
+    "queue": "File d'adaptation",
+    "agent": "Agent",
+    "login": "Connexion",
+    "main": "Navigation principale"
   },
   "dashboard": {
     "title": "Tableau de bord",

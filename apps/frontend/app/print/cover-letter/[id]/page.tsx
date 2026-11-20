@@ -6,6 +6,7 @@
  */
 
 import { API_BASE } from '@/lib/api/client';
+import { getRequestCookieHeader } from '@/lib/print/request-cookie';
 import { translate } from '@/lib/i18n/server';
 import { resolveLocale } from '@/lib/i18n/locale';
 
@@ -38,8 +39,10 @@ interface CoverLetterData {
 }
 
 async function fetchCoverLetterData(resumeId: string): Promise<CoverLetterData> {
+  const cookieHeader = await getRequestCookieHeader();
   const res = await fetch(`${API_BASE}/resumes?resume_id=${encodeURIComponent(resumeId)}`, {
     cache: 'no-store',
+    headers: cookieHeader ? { cookie: cookieHeader } : {},
   });
   if (!res.ok) {
     throw new Error(`Failed to load resume (status ${res.status}).`);

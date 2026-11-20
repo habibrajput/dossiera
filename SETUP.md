@@ -124,7 +124,18 @@ uv sync                       # Install Python dependencies
 uv run app
 ```
 
-Keep `HOST=127.0.0.1` in `.env` so the backend is only reachable from your own machine: the API has no authentication. Optionally set your AI provider here, and set `RELOAD=true` to auto-reload on code changes.
+Keep `HOST=127.0.0.1` in `.env` so the backend stays on your own machine. By default the app has no login. Optionally set your AI provider here, and set `RELOAD=true` to auto-reload on code changes.
+
+### Password-only login (optional)
+
+Set `APP_PASSWORD_HASH` in `apps/backend/.env` to require a password. Generate the hash locally (the plaintext password is never stored):
+
+```bash
+cd apps/backend
+uv run python -c "import bcrypt; print(bcrypt.hashpw(b'your-password', bcrypt.gensalt()).decode())"
+```
+
+Copy the printed `$2b$...` value into `APP_PASSWORD_HASH=...` and restart the backend. Every page and API route then requires a signed, HTTP-only session cookie from `/login`; the session lasts 12 hours by default (`APP_SESSION_TTL_SECONDS`). Use **Settings → Sign out** to end it. Leave the variable empty to keep the app open for local development. For Docker, pass the same value as `APP_PASSWORD_HASH` in the environment.
 
 ### 4. Start the frontend (PowerShell window 2)
 
@@ -384,7 +395,7 @@ PORT=4000 docker compose up -d
 
 ### Opening it from another device
 
-The container is published on `127.0.0.1` only, so it opens on the machine running Docker and nowhere else. Resume Matcher has no login: anyone who can reach it can read your resumes and change your AI settings. To use it from a phone or another computer on a network you trust, publish it on all interfaces and allow the address you will type:
+The container is published on `127.0.0.1` only, so it opens on the machine running Docker and nowhere else. Without `APP_PASSWORD_HASH`, anyone who can reach it can read your resumes and change your AI settings. Set that variable (see [Password-only login](#password-only-login-optional)) before exposing the app. To use it from a phone or another computer on a network you trust, publish it on all interfaces and allow the address you will type:
 
 ```bash
 BIND_ADDRESS=0.0.0.0 ALLOWED_HOSTS=192.168.1.20 docker compose up -d
@@ -462,7 +473,7 @@ LOG_LEVEL=INFO LOG_LLM=DEBUG docker compose up -d
 
 SQLite is the default and needs no setup. For backups, or to keep the database on a separate server you control, you can use PostgreSQL instead.
 
-> **Security:** Resume Matcher has no user accounts or authentication, and PostgreSQL doesn't add any. Run it only for yourself or on a trusted private network, never exposed publicly. For anything beyond local use, connect with a least-privilege database role (the Compose file's `resume` user is a superuser).
+> **Security:** PostgreSQL doesn't add access control of its own. If you have not enabled `APP_PASSWORD_HASH`, run Resume Matcher only for yourself or on a trusted private network, never exposed publicly. With the password hash set, all pages and API routes (except health checks) require a login. For anything beyond local use, connect with a least-privilege database role (the Compose file's `resume` user is a superuser).
 
 To start it with Docker Compose:
 

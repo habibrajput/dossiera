@@ -1,4 +1,5 @@
 import { ResumePreviewProvider } from '@/components/common/resume_previewer_context';
+import { TopNav } from '@/components/common/top-nav';
 import { StatusCacheProvider } from '@/lib/context/status-cache';
 import { LanguageProvider } from '@/lib/context/language-context';
 import { LocalizedErrorBoundary } from '@/components/common/error-boundary';
@@ -16,7 +17,10 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
             <MotionProvider>
               <EffectsProvider>
                 <BlockDissolveProvider>
-                  <main className="min-h-screen flex flex-col">{children}</main>
+                  <main className="flex h-dvh">
+                    <TopNav />
+                    <div className="min-h-0 min-w-0 flex-1">{children}</div>
+                  </main>
                 </BlockDissolveProvider>
               </EffectsProvider>
             </MotionProvider>

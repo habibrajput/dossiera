@@ -36,6 +36,18 @@
     "popupBlocked": "Popup bloqueado. Por favor, permita popups ou abra esta URL manualmente: {url}",
     "resumeDeleted": "Este currículo foi excluído. Envie ou selecione outro currículo."
   },
+  "login": {
+    "title": "Entrar",
+    "subtitle": "Digite a senha do aplicativo para continuar",
+    "passwordLabel": "Senha",
+    "passwordPlaceholder": "Senha do aplicativo",
+    "submit": "Entrar",
+    "submitting": "Entrando...",
+    "invalidPassword": "Senha incorreta. Tente novamente.",
+    "error": "Não foi possível verificar o login. Tente novamente.",
+    "unavailable": "O login não está configurado corretamente. Contate o responsável pelo aplicativo.",
+    "signOut": "Sair"
+  },
   "home": {
     "brandLine1": "Resume",
     "brandLine2": "Matcher",
@@ -63,7 +75,10 @@
     "backToDashboard": "Voltar ao Painel",
     "goToSettings": "Ir para Configurações",
     "applicationTracker": "Acompanhamento de candidaturas",
-    "queue": "Fila de personalização"
+    "queue": "Fila de personalização",
+    "agent": "Agente",
+    "login": "Entrar",
+    "main": "Navegação principal"
   },
   "dashboard": {
     "title": "Painel",

@@ -12,6 +12,7 @@ from app.schemas.applications import (
     BulkStatusUpdate,
     ManualApplicationCreate,
 )
+from app.schemas.auth import LoginRequest, SessionResponse
 from app.schemas.models import (
     AdditionalInfo,
     ApiKeyProviderStatus,
@@ -160,4 +161,6 @@ __all__ = [
     "BulkStatusUpdate",
     "BulkDelete",
     "ApplicationActionResponse",
+    "LoginRequest",
+    "SessionResponse",
 ]

@@ -12,9 +12,15 @@ from typing import Any
 import pytest
 
 import app.config as config_module
-from app.config import load_config_file, save_config_file, settings
+from app.config import Settings, load_config_file, save_config_file, settings
 from app.config_cache import invalidate_config_cache, load_config
 from app.routers.config import _get_config_path
+
+
+def test_app_password_hash_accepts_compose_escaped_dollars() -> None:
+    """Compose .env files spell a literal $ as $$; both forms must load."""
+    assert Settings(app_password_hash="$$2b$$12$$abc").app_password_hash == "$2b$12$abc"
+    assert Settings(app_password_hash="$2b$12$abc").app_password_hash == "$2b$12$abc"
 
 
 def test_imported_config_path_is_owned_by_data_dir(

@@ -336,6 +336,22 @@ class Settings(BaseSettings):
     log_level: Literal["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"] = "INFO"
     frontend_base_url: str = "http://localhost:3000"
 
+    # Password-only login. Empty hash = auth disabled (the local dev default).
+    # The value is a bcrypt hash ($2a$ / $2b$ / $2y$), never the plaintext password.
+    app_password_hash: str = ""
+    app_session_ttl_seconds: int = Field(default=43200, ge=60, le=604800)
+
+    @field_validator("app_password_hash", mode="before")
+    @classmethod
+    def normalize_app_password_hash(cls, v: Any) -> str:
+        """Treat a blank APP_PASSWORD_HASH as \"login disabled\"."""
+        if v is None:
+            return ""
+        # Docker Compose .env files need `$$` to represent a literal `$`; accept
+        # that escaping here too so the same hash works in both Compose and a
+        # local backend .env read by python-dotenv.
+        return str(v).strip().replace("$$", "$")
+
     # Total timeout for AI operations, including validation, database preloads,
     # model attempts and persistence. Nested stages share one deadline. It MUST be
     # kept in sync with the two frontend layers (Next.js `proxyTimeout` and the

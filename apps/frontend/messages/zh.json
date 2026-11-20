@@ -36,6 +36,18 @@
     "popupBlocked": "弹窗被阻止。请允许弹窗或手动打开此链接：{url}",
     "resumeDeleted": "此简历已被删除。请上传或选择另一份简历。"
   },
+  "login": {
+    "title": "登录",
+    "subtitle": "输入应用密码以继续",
+    "passwordLabel": "密码",
+    "passwordPlaceholder": "应用密码",
+    "submit": "登录",
+    "submitting": "登录中...",
+    "invalidPassword": "密码错误，请重试。",
+    "error": "无法检查登录状态，请重试。",
+    "unavailable": "登录配置不正确，请联系应用管理员。",
+    "signOut": "退出登录"
+  },
   "home": {
     "brandLine1": "简历",
     "brandLine2": "匹配器",
@@ -63,7 +75,10 @@
     "backToDashboard": "返回仪表板",
     "goToSettings": "前往设置",
     "applicationTracker": "申请追踪",
-    "queue": "定制队列"
+    "queue": "定制队列",
+    "agent": "代理",
+    "login": "登录",
+    "main": "主导航"
   },
   "dashboard": {
     "title": "仪表板",

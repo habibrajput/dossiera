@@ -20,6 +20,10 @@ vi.mock('@/components/effects/block-dissolve-provider', () => ({
   BlockDissolveProvider: passthrough,
 }));
 vi.mock('@/lib/i18n', () => ({ useTranslations: () => ({ t: (key: string) => key }) }));
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/dashboard',
+  useRouter: () => ({ replace: vi.fn(), refresh: vi.fn() }),
+}));
 // The App Router's next/dynamic, as in lazy-toaster.test.tsx.
 vi.mock('next/dynamic', async () => await import('next/dist/api/app-dynamic'));
 

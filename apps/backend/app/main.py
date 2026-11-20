@@ -18,6 +18,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app import __version__
 from app.ai_budget import operation_error_content
+from app.auth import AuthMiddleware
 from app.config import settings
 from app.database import DatabaseBusyError, db
 from app.host_guard import HostGuardMiddleware
@@ -26,6 +27,7 @@ from app.routers import (
     applications_ai_router,
     applications_router,
     ats_router,
+    auth_router,
     chatgpt_callback_router,
     chatgpt_router,
     config_router,
@@ -134,6 +136,10 @@ async def database_busy_handler(
     )
 
 
+# Added before CORS so a 401 still carries CORS headers. HostGuard is added
+# last, so it still runs first.
+app.add_middleware(AuthMiddleware)
+
 # CORS middleware - origins configurable via CORS_ORIGINS env var
 app.add_middleware(
     CORSMiddleware,
@@ -146,6 +152,7 @@ app.add_middleware(
 app.add_middleware(HostGuardMiddleware, allowed_hosts=settings.effective_allowed_hosts)
 
 # Include routers
+app.include_router(auth_router, prefix="/api/v1")
 app.include_router(health_router, prefix="/api/v1")
 app.include_router(config_router, prefix="/api/v1")
 app.include_router(resumes_router, prefix="/api/v1")

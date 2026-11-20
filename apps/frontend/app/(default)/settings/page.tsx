@@ -33,6 +33,7 @@ import {
   type ApiKeyProviderStatus,
   type ApiKeyProvider,
 } from '@/lib/api/config';
+import { logout } from '@/lib/api/auth';
 import { API_URL } from '@/lib/api/client';
 import { CHATGPT_RETURN_OUTCOMES, type ChatGptReturnOutcome } from '@/lib/api/chatgpt';
 import { ChatGptConnection } from '@/components/settings/chatgpt-connection';
@@ -712,6 +713,16 @@ export default function SettingsPage() {
     }
   };
 
+  const handleSignOut = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.error('Failed to sign out', err);
+    } finally {
+      window.location.assign('/login');
+    }
+  };
+
   // Handle Reset Database
   const handleResetDatabase = async () => {
     setIsResetting(true);
@@ -818,6 +829,11 @@ export default function SettingsPage() {
           <PageHeader.Back href="/dashboard">{t('common.back')}</PageHeader.Back>
           <PageHeader.Title>{t('settings.title')}</PageHeader.Title>
           <PageHeader.Subtitle>{t('settings.subtitle')}</PageHeader.Subtitle>
+          <PageHeader.Actions>
+            <Button type="button" variant="outline" size="sm" onClick={handleSignOut}>
+              {t('login.signOut')}
+            </Button>
+          </PageHeader.Actions>
         </PageHeader>
 
         <div className="px-8 py-8 md:px-12 space-y-8">

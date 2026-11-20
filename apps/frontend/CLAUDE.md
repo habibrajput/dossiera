@@ -17,12 +17,14 @@ App Router under `app/`. A `(default)` route group wraps the main app in provide
 | `/builder` | `app/(default)/builder/page.tsx` | Client wrapper → `components/builder/resume-builder.tsx` | Master-resume editor (forms, drag-drop sections, templates, AI regenerate, cover letter / outreach) |
 | `/tailor` | `app/(default)/tailor/page.tsx` | Client | Paste JD → preview/confirm tailored resume (diff modal) |
 | `/tracker` | `app/(default)/tracker/page.tsx` | Client | Kanban application tracker — 7-column board (drag/drop, bulk ops, manual add) |
+| `/queue` | `app/(default)/queue/page.tsx` | Client | Tailoring queue — queued JD/resume pairs |
+| `/agent` | `app/(default)/agent/page.tsx` | Client | Placeholder page for upcoming agent workflows |
 | `/settings` | `app/(default)/settings/page.tsx` | Client | LLM provider/model/key, per-provider API keys, features, prompts, language, reset DB |
 | `/resumes/[id]` | `app/(default)/resumes/[id]/page.tsx` | Client | View one resume, download PDF, rename, enrichment modal |
 | `/print/resumes/[id]` | `app/print/resumes/[id]/page.tsx` | **Server** | Print-only resume render for PDF (reads `searchParams` for template settings + `lang`) |
 | `/print/cover-letter/[id]` | `app/print/cover-letter/[id]/page.tsx` | **Server** | Print-only cover-letter render for PDF |
 
-`app/layout.tsx` (root) wires fonts (Space Grotesk for the label face, Noto Sans SC/KR/JP as CJK fallbacks for resume content), the `theme-color` viewport meta (`lib/theme-color.ts`, kept equal to Canvas by a test) and global CSS. `app/(default)/layout.tsx` nests providers: `StatusCacheProvider` → `LanguageProvider` → `ResumePreviewProvider` → `LocalizedErrorBoundary` → `MotionProvider` → `EffectsProvider` (whether the page background effect is on: default on, stored in localStorage, toggled in Settings; outside the provider effects are off, so `print/*` never shows one).
+`app/layout.tsx` (root) wires fonts (Space Grotesk for the label face, Noto Sans SC/KR/JP as CJK fallbacks for resume content), the `theme-color` viewport meta (`lib/theme-color.ts`, kept equal to Canvas by a test) and global CSS. `app/(default)/layout.tsx` nests providers: `StatusCacheProvider` → `LanguageProvider` → `ResumePreviewProvider` → `LocalizedErrorBoundary` → `MotionProvider` → `EffectsProvider` (whether the page background effect is on: default on, stored in localStorage, toggled in Settings; outside the provider effects are off, so `print/*` never shows one). It also mounts the global `TopNav` above every page in this group; `/login` and `print/*` are outside it.
 
 > Most pages are `'use client'`. The `print/*` pages are intentionally server components and fetch from the backend directly via `API_BASE` + `lib/i18n/server.ts` (`translate`). Do not add `'use client'` to them.
 

@@ -36,6 +36,18 @@
     "popupBlocked": "ポップアップがブロックされました。ポップアップを許可するか、次のURLを手動で開いてください: {url}",
     "resumeDeleted": "この履歴書は削除されました。別の履歴書をアップロードするか選択してください。"
   },
+  "login": {
+    "title": "ログイン",
+    "subtitle": "続行するにはアプリのパスワードを入力してください",
+    "passwordLabel": "パスワード",
+    "passwordPlaceholder": "アプリのパスワード",
+    "submit": "ログイン",
+    "submitting": "ログイン中...",
+    "invalidPassword": "パスワードが正しくありません。もう一度お試しください。",
+    "error": "ログイン状態を確認できませんでした。もう一度お試しください。",
+    "unavailable": "ログインが正しく設定されていません。アプリの管理者に連絡してください。",
+    "signOut": "ログアウト"
+  },
   "home": {
     "brandLine1": "履歴書",
     "brandLine2": "マッチャー",
@@ -63,7 +75,10 @@
     "backToDashboard": "ダッシュボードに戻る",
     "goToSettings": "設定へ",
     "applicationTracker": "応募トラッカー",
-    "queue": "カスタマイズキュー"
+    "queue": "カスタマイズキュー",
+    "agent": "エージェント",
+    "login": "ログイン",
+    "main": "メインナビゲーション"
   },
   "dashboard": {
     "title": "ダッシュボード",

@@ -36,6 +36,18 @@
     "popupBlocked": "Se bloqueó la ventana emergente. Permite las ventanas emergentes o abre manualmente esta URL: {url}",
     "resumeDeleted": "Este currículum se eliminó. Sube o selecciona otro."
   },
+  "login": {
+    "title": "Iniciar sesión",
+    "subtitle": "Introduce la contraseña de la aplicación para continuar",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Contraseña de la aplicación",
+    "submit": "Iniciar sesión",
+    "submitting": "Iniciando sesión...",
+    "invalidPassword": "Contraseña incorrecta. Inténtalo de nuevo.",
+    "error": "No se pudo comprobar el inicio de sesión. Inténtalo de nuevo.",
+    "unavailable": "El inicio de sesión no está configurado correctamente. Contacta al propietario de la aplicación.",
+    "signOut": "Cerrar sesión"
+  },
   "home": {
     "brandLine1": "Currículum",
     "brandLine2": "Matcher",
@@ -63,7 +75,10 @@
     "backToDashboard": "Volver al Panel",
     "goToSettings": "Ir a Configuración",
     "applicationTracker": "Seguimiento de candidaturas",
-    "queue": "Cola de adaptación"
+    "queue": "Cola de adaptación",
+    "agent": "Agente",
+    "login": "Iniciar sesión",
+    "main": "Navegación principal"
   },
   "dashboard": {
     "title": "Panel",

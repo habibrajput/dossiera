@@ -134,7 +134,7 @@ export function ResumeWizardPage() {
       setShowLeaveWithoutDraftDialog(true);
       return;
     }
-    router.push('/dashboard');
+    router.push('/resume-board');
   };
 
   const handleFinalize = async () => {
@@ -273,7 +273,7 @@ export function ResumeWizardPage() {
         confirmLabel={t('resumeWizard.actions.leaveWithoutSaving')}
         cancelLabel={t('resumeWizard.actions.stay')}
         variant="warning"
-        onConfirm={() => router.push('/dashboard')}
+        onConfirm={() => router.push('/resume-board')}
       />
     </PageFrame>
   );

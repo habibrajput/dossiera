@@ -717,7 +717,7 @@ export default function SettingsPage() {
     } catch (err) {
       console.error('Failed to sign out', err);
     } finally {
-      window.location.assign('/login');
+      window.location.assign('/');
     }
   };
 
@@ -824,7 +824,7 @@ export default function SettingsPage() {
     <>
       <PageFrame width="narrow">
         <PageHeader>
-          <PageHeader.Back href="/dashboard">{t('common.back')}</PageHeader.Back>
+          <PageHeader.Back href="/resume-board">{t('common.back')}</PageHeader.Back>
           <PageHeader.Title>{t('settings.title')}</PageHeader.Title>
           <PageHeader.Subtitle>{t('settings.subtitle')}</PageHeader.Subtitle>
           <PageHeader.Actions>

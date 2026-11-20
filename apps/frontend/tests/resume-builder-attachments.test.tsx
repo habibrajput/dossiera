@@ -546,7 +546,7 @@ it.each(['cover-letter', 'outreach'])(
     expect(push).not.toHaveBeenCalled();
     expect(save).toHaveBeenNthCalledWith(3, 'a', 'FINAL');
     await act(async () => third.resolve());
-    expect(push).toHaveBeenCalledWith('/dashboard');
+    expect(push).toHaveBeenCalledWith('/resume-board');
   }
 );
 

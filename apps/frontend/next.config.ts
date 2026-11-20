@@ -35,6 +35,17 @@ const nextConfig: NextConfig = {
       '@dnd-kit/utilities',
     ],
   },
+  async redirects() {
+    // Keep old bookmarks and middleware links working after moving sign-in to `/`.
+    // Query strings (including `next`) are forwarded automatically.
+    return [
+      {
+        source: '/login',
+        destination: '/',
+        permanent: false,
+      },
+    ];
+  },
   async rewrites() {
     // Note: Next.js serves filesystem routes (app/api/) before rewrites.
     // Do not create app/api/ routes or they will shadow the backend proxy.

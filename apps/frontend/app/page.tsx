@@ -14,7 +14,7 @@ import { AuthError, fetchSession, login } from '@/lib/api/auth';
 
 function safeNextPath(): string {
   const next = new URLSearchParams(window.location.search).get('next');
-  // Only allow local paths so the login page cannot be used as an open redirect.
+  // Only allow local paths so the sign-in page cannot be used as an open redirect.
   return next && next.startsWith('/') && !next.startsWith('//') ? next : '/dashboard';
 }
 

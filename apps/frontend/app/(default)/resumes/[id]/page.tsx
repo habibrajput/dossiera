@@ -422,7 +422,7 @@ export default function ResumeViewerPage() {
 
   const handleDeleteSuccessConfirm = () => {
     setShowDeleteSuccessDialog(false);
-    router.push('/dashboard');
+    router.push('/resume-board');
   };
 
   // Delete-related dialogs, shared by the failed-processing error branch and the
@@ -524,7 +524,7 @@ export default function ResumeViewerPage() {
                   </Button>
                 </>
               )}
-              <Button type="button" variant="outline" onClick={() => router.push('/dashboard')}>
+              <Button type="button" variant="outline" onClick={() => router.push('/resume-board')}>
                 {t('resumeViewer.returnToDashboard')}
               </Button>
             </div>
@@ -538,7 +538,7 @@ export default function ResumeViewerPage() {
   return (
     <PageFrame>
       <PageHeader className="no-print">
-        <PageHeader.Back href="/dashboard">{t('nav.backToDashboard')}</PageHeader.Back>
+        <PageHeader.Back href="/resume-board">{t('nav.backToDashboard')}</PageHeader.Back>
 
         {/* Editable title (the track name for a master) */}
         <div className="flex flex-wrap items-center gap-4">

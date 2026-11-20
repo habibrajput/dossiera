@@ -8,8 +8,9 @@ from pydantic.json_schema import SkipJsonSchema
 
 
 class ApplicationStatus(str, Enum):
-    """The seven stable tracker columns (decoupled from i18n labels)."""
+    """The eight stable tracker columns (decoupled from i18n labels)."""
 
+    tailored_queue = "tailored_queue"
     saved = "saved"
     applied = "applied"
     no_response = "no_response"
@@ -33,6 +34,7 @@ class ApplicationResponse(BaseModel):
     status: ApplicationStatus
     company: str | None = None
     role: str | None = None
+    job_url: str | None = None
     applied_at: str | None = None
     notes: str | None = None
     position: int
@@ -52,7 +54,7 @@ class ApplicationDetailResponse(ApplicationResponse):
 
 
 class ApplicationListResponse(BaseModel):
-    """Applications grouped by column. All seven keys are always present."""
+    """Applications grouped by column. All eight keys are always present."""
 
     columns: dict[str, list[ApplicationResponse]]
 
@@ -69,8 +71,22 @@ class ManualApplicationCreate(BaseModel):
     job_description: str = Field(min_length=1)
     company: str | None = None
     role: str | None = None
+    job_url: str | None = None
     status: ApplicationStatus = ApplicationStatus.applied
     notes: str | None = None
+
+    @field_validator("job_url")
+    @classmethod
+    def normalize_job_url(cls, value: str | None) -> str | None:
+        """Only real web links reach the rendered card."""
+        if value is None:
+            return None
+        trimmed = value.strip()
+        if not trimmed:
+            return None
+        if not trimmed.lower().startswith(("http://", "https://")):
+            raise ValueError("Job URL must start with http:// or https://")
+        return trimmed
 
 
 class ApplicationUpdate(BaseModel):

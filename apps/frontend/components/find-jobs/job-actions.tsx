@@ -12,7 +12,12 @@ import {
 import { buttonClass, Button } from '@/components/ui/button';
 import type { JobPosting } from '@/lib/api/job-search';
 import { useTranslations } from '@/lib/i18n';
-import { stashTailorIntake, tailorJobUrlHref } from '@/lib/utils/tailor-intake';
+import {
+  stashTailorIntake,
+  tailorJobUrlHref,
+  type TailorJobIntake,
+} from '@/lib/utils/tailor-intake';
+import { enqueueTailoredApplication } from '@/lib/utils/tailor-tracker-handoff';
 
 export type JobActionView = 'results' | 'saved' | 'dismissed';
 
@@ -47,15 +52,19 @@ export function JobActions({
           className={buttonClass({ variant: 'secondary', size })}
           aria-label={`${t('nav.tailor')}: ${job.title}`}
           title={`${t('nav.tailor')}: ${job.title}`}
-          onClick={() =>
-            stashTailorIntake({
+          onClick={() => {
+            const intake: TailorJobIntake = {
               url: job.url as string,
               title: job.title,
               company: job.company,
               location: job.location,
               description: job.description,
-            })
-          }
+            };
+            stashTailorIntake(intake);
+            // Fire-and-forget: the card lands in the tracker's Tailored Queue
+            // while the normal navigation to /tailor continues.
+            void enqueueTailoredApplication(intake);
+          }}
         >
           <PencilSimple aria-hidden="true" />
         </Link>

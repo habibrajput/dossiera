@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
-import DashboardPage from '@/app/(default)/dashboard/page';
+import DashboardPage from '@/app/(default)/resume-board/page';
 import type { fetchResume, ResumeListItem } from '@/lib/api/resume';
 
 const api = vi.hoisted(() => ({

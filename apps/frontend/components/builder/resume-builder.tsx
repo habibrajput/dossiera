@@ -1266,7 +1266,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
     const resumeDidSave = await flushResumeChanges(true);
     const attachmentsDidSave = await flushAttachmentChanges();
     if (resumeDidSave && attachmentsDidSave) {
-      router.push('/dashboard');
+      router.push('/resume-board');
     } else {
       setShowLeaveWithLocalDraftDialog(true);
     }
@@ -1274,7 +1274,7 @@ const ResumeBuilderContent = ({ agentMode = false }: ResumeBuilderProps) => {
 
   const handleLeaveWithLocalDraft = () => {
     setShowLeaveWithLocalDraftDialog(false);
-    router.push('/dashboard');
+    router.push('/resume-board');
   };
 
   const handleStartRegenerate = async () => {

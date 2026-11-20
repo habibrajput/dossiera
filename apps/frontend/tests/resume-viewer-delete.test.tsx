@@ -72,6 +72,6 @@ describe('ResumeViewerPage — delete from the processing-failed error state', (
     await screen.findByText('resumeViewer.deletedTitle');
     const dialog = screen.getByRole('dialog');
     fireEvent.click(within(dialog).getByRole('button', { name: 'resumeViewer.returnToDashboard' }));
-    expect(push).toHaveBeenCalledWith('/dashboard');
+    expect(push).toHaveBeenCalledWith('/resume-board');
   });
 });

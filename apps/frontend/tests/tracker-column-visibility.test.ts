@@ -50,10 +50,12 @@ describe('tracker column visibility storage', () => {
   });
 
   it('writes statuses in the canonical order', () => {
-    writeHiddenStatuses(new Set<ApplicationStatus>(['rejected', 'saved']));
+    const first = APPLICATION_STATUS_ORDER[0];
+    const last = APPLICATION_STATUS_ORDER[APPLICATION_STATUS_ORDER.length - 1];
+    writeHiddenStatuses(new Set<ApplicationStatus>([last, first]));
     expect(JSON.parse(localStorage.getItem(TRACKER_HIDDEN_STATUSES_KEY) ?? '[]')).toEqual([
-      APPLICATION_STATUS_ORDER[0],
-      APPLICATION_STATUS_ORDER[APPLICATION_STATUS_ORDER.length - 1],
+      first,
+      last,
     ]);
   });
 

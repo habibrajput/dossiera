@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
 import {
   DndContext,
   DragEndEvent,
@@ -13,7 +12,7 @@ import {
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useReducedMotion } from 'motion/react';
-import { ArrowLeft, Plus, Gear, SpinnerGap, CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { Plus, Gear, SpinnerGap, CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { Button, buttonClass } from '@/components/ui/button';
 import { Alert } from '@/components/ui/alert';
 import { EmptyState } from '@/components/ui/empty-state';
@@ -39,6 +38,7 @@ import {
   toggleHiddenStatus,
   writeHiddenStatuses,
 } from '@/lib/utils/tracker-column-visibility';
+import { TAILOR_QUEUE_EVENT } from '@/lib/utils/tailor-tracker-handoff';
 
 function emptyColumns(): ApplicationColumns {
   return APPLICATION_STATUS_ORDER.reduce((acc, status) => {
@@ -76,9 +76,9 @@ export function KanbanBoard() {
     writeHiddenStatuses(next);
   };
 
-  // Horizontal-scroll affordance: the seven stages overflow the canvas, so we
-  // track whether more columns sit off-screen and surface controls + a stage
-  // rail so no section is ever silently lost beyond the edge.
+  // Horizontal-scroll affordance: the stages overflow the canvas, so we track
+  // whether more columns sit off-screen and surface controls + a stage rail so
+  // no section is ever silently lost beyond the edge.
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -86,7 +86,7 @@ export function KanbanBoard() {
   const load = async () => {
     try {
       const data = await listApplications();
-      // Ensure all seven keys exist even if the server omits an empty one.
+      // Ensure every column key exists even if the server omits an empty one.
       setColumns({ ...emptyColumns(), ...data.columns });
       setError(null);
     } catch {
@@ -98,6 +98,15 @@ export function KanbanBoard() {
 
   useEffect(() => {
     void load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // A Tailor Resume click creates the queue card while the user is on another
+  // page; refresh if the board is already open when that request lands.
+  useEffect(() => {
+    const refresh = () => void load();
+    window.addEventListener(TAILOR_QUEUE_EVENT, refresh);
+    return () => window.removeEventListener(TAILOR_QUEUE_EVENT, refresh);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -127,7 +136,7 @@ export function KanbanBoard() {
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    // Board width is driven by the seven fixed-width columns, so we only need to
+    // Board width is driven by the fixed-width columns, so we only need to
     // (re)attach when the board appears — not on every card-list change.
     const sync = () => {
       setCanScrollLeft(el.scrollLeft > 4);
@@ -221,10 +230,6 @@ export function KanbanBoard() {
           this is a full-height working view, so the band stays short and the
           board keeps the height. Wraps onto more rows on narrow screens. */}
       <header className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-3 border-b border-ink px-6 py-3">
-        <Link href="/dashboard" className={buttonClass({ variant: 'outline', size: 'sm' })}>
-          <ArrowLeft aria-hidden="true" />
-          {t('nav.backToDashboard')}
-        </Link>
         {/* min-w keeps the title readable: with a 0 basis the actions would
             never wrap and would squeeze the title to nothing. */}
         <div className="flex min-w-[14rem] flex-1 flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -337,12 +342,6 @@ export function KanbanBoard() {
           off-screen sections are never lost; click a stage to jump to it. */}
       {!isEmpty && (
         <div className="flex shrink-0 items-center gap-3 overflow-x-auto border-t border-ink bg-paper px-6 py-2 md:px-8">
-          {canScrollRight && (
-            <span className="flex shrink-0 items-center gap-1 font-mono text-xs font-bold uppercase tracking-wide text-primary">
-              {t('tracker.scroll.hint')}
-              <CaretRight aria-hidden="true" className="size-4" />
-            </span>
-          )}
           <div className="flex items-center gap-2">
             {visibleStatuses.map((status) => (
               <button

@@ -661,7 +661,7 @@ describe('ResumeWizardPage', () => {
     expect(allowedReload.defaultPrevented).toBe(false);
 
     fireEvent.click(screen.getByRole('button', { name: 'resumeWizard.actions.backToDashboard' }));
-    expect(push).toHaveBeenCalledWith('/dashboard');
+    expect(push).toHaveBeenCalledWith('/resume-board');
   });
 
   it('leaves an unprotected wizard draft only after explicit confirmation', async () => {
@@ -681,7 +681,7 @@ describe('ResumeWizardPage', () => {
     fireEvent.click(
       screen.getByRole('button', { name: 'resumeWizard.actions.leaveWithoutSaving' })
     );
-    expect(push).toHaveBeenCalledWith('/dashboard');
+    expect(push).toHaveBeenCalledWith('/resume-board');
   });
   it('retains recovery until the initially scheduled builder navigation actually loads', async () => {
     localStorage.setItem(

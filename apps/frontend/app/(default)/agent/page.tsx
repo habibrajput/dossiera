@@ -11,7 +11,6 @@ export default function AgentPage() {
   return (
     <PageFrame>
       <PageHeader>
-        <PageHeader.Back href="/dashboard">{t('nav.backToDashboard')}</PageHeader.Back>
         <PageHeader.Title>{t('nav.agent')}</PageHeader.Title>
       </PageHeader>
       <div className="min-h-96" aria-hidden="true" />

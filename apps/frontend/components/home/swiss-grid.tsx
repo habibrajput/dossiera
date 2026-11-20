@@ -18,7 +18,7 @@ export const SwissGrid = ({
   return (
     <PageFrame height="screen" className="h-full">
       <PageHeader>
-        <PageHeader.Title>{t('nav.dashboard')}</PageHeader.Title>
+        <PageHeader.Title>{t('nav.resumeBoard')}</PageHeader.Title>
         <PageHeader.Subtitle>{t('dashboard.selectModule')}</PageHeader.Subtitle>
       </PageHeader>
 

@@ -11,13 +11,24 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Briefcase, Gear, ListNumbers, Robot, SignOut, SquaresFour } from '@phosphor-icons/react';
+import {
+  Briefcase,
+  ChartLineUp,
+  Files,
+  Gear,
+  ListNumbers,
+  Robot,
+  SignOut,
+  SquaresFour,
+} from '@phosphor-icons/react';
 import { logout } from '@/lib/api/auth';
 import { useTranslations } from '@/lib/i18n';
 import { buttonClass } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const NAV_ITEMS = [
+  { href: '/dashboard', labelKey: 'nav.dashboard', Icon: ChartLineUp },
+  { href: '/resume-board', labelKey: 'nav.resumeBoard', Icon: Files },
   { href: '/queue', labelKey: 'nav.queue', Icon: ListNumbers },
   { href: '/tracker', labelKey: 'nav.applicationTracker', Icon: SquaresFour },
   { href: '/find-jobs', labelKey: 'nav.findJobs', Icon: Briefcase },
@@ -79,7 +90,7 @@ export function TopNav() {
     } catch (error) {
       console.error('Failed to sign out', error);
     } finally {
-      router.replace('/login');
+      router.replace('/');
     }
   };
 
@@ -102,13 +113,13 @@ export function TopNav() {
     <aside className="fixed inset-y-0 left-0 z-50 flex h-dvh w-12 shrink-0 flex-col items-center gap-1 border-r border-ink bg-canvas py-3">
       <Link
         href="/dashboard"
-        aria-label={t('nav.dashboard')}
+        aria-label={t('nav.home')}
         className={cn(
           buttonClass({ variant: 'ghost', size: 'sm', className: `${ICON_BUTTON} group` })
         )}
       >
         <Image src="/logo.svg" alt="" width={20} height={20} className="size-5" />
-        <RailLabel>{t('nav.dashboard')}</RailLabel>
+        <RailLabel>{t('nav.home')}</RailLabel>
       </Link>
 
       <nav aria-label={t('nav.main')} className="flex flex-col items-center gap-1">

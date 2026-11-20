@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import DashboardPage from '@/app/(default)/dashboard/page';
+import DashboardPage from '@/app/(default)/resume-board/page';
 import ResumeViewerPage from '@/app/(default)/resumes/[id]/page';
 import type { ResumeListItem } from '@/lib/api/resume';
 

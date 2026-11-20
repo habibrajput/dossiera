@@ -247,14 +247,14 @@ describe('tailor page master picker', () => {
   it('redirects to the dashboard when the list request fails and nothing is stored', async () => {
     api.list.mockRejectedValue(new Error('offline'));
     await renderPage();
-    await waitFor(() => expect(api.push).toHaveBeenCalledWith('/dashboard'));
+    await waitFor(() => expect(api.push).toHaveBeenCalledWith('/resume-board'));
   });
 
   it('redirects to the dashboard when no ready master exists, even with a stored id', async () => {
     localStorage.setItem('master_resume_id', 'm1');
     api.list.mockResolvedValue([{ ...master('m1', true, 'X'), processing_status: 'processing' }]);
     await renderPage();
-    await waitFor(() => expect(api.push).toHaveBeenCalledWith('/dashboard'));
+    await waitFor(() => expect(api.push).toHaveBeenCalledWith('/resume-board'));
   });
 });
 

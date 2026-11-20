@@ -135,7 +135,7 @@ cd apps/backend
 uv run python -c "import bcrypt; print(bcrypt.hashpw(b'your-password', bcrypt.gensalt()).decode())"
 ```
 
-Copy the printed `$2b$...` value into `APP_PASSWORD_HASH=...` and restart the backend. Every page and API route then requires a signed, HTTP-only session cookie from `/login`; the session lasts 12 hours by default (`APP_SESSION_TTL_SECONDS`). Use **Settings → Sign out** to end it. Leave the variable empty to keep the app open for local development. For Docker, pass the same value as `APP_PASSWORD_HASH` in the environment.
+Copy the printed `$2b$...` value into `APP_PASSWORD_HASH=...` and restart the backend. Every page and API route then requires a signed, HTTP-only session cookie from the `/` sign-in page; the session lasts 12 hours by default (`APP_SESSION_TTL_SECONDS`). Use **Settings → Sign out** to end it. Leave the variable empty to keep the app open for local development. For Docker, pass the same value as `APP_PASSWORD_HASH` in the environment.
 
 ### 4. Start the frontend (PowerShell window 2)
 

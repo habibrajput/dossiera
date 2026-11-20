@@ -6,6 +6,7 @@ LLM hot path) built from these factories. Keeping construction here lets tests
 spin up fully isolated engines against a temp-file database or a scratch schema.
 """
 
+import re
 from pathlib import Path
 from typing import Any
 
@@ -14,7 +15,7 @@ from sqlalchemy.engine import Connection, Engine
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.schema import CreateColumn
 
-from app.models import Base, Improvement, Resume
+from app.models import Application, Base, Improvement, Resume
 
 __all__ = [
     "Base",
@@ -110,6 +111,30 @@ def _add_missing_column(
     conn.exec_driver_sql(f"ALTER TABLE {table} ADD COLUMN {ddl}")
 
 
+def _backfill_application_job_urls(conn: Connection, schema: str | None = None) -> None:
+    """Fill job_url on cards saved before the field existed.
+
+    Find Job handoffs append ``Source: <url>`` to the stored description, so
+    older cards can recover their posting link without user action.
+    """
+    prefix = f'"{schema}".' if schema else ""
+    rows = conn.execute(
+        text(
+            "SELECT a.application_id AS application_id, j.content AS content "
+            f"FROM {prefix}applications a JOIN {prefix}jobs j ON j.job_id = a.job_id "
+            "WHERE a.job_url IS NULL OR a.job_url = ''"
+        )
+    ).mappings().all()
+    for row in rows:
+        match = re.search(r"Source:\s*(https?://\S+)", row["content"] or "")
+        if match is None:
+            continue
+        conn.execute(
+            text(f"UPDATE {prefix}applications SET job_url = :url WHERE application_id = :id"),
+            {"url": match.group(1), "id": row["application_id"]},
+        )
+
+
 def _init_postgres(engine: Engine, schema: str | None) -> None:
     """Create the schema and tables once, even when several processes start together."""
     with engine.begin() as conn:
@@ -123,6 +148,8 @@ def _init_postgres(engine: Engine, schema: str | None) -> None:
         _add_missing_column(conn, Improvement.__table__.c.ats_score, schema)
         _add_missing_column(conn, Improvement.__table__.c.forced_keywords, schema)
         _add_missing_column(conn, Resume.__table__.c.template_settings, schema)
+        _add_missing_column(conn, Application.__table__.c.job_url, schema)
+        _backfill_application_job_urls(conn)
 
 
 def init_models_sync(engine: Engine, schema: str | None = None) -> None:
@@ -165,6 +192,9 @@ def init_models_sync(engine: Engine, schema: str | None = None) -> None:
         _add_missing_column(conn, Improvement.__table__.c.ats_score)
         _add_missing_column(conn, Improvement.__table__.c.forced_keywords)
         _add_missing_column(conn, Resume.__table__.c.template_settings)
+        _add_missing_column(conn, Application.__table__.c.job_url)
+        if columns:
+            _backfill_application_job_urls(conn)
 
         preview_columns = (
             conn.exec_driver_sql("PRAGMA table_info(tailoring_previews)")

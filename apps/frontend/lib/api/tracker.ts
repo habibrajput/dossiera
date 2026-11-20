@@ -1,7 +1,9 @@
 import { apiFetch, apiPost, apiPatch, apiDelete } from './client';
 
-// The seven stable Kanban columns (keys are decoupled from i18n labels).
+// The stable Kanban columns (keys are decoupled from i18n labels).
+// `tailored_queue` is where Find Job's Tailor Resume handoff lands cards.
 export type ApplicationStatus =
+  | 'tailored_queue'
   | 'saved'
   | 'applied'
   | 'no_response'
@@ -11,6 +13,7 @@ export type ApplicationStatus =
   | 'rejected';
 
 export const APPLICATION_STATUS_ORDER: ApplicationStatus[] = [
+  'tailored_queue',
   'saved',
   'applied',
   'no_response',
@@ -28,6 +31,7 @@ export interface Application {
   status: ApplicationStatus;
   company: string | null;
   role: string | null;
+  job_url: string | null;
   applied_at: string | null;
   notes: string | null;
   position: number;
@@ -52,6 +56,7 @@ export interface ManualApplicationCreate {
   job_description: string;
   company?: string;
   role?: string;
+  job_url?: string;
   status?: ApplicationStatus;
   notes?: string;
 }

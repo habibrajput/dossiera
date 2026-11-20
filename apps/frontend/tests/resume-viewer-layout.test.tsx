@@ -57,7 +57,7 @@ describe('resume viewer layout', () => {
     expect(container.firstChild as HTMLElement).toHaveClass('relative', 'isolate', 'bg-canvas');
     expect(screen.getByRole('link', { name: 'nav.backToDashboard' })).toHaveAttribute(
       'href',
-      '/dashboard'
+      '/resume-board'
     );
     // The DEFAULT marker is the shared DefaultBadge.
     expect(screen.getByText('resumeViewer.defaultBadge')).toHaveClass('border-ink', 'font-mono');

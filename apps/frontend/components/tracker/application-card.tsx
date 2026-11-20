@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useReducedMotion } from 'motion/react';
-import { DotsSixVertical, Stack } from '@phosphor-icons/react';
+import { ArrowSquareOut, DotsSixVertical, Stack } from '@phosphor-icons/react';
 import { Card } from '@/components/ui/card';
 import { StatusIndicator } from '@/components/ui/status-indicator';
 import { useTranslations } from '@/lib/i18n';
@@ -90,6 +90,21 @@ export function ApplicationCard({
               </span>
             )}
           </button>
+
+          {application.job_url && (
+            <a
+              href={application.job_url}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              onPointerDown={(e) => e.stopPropagation()}
+              aria-label={`${t('findJobs.openPosting')}: ${company || t('tracker.card.companyUnknown')}`}
+              title={`${t('findJobs.openPosting')}: ${company || t('tracker.card.companyUnknown')}`}
+              className={`mt-1 shrink-0 text-steel transition-colors hover:text-ink ${FOCUS_RING}`}
+            >
+              <ArrowSquareOut aria-hidden="true" className="size-4" />
+            </a>
+          )}
 
           <button
             type="button"

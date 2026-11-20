@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, onTestFinished, vi } from 'vitest';
-import DashboardPage from '@/app/(default)/dashboard/page';
+import DashboardPage from '@/app/(default)/resume-board/page';
 import { StatusCacheProvider, useStatusCache } from '@/lib/context/status-cache';
 import { fetchSystemStatus } from '@/lib/api/config';
 import {

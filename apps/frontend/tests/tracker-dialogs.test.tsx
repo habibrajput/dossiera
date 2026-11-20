@@ -1,9 +1,10 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { CardDetailModal } from '@/components/tracker/card-detail-modal';
 import { ManualAddApplicationDialog } from '@/components/tracker/manual-add-application-dialog';
 import {
   createApplication,
+  deleteApplication,
   getApplicationDetail,
   updateApplication,
   type ApplicationDetail,
@@ -21,6 +22,7 @@ vi.mock('@/lib/api/tracker', async (importOriginal) => ({
   getApplicationDetail: vi.fn(),
   createApplication: vi.fn(),
   updateApplication: vi.fn(),
+  deleteApplication: vi.fn(),
 }));
 
 const resume: ResumeListItem = {
@@ -44,6 +46,7 @@ const detail: ApplicationDetail = {
   status: 'interview',
   company: 'ACME',
   role: 'Engineer',
+  job_url: null,
   applied_at: '2026-03-15T00:00:00Z',
   notes: null,
   position: 0,
@@ -184,5 +187,42 @@ describe('CardDetailModal', () => {
     );
     expect(screen.getByText(expected)).toBeInTheDocument();
     expect(screen.getByRole('alert')).toHaveTextContent('tracker.modal.resumeUnavailable');
+  });
+
+  it('links to the posting and the tailored resume from the detail body', async () => {
+    vi.mocked(getApplicationDetail).mockResolvedValue({
+      ...detail,
+      job_url: 'https://jobs.example/role',
+      resume: { resume_id: 'r2' },
+    });
+    render(<CardDetailModal applicationId="a1" open onOpenChange={vi.fn()} onUpdated={vi.fn()} />);
+
+    expect(await screen.findByRole('link', { name: 'findJobs.openPosting' })).toHaveAttribute(
+      'href',
+      'https://jobs.example/role'
+    );
+    expect(screen.getByRole('link', { name: 'dashboard.tailoredResume' })).toHaveAttribute(
+      'href',
+      '/resumes/r2'
+    );
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
+
+  it('deletes the card after confirmation and closes the detail', async () => {
+    vi.mocked(getApplicationDetail).mockResolvedValue(detail);
+    vi.mocked(deleteApplication).mockResolvedValue(undefined);
+    const onUpdated = vi.fn();
+    const onOpenChange = vi.fn();
+    render(
+      <CardDetailModal applicationId="a1" open onOpenChange={onOpenChange} onUpdated={onUpdated} />
+    );
+
+    fireEvent.click(await screen.findByRole('button', { name: 'common.delete' }));
+    const confirmation = screen.getAllByRole('dialog').at(-1) as HTMLElement;
+    fireEvent.click(within(confirmation).getByRole('button', { name: 'common.delete' }));
+
+    await vi.waitFor(() => expect(deleteApplication).toHaveBeenCalledWith('a1'));
+    expect(onUpdated).toHaveBeenCalled();
+    expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 });

@@ -295,6 +295,7 @@ class Database:
             "status": row.status,
             "company": row.company,
             "role": row.role,
+            "job_url": row.job_url,
             "applied_at": row.applied_at,
             "notes": row.notes,
             "position": row.position,
@@ -1195,6 +1196,7 @@ class Database:
         status: str = "applied",
         company: str | None = None,
         role: str | None = None,
+        job_url: str | None = None,
         applied_at: str | None = None,
         notes: str | None = None,
     ) -> Application:
@@ -1211,6 +1213,7 @@ class Database:
             status=status,
             company=company,
             role=role,
+            job_url=job_url,
             applied_at=applied_at,
             notes=notes,
             position=position,
@@ -1228,6 +1231,7 @@ class Database:
         status: str = "applied",
         company: str | None = None,
         role: str | None = None,
+        job_url: str | None = None,
         notes: str | None = None,
     ) -> dict[str, Any]:
         """Commit a pasted job and its tracker card together, or roll back both."""
@@ -1250,6 +1254,7 @@ class Database:
                 status=status,
                 company=company,
                 role=role,
+                job_url=job_url,
                 notes=notes,
             )
             await session.commit()

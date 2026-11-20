@@ -119,6 +119,7 @@ export function ManualAddApplicationDialog({
         job_description: jobDescription.trim(),
         company: company.trim() || undefined,
         role: role.trim() || undefined,
+        job_url: postingUrl.trim() || undefined,
         status,
       });
       reset();

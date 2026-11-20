@@ -35,7 +35,7 @@ describe('KanbanBoard header', () => {
     expect(screen.getByRole('status')).toHaveTextContent('common.loading');
   });
 
-  it('is a compact single-row toolbar: one short H1, an inline back link, a mono caption', async () => {
+  it('is a compact single-row toolbar: one short H1 and a mono caption, with no back link', async () => {
     vi.mocked(listApplications).mockResolvedValue({ columns: columnsWith([]) });
     render(<KanbanBoard />);
     await screen.findByText('tracker.empty.title');
@@ -57,17 +57,13 @@ describe('KanbanBoard header', () => {
     expect(title.parentElement).toHaveClass('min-w-[14rem]', 'flex-1');
     expect(title.parentElement).not.toHaveClass('min-w-0');
 
-    const back = screen.getByRole('link', { name: 'nav.backToDashboard' });
-    expect(back).toHaveAttribute('href', '/dashboard');
-    expect(back).toHaveClass('border-ink', 'h-8');
-    expect(back).not.toHaveClass('mb-8');
+    expect(screen.queryByRole('link', { name: 'nav.backToDashboard' })).toBeNull();
 
     expect(screen.getByText(/tracker\.subtitle/)).toHaveClass('font-mono', 'text-xs', 'text-steel');
 
     const band = title.closest('header');
     expect(band).toHaveClass('px-6', 'py-3', 'border-b', 'border-ink');
     expect(band).not.toHaveClass('p-8', 'md:p-12');
-    expect(band).toContainElement(back);
 
     // Every control in the band is h-8, so the band height never changes.
     const manage = screen.getByRole('button', { name: 'tracker.manage' });

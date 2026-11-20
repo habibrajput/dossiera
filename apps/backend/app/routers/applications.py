@@ -16,6 +16,7 @@ from app.schemas import (
     ApplicationDetailResponse,
     ApplicationListResponse,
     ApplicationResponse,
+    ApplicationStatus,
     ApplicationUpdate,
     BulkDelete,
     BulkStatusUpdate,
@@ -39,11 +40,11 @@ ai_router = APIRouter(
 def _group_by_status(
     applications: list[dict[str, Any]],
 ) -> dict[str, list[ApplicationResponse]]:
-    """Group a flat list into the seven columns (all keys always present).
+    """Group a flat list into the eight columns (all keys always present).
 
     A row with an unknown status can't be represented by the enum-backed
     ``ApplicationResponse``; rather than 500 the whole board we skip it (the
-    board only renders the seven known columns) and log it.
+    board only renders the known columns) and log it.
     """
     columns: dict[str, list[ApplicationResponse]] = {
         s: [] for s in APPLICATION_STATUS_ORDER
@@ -81,7 +82,10 @@ async def create_application(request: ManualApplicationCreate) -> ApplicationRes
     """
     company = request.company
     role = request.role
-    if not company or not role:
+    # The Tailored Queue handoff already carries the posting metadata from Find
+    # Job. Skipping the LLM pass keeps that background click instant (and works
+    # when no model is configured).
+    if request.status != ApplicationStatus.tailored_queue and (not company or not role):
         extracted = await _extract_company_role(request.job_description)
         company = company or extracted.get("company")
         role = role or extracted.get("role")
@@ -93,6 +97,7 @@ async def create_application(request: ManualApplicationCreate) -> ApplicationRes
             status=request.status.value,
             company=company,
             role=role,
+            job_url=request.job_url,
             notes=request.notes,
         )
     except DatabaseBusyError:

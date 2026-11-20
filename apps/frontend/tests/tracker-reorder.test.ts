@@ -16,6 +16,7 @@ function card(id: string, status: ApplicationStatus, position: number): Applicat
     status,
     company: null,
     role: null,
+    job_url: null,
     applied_at: null,
     notes: null,
     position,

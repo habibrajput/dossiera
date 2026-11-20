@@ -173,6 +173,9 @@ class Application(Base):
     status: Mapped[str] = mapped_column(String, default="applied", index=True)
     company: Mapped[str | None] = mapped_column(String, nullable=True)
     role: Mapped[str | None] = mapped_column(String, nullable=True)
+    # Original job posting URL, when the card came from a job search or was
+    # added manually from a posting link.
+    job_url: Mapped[str | None] = mapped_column(String, nullable=True)
     applied_at: Mapped[str | None] = mapped_column(String, nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     position: Mapped[int] = mapped_column(Integer, default=0)

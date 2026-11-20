@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { SpinnerGap, PencilSimple } from '@phosphor-icons/react';
+import { ArrowSquareOut, PencilSimple, SpinnerGap, Trash } from '@phosphor-icons/react';
 import {
   Dialog,
   DialogBody,
@@ -13,6 +14,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Alert } from '@/components/ui/alert';
@@ -20,7 +22,12 @@ import { StatusIndicator } from '@/components/ui/status-indicator';
 import { FollowUpPanel } from '@/components/tracker/follow-up-panel';
 import { useTranslations } from '@/lib/i18n';
 import { formatDate } from '@/lib/format-date';
-import { getApplicationDetail, updateApplication, type ApplicationDetail } from '@/lib/api/tracker';
+import {
+  deleteApplication,
+  getApplicationDetail,
+  updateApplication,
+  type ApplicationDetail,
+} from '@/lib/api/tracker';
 
 interface CardDetailModalProps {
   applicationId: string | null;
@@ -42,10 +49,15 @@ export function CardDetailModal({
   const [notes, setNotes] = useState('');
   const [savingNotes, setSavingNotes] = useState(false);
   const [notesError, setNotesError] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!open || !applicationId) {
       setDetail(null);
+      setConfirmDelete(false);
+      setDeleteError(null);
       return;
     }
     let cancelled = false;
@@ -89,6 +101,22 @@ export function CardDetailModal({
     }
   };
 
+  const handleDelete = async () => {
+    if (!applicationId) return;
+    setDeleting(true);
+    setDeleteError(null);
+    try {
+      await deleteApplication(applicationId);
+      setConfirmDelete(false);
+      onUpdated();
+      onOpenChange(false);
+    } catch {
+      setDeleteError(t('tracker.errors.deleteFailed'));
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   const resumeAvailable = Boolean(detail?.resume);
 
   return (
@@ -117,6 +145,33 @@ export function CardDetailModal({
                   </span>
                 )}
               </div>
+
+              {(detail.job_url || resumeAvailable) && (
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-ink pb-3 font-mono text-xs uppercase tracking-wide text-ink-soft">
+                  {detail.job_url && (
+                    <a
+                      href={detail.job_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 underline decoration-ink underline-offset-2 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    >
+                      <ArrowSquareOut aria-hidden="true" className="size-4" />
+                      {t('findJobs.openPosting')}
+                    </a>
+                  )}
+                  {resumeAvailable && (
+                    <Link
+                      href={`/resumes/${detail.resume_id}`}
+                      className="inline-flex items-center gap-1 underline decoration-ink underline-offset-2 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    >
+                      <ArrowSquareOut aria-hidden="true" className="size-4" />
+                      {t('dashboard.tailoredResume')}
+                    </Link>
+                  )}
+                </div>
+              )}
+
+              {deleteError && <Alert tone="error">{deleteError}</Alert>}
 
               <div className="space-y-1">
                 <Label>{t('tracker.modal.jobDescription')}</Label>
@@ -182,7 +237,17 @@ export function CardDetailModal({
           )}
         </DialogBody>
 
-        <DialogFooter>
+        <DialogFooter className="justify-between">
+          <Button
+            type="button"
+            variant="outline-destructive"
+            size="sm"
+            onClick={() => setConfirmDelete(true)}
+            disabled={!detail || deleting}
+          >
+            <Trash aria-hidden="true" />
+            {t('common.delete')}
+          </Button>
           <Button
             type="button"
             onClick={() => {
@@ -194,6 +259,15 @@ export function CardDetailModal({
             {t('tracker.modal.editResume')}
           </Button>
         </DialogFooter>
+        <ConfirmDialog
+          open={confirmDelete}
+          onOpenChange={setConfirmDelete}
+          title={t('tracker.modal.deleteConfirmTitle')}
+          description={t('tracker.modal.deleteConfirmDescription')}
+          confirmLabel={t('common.delete')}
+          variant="danger"
+          onConfirm={handleDelete}
+        />
       </DialogContent>
     </Dialog>
   );

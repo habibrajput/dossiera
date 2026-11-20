@@ -21,7 +21,7 @@ async def _seed_card(isolated_db, **kwargs):
 
 
 class TestListAndGroup:
-    async def test_empty_board_has_all_seven_columns(self, isolated_db):
+    async def test_empty_board_has_all_columns(self, isolated_db):
         async with _client() as client:
             resp = await client.get("/api/v1/applications")
         assert resp.status_code == 200
@@ -60,6 +60,41 @@ class TestManualAdd:
         assert body["company"] == "Acme Corp"
         assert body["role"] == "Staff Engineer"
         assert body["status"] == "applied"
+
+    async def test_manual_add_stores_the_job_posting_url(self, isolated_db):
+        async with _client() as client:
+            resp = await client.post(
+                "/api/v1/applications",
+                json={
+                    "resume_id": "res-1",
+                    "job_description": "JD text",
+                    "company": "Acme",
+                    "role": "Engineer",
+                    "job_url": "https://jobs.example/role",
+                },
+            )
+            listed = await client.get("/api/v1/applications")
+        assert resp.status_code == 200
+        assert resp.json()["job_url"] == "https://jobs.example/role"
+        assert listed.json()["columns"]["applied"][0]["job_url"] == "https://jobs.example/role"
+
+    async def test_manual_add_can_seed_tailored_queue_without_llm(self, isolated_db):
+        with patch(
+            "app.routers.applications.extract_job_keywords",
+            new_callable=AsyncMock,
+        ) as mock_extract:
+            async with _client() as client:
+                resp = await client.post(
+                    "/api/v1/applications",
+                    json={
+                        "resume_id": "res-1",
+                        "job_description": "JD text",
+                        "status": "tailored_queue",
+                    },
+                )
+        assert resp.status_code == 200
+        assert resp.json()["status"] == "tailored_queue"
+        mock_extract.assert_not_called()
 
     async def test_manual_add_respects_explicit_fields_without_llm(self, isolated_db):
         with patch(

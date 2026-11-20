@@ -56,4 +56,21 @@ describe('ApplicationCard', () => {
     expect(badge.querySelector('svg')).toHaveClass('size-4');
     expect(badge.querySelector('svg')).not.toHaveClass('size-3');
   });
+
+  it('links to the original job posting from the card', () => {
+    render(
+      <ApplicationCard
+        application={{ ...application, job_url: 'https://jobs.example/role' }}
+        selected={false}
+        sharedResume={false}
+        onToggleSelect={vi.fn()}
+        onOpen={vi.fn()}
+      />
+    );
+
+    const link = screen.getByRole('link', { name: /findJobs\.openPosting/ });
+    expect(link).toHaveAttribute('href', 'https://jobs.example/role');
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noreferrer');
+  });
 });

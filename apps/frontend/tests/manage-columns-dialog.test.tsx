@@ -80,7 +80,7 @@ describe('ManageColumnsDialog', () => {
       />
     );
 
-    expect(screen.getAllByRole('switch')).toHaveLength(7);
+    expect(screen.getAllByRole('switch')).toHaveLength(APPLICATION_STATUS_ORDER.length);
   });
 
   it('reports toggles with the status key', () => {
@@ -116,7 +116,9 @@ describe('ManageColumnsDialog', () => {
     ).toBeInTheDocument();
     expect(within(rowFor('applied')).getByText('tracker.manageDialog.visible')).toBeInTheDocument();
     expect(screen.getAllByText('tracker.manageDialog.hidden')).toHaveLength(1);
-    expect(screen.getAllByText('tracker.manageDialog.visible')).toHaveLength(6);
+    expect(screen.getAllByText('tracker.manageDialog.visible')).toHaveLength(
+      APPLICATION_STATUS_ORDER.length - 1
+    );
   });
 
   it('locks the last visible stage and explains why', () => {
@@ -168,6 +170,7 @@ describe('KanbanBoard column visibility', () => {
     status: 'saved',
     company: 'ACME',
     role: 'Engineer',
+    job_url: null,
     applied_at: null,
     notes: null,
     position: 0,

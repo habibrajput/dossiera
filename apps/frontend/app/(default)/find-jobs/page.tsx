@@ -12,7 +12,6 @@ export default function FindJobsPage() {
   return (
     <PageFrame width="wide">
       <PageHeader>
-        <PageHeader.Back href="/dashboard">{t('nav.backToDashboard')}</PageHeader.Back>
         <PageHeader.Title>{t('nav.findJobs')}</PageHeader.Title>
         <PageHeader.Subtitle>{t('findJobs.subtitle')}</PageHeader.Subtitle>
       </PageHeader>

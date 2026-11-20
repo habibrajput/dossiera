@@ -53,6 +53,7 @@ const card = (overrides: Partial<Application> = {}): Application => ({
   status: 'applied',
   company: 'ACME',
   role: 'Engineer',
+  job_url: null,
   applied_at: daysAgo(10),
   notes: null,
   position: 0,

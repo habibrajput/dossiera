@@ -338,6 +338,9 @@ def test_server_environment_preserves_connectivity_not_ambient_keys(
         assert env["HTTPS_PROXY"] == "http://127.0.0.1:9000"
         assert env["SSL_CERT_FILE"] == "/synthetic/cert.pem"
         assert "OPENAI_API_KEY" not in env
+        # The owned backend is called without a session; a developer .env
+        # password must not leak into it through the scrubbed environment.
+        assert env["APP_PASSWORD_HASH"] == ""
     finally:
         servers.teardown()
 

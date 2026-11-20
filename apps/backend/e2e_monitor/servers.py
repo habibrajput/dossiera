@@ -136,6 +136,9 @@ class Servers:
         env.update(
             {
                 "DATA_DIR": str(self.bundle.data_dir),
+                # Never inherit a developer password. The monitor owns this
+                # backend and calls it without a session cookie.
+                "APP_PASSWORD_HASH": "",
                 "LLM_API_KEY": "",
                 "LLM_PROVIDER": selected.provider,
                 "LLM_MODEL": selected.model,

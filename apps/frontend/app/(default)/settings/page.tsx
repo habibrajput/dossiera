@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Image from 'next/image';
 import { AnimatePresence, m } from 'motion/react';
 import {
   fetchLlmConfig,
@@ -37,12 +36,12 @@ import { logout } from '@/lib/api/auth';
 import { API_URL } from '@/lib/api/client';
 import { CHATGPT_RETURN_OUTCOMES, type ChatGptReturnOutcome } from '@/lib/api/chatgpt';
 import { ChatGptConnection } from '@/components/settings/chatgpt-connection';
+import { JobSearchSettings } from '@/components/settings/job-search-settings';
 import {
   AGENT_SETUP_URL,
   SubscriptionRiskDialog,
   type SubscriptionProvider,
 } from '@/components/settings/subscription-risk-dialog';
-import { getVersionString } from '@/lib/config/version';
 import { ToggleSwitch } from '@/components/ui/toggle-switch';
 import { useStatusCache } from '@/lib/context/status-cache';
 import { Button } from '@/components/ui/button';
@@ -55,7 +54,6 @@ import { SegmentedControl } from '@/components/ui/segmented-control';
 import { BrandIcon, hasBrandIcon } from '@/components/ui/brand-icon';
 import { PageFrame } from '@/components/ui/page-frame';
 import { PageHeader } from '@/components/ui/page-header';
-import { SettingsAbout, SettingsSupportStrip } from '@/components/settings/community';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Dropdown } from '@/components/ui/dropdown';
 import {
@@ -837,8 +835,6 @@ export default function SettingsPage() {
         </PageHeader>
 
         <div className="px-8 py-8 md:px-12 space-y-8">
-          <SettingsSupportStrip />
-
           {/* API Key Not Configured Warning */}
           {!statusLoading && systemStatus && !systemStatus.llm_configured && (
             <Alert tone="warning">
@@ -993,6 +989,9 @@ export default function SettingsPage() {
               </div>
             )}
           </section>
+
+          {/* Job Search Agent */}
+          <JobSearchSettings />
 
           {/* LLM Configuration */}
           <section className="space-y-6">
@@ -1683,42 +1682,28 @@ export default function SettingsPage() {
               </div>
             </div>
           </section>
-
-          <SettingsAbout />
         </div>
 
         {/* Footer */}
-        <div className="bg-canvas p-4 border-t border-ink flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Image
-              src="/logo.svg"
-              alt="Resume Matcher"
-              width={20}
-              height={20}
-              className="w-5 h-5"
-            />
-            <span className="font-mono text-xs text-steel">{getVersionString().toUpperCase()}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            {statusLoading ? (
-              <>
-                <SpinnerGap className="size-4 animate-spin text-steel" />
-                <span className="font-mono text-xs text-steel">
-                  {t('settings.footer.status.checking')}
-                </span>
-              </>
-            ) : systemStatus ? (
-              <StatusIndicator tone={systemStatus.status === 'ready' ? 'ready' : 'warning'}>
-                {systemStatus.status === 'ready'
-                  ? t('settings.footer.status.ready')
-                  : t('settings.footer.status.setupRequired')}
-              </StatusIndicator>
-            ) : (
+        <div className="bg-canvas p-4 border-t border-ink flex items-center">
+          {statusLoading ? (
+            <>
+              <SpinnerGap className="size-4 animate-spin text-steel" />
               <span className="font-mono text-xs text-steel">
-                {t('settings.footer.status.offline')}
+                {t('settings.footer.status.checking')}
               </span>
-            )}
-          </div>
+            </>
+          ) : systemStatus ? (
+            <StatusIndicator tone={systemStatus.status === 'ready' ? 'ready' : 'warning'}>
+              {systemStatus.status === 'ready'
+                ? t('settings.footer.status.ready')
+                : t('settings.footer.status.setupRequired')}
+            </StatusIndicator>
+          ) : (
+            <span className="font-mono text-xs text-steel">
+              {t('settings.footer.status.offline')}
+            </span>
+          )}
         </div>
       </PageFrame>
 

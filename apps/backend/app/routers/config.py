@@ -351,6 +351,7 @@ async def get_feature_config() -> FeatureConfigResponse:
         enable_cover_letter=stored.get("enable_cover_letter", False),
         enable_outreach_message=stored.get("enable_outreach_message", False),
         enable_interview_prep=stored.get("enable_interview_prep", False),
+        job_search_provider=stored.get("job_search_provider", "off"),
     )
 
 
@@ -366,6 +367,8 @@ async def update_feature_config(request: FeatureConfigRequest) -> FeatureConfigR
         stored["enable_outreach_message"] = request.enable_outreach_message
     if request.enable_interview_prep is not None:
         stored["enable_interview_prep"] = request.enable_interview_prep
+    if request.job_search_provider is not None:
+        stored["job_search_provider"] = request.job_search_provider
 
     # Save config
     _save_config(stored)
@@ -374,6 +377,7 @@ async def update_feature_config(request: FeatureConfigRequest) -> FeatureConfigR
         enable_cover_letter=stored.get("enable_cover_letter", False),
         enable_outreach_message=stored.get("enable_outreach_message", False),
         enable_interview_prep=stored.get("enable_interview_prep", False),
+        job_search_provider=stored.get("job_search_provider", "off"),
     )
 
 
@@ -567,6 +571,8 @@ SUPPORTED_PROVIDERS = [
     "groq",
     "openai_compatible",
     "ollama",
+    "jsearch",
+    "adzuna",
 ]
 
 
@@ -675,6 +681,20 @@ async def update_api_keys(request: ApiKeysUpdateRequest) -> ApiKeysUpdateRespons
         elif "ollama" in stored_keys:
             del stored_keys["ollama"]
         updated.append("ollama")
+
+    if request.jsearch is not None:
+        if request.jsearch:
+            stored_keys["jsearch"] = request.jsearch
+        elif "jsearch" in stored_keys:
+            del stored_keys["jsearch"]
+        updated.append("jsearch")
+
+    if request.adzuna is not None:
+        if request.adzuna:
+            stored_keys["adzuna"] = request.adzuna
+        elif "adzuna" in stored_keys:
+            del stored_keys["adzuna"]
+        updated.append("adzuna")
 
     save_api_keys_to_config(stored_keys)
     invalidate_config_cache()

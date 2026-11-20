@@ -260,16 +260,65 @@ export const PROVIDER_INFO: Record<
 };
 
 // Feature configuration types
+export type JobSearchProvider = 'jsearch' | 'adzuna' | 'freehire' | 'arbeitsagentur' | 'off';
+
+/** Sources offered by the Job search agent. Only the first two use a key. */
+export const JOB_SEARCH_PROVIDERS: ReadonlyArray<{
+  id: JobSearchProvider;
+  titleKey: string;
+  descriptionKey: string;
+  metaKey: string;
+  requiresKey: boolean;
+}> = [
+  {
+    id: 'jsearch',
+    titleKey: 'settings.jobSearch.jsearchTitle',
+    descriptionKey: 'settings.jobSearch.jsearchDescription',
+    metaKey: 'settings.jobSearch.jsearchMeta',
+    requiresKey: true,
+  },
+  {
+    id: 'adzuna',
+    titleKey: 'settings.jobSearch.adzunaTitle',
+    descriptionKey: 'settings.jobSearch.adzunaDescription',
+    metaKey: 'settings.jobSearch.adzunaMeta',
+    requiresKey: true,
+  },
+  {
+    id: 'freehire',
+    titleKey: 'settings.jobSearch.freeHireTitle',
+    descriptionKey: 'settings.jobSearch.freeHireDescription',
+    metaKey: 'settings.jobSearch.freeHireMeta',
+    requiresKey: false,
+  },
+  {
+    id: 'arbeitsagentur',
+    titleKey: 'settings.jobSearch.arbeitsagenturTitle',
+    descriptionKey: 'settings.jobSearch.arbeitsagenturDescription',
+    metaKey: 'settings.jobSearch.arbeitsagenturMeta',
+    requiresKey: false,
+  },
+  {
+    id: 'off',
+    titleKey: 'settings.jobSearch.offTitle',
+    descriptionKey: 'settings.jobSearch.offDescription',
+    metaKey: 'settings.jobSearch.offMeta',
+    requiresKey: false,
+  },
+];
+
 export interface FeatureConfig {
   enable_cover_letter: boolean;
   enable_outreach_message: boolean;
   enable_interview_prep: boolean;
+  job_search_provider: JobSearchProvider;
 }
 
 export interface FeatureConfigUpdate {
   enable_cover_letter?: boolean;
   enable_outreach_message?: boolean;
   enable_interview_prep?: boolean;
+  job_search_provider?: JobSearchProvider;
 }
 
 // Fetch feature configuration
@@ -478,7 +527,9 @@ export type ApiKeyProvider =
   | 'deepseek'
   | 'groq'
   | 'openai_compatible'
-  | 'ollama';
+  | 'ollama'
+  | 'jsearch'
+  | 'adzuna';
 
 // Map an LLM provider (the active-provider axis) to its key-store provider
 // name. Mirrors the backend `_PROVIDER_KEY_MAP` (gemini → google; the local
@@ -508,6 +559,8 @@ export interface ApiKeysUpdateRequest {
   groq?: string;
   openai_compatible?: string;
   ollama?: string;
+  jsearch?: string;
+  adzuna?: string;
 }
 
 export interface ApiKeysUpdateResponse {
@@ -527,6 +580,8 @@ export const API_KEY_PROVIDER_INFO: Record<ApiKeyProvider, { name: string; descr
     groq: { name: 'Groq', description: 'Llama, Mixtral, Gemma on Groq' },
     openai_compatible: { name: 'OpenAI-Compatible', description: 'Self-hosted / proxy endpoints' },
     ollama: { name: 'Ollama', description: 'Local Ollama server' },
+    jsearch: { name: 'JSearch', description: 'Google for Jobs postings' },
+    adzuna: { name: 'Adzuna', description: 'Adzuna job index' },
   };
 
 // Fetch API key status for all providers

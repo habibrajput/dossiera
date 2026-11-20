@@ -137,12 +137,12 @@ describe('settings page (Swiss sweep)', () => {
     const sections = screen.getAllByRole('heading', { level: 2 });
     expect(sections.map((h) => h.textContent)).toEqual([
       'settings.systemStatus.title',
+      'settings.jobSearch.title',
       'settings.llmConfigurationTitle',
       'settings.contentGeneration.title',
       'settings.languageTitle',
       'settings.display.title',
       'settings.dangerZone',
-      'community.aboutTitle',
     ]);
     for (const heading of sections) {
       expect(heading).toHaveClass('font-serif', 'font-bold', 'text-ink');
@@ -673,9 +673,7 @@ describe('settings page (Swiss sweep)', () => {
 
   it('sets the footer on canvas, not panel', async () => {
     await renderLoaded();
-    const footer = screen
-      .getByText('settings.footer.status.setupRequired')
-      .closest('.justify-between');
+    const footer = screen.getByText('settings.footer.status.setupRequired').closest('.border-t');
     expect(footer).toHaveClass('bg-canvas', 'border-t');
     expect(footer).not.toHaveClass('bg-panel');
     expect(footer).not.toHaveClass('bg-secondary');

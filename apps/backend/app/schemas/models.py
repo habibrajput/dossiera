@@ -1019,12 +1019,18 @@ class LLMConfigResponse(BaseModel):
     reasoning_effort: ReasoningEffortLiteral | None = None
 
 
+JobSearchProviderLiteral = Literal[
+    "jsearch", "adzuna", "freehire", "arbeitsagentur", "off"
+]
+
+
 class FeatureConfigRequest(BaseModel):
     """Request to update feature settings."""
 
     enable_cover_letter: bool | None = None
     enable_outreach_message: bool | None = None
     enable_interview_prep: bool | None = None
+    job_search_provider: JobSearchProviderLiteral | None = None
 
 
 class FeatureConfigResponse(BaseModel):
@@ -1033,6 +1039,7 @@ class FeatureConfigResponse(BaseModel):
     enable_cover_letter: bool = False
     enable_outreach_message: bool = False
     enable_interview_prep: bool = False
+    job_search_provider: JobSearchProviderLiteral = "off"
 
 
 class LanguageConfigRequest(BaseModel):
@@ -1125,6 +1132,10 @@ class ApiKeysUpdateRequest(BaseModel):
     # Local/self-hosted providers that may sit behind an auth proxy.
     openai_compatible: str | None = None
     ollama: str | None = None
+    # Job-search sources. Only these two need a private key; the other sources
+    # are public and keep no entry in the key store.
+    jsearch: str | None = None
+    adzuna: str | None = None
 
 
 class ApiKeysUpdateResponse(BaseModel):

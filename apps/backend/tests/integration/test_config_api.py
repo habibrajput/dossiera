@@ -283,6 +283,7 @@ class TestFeatureConfig:
             "enable_cover_letter": True,
             "enable_outreach_message": False,
             "enable_interview_prep": True,
+            "job_search_provider": "jsearch",
         }
         async with client:
             resp = await client.get("/api/v1/config/features")
@@ -291,6 +292,7 @@ class TestFeatureConfig:
         assert data["enable_cover_letter"] is True
         assert data["enable_outreach_message"] is False
         assert data["enable_interview_prep"] is True
+        assert data["job_search_provider"] == "jsearch"
 
     @patch("app.routers.config._save_config")
     @patch("app.routers.config._load_config")
@@ -302,15 +304,18 @@ class TestFeatureConfig:
                 json={
                     "enable_cover_letter": True,
                     "enable_interview_prep": True,
+                    "job_search_provider": "adzuna",
                 },
             )
         assert resp.status_code == 200
         data = resp.json()
         assert data["enable_cover_letter"] is True
         assert data["enable_interview_prep"] is True
+        assert data["job_search_provider"] == "adzuna"
         saved = mock_save.call_args.args[0]
         assert saved["enable_cover_letter"] is True
         assert saved["enable_interview_prep"] is True
+        assert saved["job_search_provider"] == "adzuna"
 
 
 class TestFeaturePrompts:
@@ -533,6 +538,28 @@ class TestEncryptedApiKeys:
         }
         assert configured["openai"] is False
         assert configured["anthropic"] is True
+
+    async def test_job_search_keys_are_independent_and_encrypted(
+        self, keys_env, client
+    ):
+        async with client:
+            r1 = await client.post(
+                "/api/v1/config/api-keys", json={"jsearch": "jsearch-secret"}
+            )
+            assert r1.status_code == 200
+            r2 = await client.post(
+                "/api/v1/config/api-keys", json={"adzuna": "adzuna-secret"}
+            )
+            assert r2.status_code == 200
+            status = await client.get("/api/v1/config/api-keys")
+        configured = {p["provider"]: p for p in status.json()["providers"]}
+        assert configured["jsearch"]["configured"] is True
+        assert configured["adzuna"]["configured"] is True
+        assert configured["jsearch"]["masked_key"].endswith("cret")
+        ciphertexts = keys_env.get_api_key_ciphertexts()
+        assert "jsearch-secret" not in ciphertexts["jsearch"]
+        assert "adzuna-secret" not in ciphertexts["adzuna"]
+        assert set(r2.json()["updated_providers"]) == {"adzuna"}
 
 
 class TestLegacyKeyMigration:

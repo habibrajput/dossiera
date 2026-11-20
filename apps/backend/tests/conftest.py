@@ -26,6 +26,10 @@ _ORIGINAL_DATABASE_ENV = {
 }
 os.environ["DATABASE_URL"] = ""
 os.environ["DATABASE_SCHEMA"] = ""
+# A developer APP_PASSWORD_HASH must not enable the login guard in tests. The
+# auth tests opt in with monkeypatch; every other test expects an open API.
+_ORIGINAL_APP_PASSWORD_HASH = os.environ.get("APP_PASSWORD_HASH")
+os.environ["APP_PASSWORD_HASH"] = ""
 # The suite's httpx clients address the app as http://test (or http://t); the
 # ChatGPT origin-guard tests model a LAN deployment (192.168.1.5) that opted in.
 _ORIGINAL_ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
@@ -57,6 +61,10 @@ def pytest_unconfigure(config: pytest.Config) -> None:
             os.environ.pop(key, None)
         else:
             os.environ[key] = value
+    if _ORIGINAL_APP_PASSWORD_HASH is None:
+        os.environ.pop("APP_PASSWORD_HASH", None)
+    else:
+        os.environ["APP_PASSWORD_HASH"] = _ORIGINAL_APP_PASSWORD_HASH
     _TEST_DATA_DIR_CONTEXT.cleanup()
 
 

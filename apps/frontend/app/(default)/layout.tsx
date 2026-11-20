@@ -17,7 +17,7 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
             <MotionProvider>
               <EffectsProvider>
                 <BlockDissolveProvider>
-                  <main className="flex h-dvh">
+                  <main className="flex h-dvh pl-12">
                     <TopNav />
                     <div className="min-h-0 min-w-0 flex-1">{children}</div>
                   </main>

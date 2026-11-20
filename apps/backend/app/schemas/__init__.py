@@ -13,6 +13,13 @@ from app.schemas.applications import (
     ManualApplicationCreate,
 )
 from app.schemas.auth import LoginRequest, SessionResponse
+from app.schemas.job_search import (
+    JobPostingFetchRequest,
+    JobPostingFetchResponse,
+    JobPostingResponse,
+    JobSearchRequest,
+    JobSearchResponse,
+)
 from app.schemas.models import (
     AdditionalInfo,
     ApiKeyProviderStatus,
@@ -163,4 +170,9 @@ __all__ = [
     "ApplicationActionResponse",
     "LoginRequest",
     "SessionResponse",
+    "JobSearchRequest",
+    "JobPostingResponse",
+    "JobSearchResponse",
+    "JobPostingFetchRequest",
+    "JobPostingFetchResponse",
 ]

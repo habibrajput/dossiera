@@ -9,6 +9,7 @@ import {
   type ApplicationDetail,
 } from '@/lib/api/tracker';
 import type { ResumeListItem } from '@/lib/api/resume';
+import { fetchJobPosting } from '@/lib/api/job-search';
 
 vi.mock('@/lib/i18n', () => ({
   useTranslations: () => ({ t: (key: string) => key, locale: 'de' }),
@@ -33,6 +34,7 @@ const resume: ResumeListItem = {
   title: 'Main CV',
 };
 vi.mock('@/lib/api/resume', () => ({ fetchResumeList: vi.fn(async () => [resume]) }));
+vi.mock('@/lib/api/job-search', () => ({ fetchJobPosting: vi.fn() }));
 
 const detail: ApplicationDetail = {
   application_id: 'a1',
@@ -65,6 +67,54 @@ describe('ManualAddApplicationDialog', () => {
 });
 
 describe('ManualAddApplicationDialog feedback', () => {
+  it('fetches a posting link and prefills the description and metadata', async () => {
+    vi.mocked(fetchJobPosting).mockResolvedValue({
+      url: 'https://jobs.example/role',
+      final_url: 'https://jobs.example/role',
+      title: 'Senior Go Engineer',
+      company: 'Acme',
+      location: 'Berlin, DE',
+      work_mode: 'remote',
+      skills: ['Go', 'PostgreSQL'],
+      job_req_id: 'REQ-42',
+      description: 'Build the payments API in Go.',
+      source: 'json-ld',
+    });
+    render(<ManualAddApplicationDialog open onOpenChange={vi.fn()} onCreated={vi.fn()} />);
+    await screen.findByRole('button', { name: 'tracker.manualAdd.resume Main CV' });
+
+    fireEvent.change(screen.getByRole('textbox', { name: 'tracker.manualAdd.jobPostingUrl' }), {
+      target: { value: 'https://jobs.example/role' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'tracker.manualAdd.fetch' }));
+
+    expect(await screen.findByRole('status')).toHaveTextContent('tracker.manualAdd.fetched');
+    expect(fetchJobPosting).toHaveBeenCalledWith('https://jobs.example/role');
+    expect(screen.getByRole('textbox', { name: 'tracker.manualAdd.jobDescription' })).toHaveValue(
+      'Build the payments API in Go.'
+    );
+    expect(screen.getByRole('textbox', { name: 'tracker.manualAdd.company' })).toHaveValue('Acme');
+    expect(screen.getByRole('textbox', { name: 'tracker.manualAdd.role' })).toHaveValue(
+      'Senior Go Engineer'
+    );
+  });
+
+  it('keeps fetch failures out of the description field', async () => {
+    vi.mocked(fetchJobPosting).mockRejectedValue(new Error('offline'));
+    render(<ManualAddApplicationDialog open onOpenChange={vi.fn()} onCreated={vi.fn()} />);
+    await screen.findByRole('button', { name: 'tracker.manualAdd.resume Main CV' });
+
+    fireEvent.change(screen.getByRole('textbox', { name: 'tracker.manualAdd.jobPostingUrl' }), {
+      target: { value: 'https://jobs.example/role' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'tracker.manualAdd.fetch' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('tracker.manualAdd.fetchFailed');
+    expect(
+      screen.getByRole('textbox', { name: 'tracker.manualAdd.jobDescription' })
+    ).not.toHaveAttribute('aria-invalid', 'true');
+  });
+
   it('ties the validation error to the job description field', async () => {
     render(<ManualAddApplicationDialog open onOpenChange={vi.fn()} onCreated={vi.fn()} />);
     await screen.findByRole('button', { name: 'tracker.manualAdd.resume Main CV' });

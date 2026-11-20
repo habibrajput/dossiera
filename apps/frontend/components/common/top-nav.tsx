@@ -11,7 +11,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Gear, ListNumbers, Robot, SignOut, SquaresFour } from '@phosphor-icons/react';
+import { Briefcase, Gear, ListNumbers, Robot, SignOut, SquaresFour } from '@phosphor-icons/react';
 import { logout } from '@/lib/api/auth';
 import { useTranslations } from '@/lib/i18n';
 import { buttonClass } from '@/components/ui/button';
@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils';
 const NAV_ITEMS = [
   { href: '/queue', labelKey: 'nav.queue', Icon: ListNumbers },
   { href: '/tracker', labelKey: 'nav.applicationTracker', Icon: SquaresFour },
+  { href: '/find-jobs', labelKey: 'nav.findJobs', Icon: Briefcase },
   { href: '/agent', labelKey: 'nav.agent', Icon: Robot },
 ] as const;
 
@@ -98,7 +99,7 @@ export function TopNav() {
   };
 
   return (
-    <aside className="z-50 flex h-dvh w-12 shrink-0 flex-col items-center gap-1 border-r border-ink bg-canvas py-3">
+    <aside className="fixed inset-y-0 left-0 z-50 flex h-dvh w-12 shrink-0 flex-col items-center gap-1 border-r border-ink bg-canvas py-3">
       <Link
         href="/dashboard"
         aria-label={t('nav.dashboard')}

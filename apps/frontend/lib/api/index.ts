@@ -64,3 +64,13 @@ export {
   type PromptConfig,
   type PromptConfigUpdate,
 } from './config';
+
+// Job search operations
+export {
+  fetchJobPosting,
+  searchJobs,
+  type FetchedJobPosting,
+  type JobPosting,
+  type JobSearchRequest,
+  type JobSearchResponse,
+} from './job-search';

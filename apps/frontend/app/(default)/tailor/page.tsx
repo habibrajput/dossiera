@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button, buttonClass } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label, labelClass } from '@/components/ui/label';
 import { Alert } from '@/components/ui/alert';
@@ -26,6 +27,12 @@ import {
   type ResumeListItem,
 } from '@/lib/api/resume';
 import { newProgressId, subscribeToProgress } from '@/lib/api/progress';
+import { fetchJobPosting } from '@/lib/api/job-search';
+import {
+  readTailorIntake,
+  readTailorJobUrl,
+  type TailorJobIntake,
+} from '@/lib/utils/tailor-intake';
 import type { WritingReport } from '@/lib/api/writing';
 import { keywordInText, resumeKeywordText } from '@/lib/utils/keyword-matcher';
 import {
@@ -68,8 +75,12 @@ export default function TailorPage() {
   const { begin, isCurrent, invalidate } = useOperationOwner('tailor');
   const confirmedResponses = useRef(new WeakMap<ImprovedResult, ImprovedResult>());
   const countedResumes = useRef(new Set<string>());
+  const autoFetchedPostingUrlRef = useRef<string | null>(null);
   const confirmationBusy = useRef(false);
   const [jobDescription, setJobDescription] = useState('');
+  const [postingUrl, setPostingUrl] = useState('');
+  const [fetchingPosting, setFetchingPosting] = useState(false);
+  const [fetchedDetails, setFetchedDetails] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [masterResumeId, setMasterResumeId] = useState<string | null>(null);
@@ -221,6 +232,52 @@ export default function TailorPage() {
 
   const handleTextareaKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') e.stopPropagation();
+  };
+
+  const fetchPostingIntoForm = useCallback(
+    async (url: string, intake?: TailorJobIntake | null) => {
+      const trimmed = url.trim();
+      if (!trimmed || fetchingPosting || isLoading) return;
+      const fallbackDescription = intake?.description.trim();
+      setFetchingPosting(true);
+      setError(null);
+      setFetchedDetails('');
+      if (intake && fallbackDescription) {
+        setJobDescription(fallbackDescription);
+        const parts = [intake.title, intake.company, intake.location].filter(Boolean);
+        setFetchedDetails(parts.join(' · '));
+      }
+      try {
+        const posting = await fetchJobPosting(trimmed);
+        setJobDescription(posting.description);
+        const parts = [posting.title, posting.company, posting.location].filter(Boolean);
+        setFetchedDetails(parts.join(' · '));
+      } catch {
+        if (!fallbackDescription) setError(t('tracker.manualAdd.fetchFailed'));
+      } finally {
+        setFetchingPosting(false);
+      }
+    },
+    [fetchingPosting, isLoading, t]
+  );
+
+  const handleFetchPosting = () => {
+    void fetchPostingIntoForm(postingUrl, readTailorIntake(postingUrl));
+  };
+
+  useEffect(() => {
+    const url = readTailorJobUrl(window.location.search);
+    if (!url || autoFetchedPostingUrlRef.current === url) return;
+    autoFetchedPostingUrlRef.current = url;
+    setPostingUrl(url);
+    void fetchPostingIntoForm(url, readTailorIntake(url));
+  }, [fetchPostingIntoForm]);
+
+  const handleFetchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      void handleFetchPosting();
+    }
   };
 
   const buildConfirmPayload = (result: ImprovedResult) => {
@@ -747,6 +804,48 @@ export default function TailorPage() {
           </div>
 
           <div className="space-y-2">
+            <Label htmlFor="tailor-job-url">{t('tracker.manualAdd.jobPostingUrl')}</Label>
+            <div className="flex gap-2">
+              <Input
+                id="tailor-job-url"
+                type="url"
+                inputMode="url"
+                autoComplete="url"
+                value={postingUrl}
+                onChange={(e) => setPostingUrl(e.target.value)}
+                onKeyDown={handleFetchKeyDown}
+                placeholder={t('tracker.manualAdd.jobPostingUrlPlaceholder')}
+                disabled={fetchingPosting || isLoading}
+                className="min-w-0 flex-1"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => void handleFetchPosting()}
+                disabled={fetchingPosting || isLoading || !postingUrl.trim()}
+                className="shrink-0"
+              >
+                {fetchingPosting ? (
+                  <>
+                    <SpinnerGap aria-hidden="true" className="animate-spin" />
+                    {t('tracker.manualAdd.fetching')}
+                  </>
+                ) : (
+                  t('tracker.manualAdd.fetch')
+                )}
+              </Button>
+            </div>
+            {fetchedDetails && (
+              <Alert tone="success">
+                <p>{t('tracker.manualAdd.fetched')}</p>
+                <p className="mt-1 font-mono text-xs text-ink-soft">
+                  {t('tracker.manualAdd.detected', { details: fetchedDetails })}
+                </p>
+              </Alert>
+            )}
+          </div>
+
+          <div className="space-y-2">
             <Label htmlFor="job-description">{t('tailor.pasteJobDescription')}</Label>
             <div className="relative">
               <Textarea
@@ -755,9 +854,12 @@ export default function TailorPage() {
                 placeholder={t('tailor.jobDescriptionPlaceholder')}
                 className="min-h-48 resize-none p-4 pb-8"
                 value={jobDescription}
-                onChange={(e) => setJobDescription(e.target.value)}
+                onChange={(e) => {
+                  setJobDescription(e.target.value);
+                  setFetchedDetails('');
+                }}
                 onKeyDown={handleTextareaKeyDown}
-                disabled={isLoading}
+                disabled={isLoading || fetchingPosting}
               />
               <div className="absolute bottom-2 right-2 font-mono text-xs tabular-nums text-steel pointer-events-none">
                 {t('tailor.charactersCount', { count: jobDescription.length })}

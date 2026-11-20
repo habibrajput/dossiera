@@ -19,6 +19,7 @@ import { Dropdown } from '@/components/ui/dropdown';
 import { Alert } from '@/components/ui/alert';
 import { useTranslations } from '@/lib/i18n';
 import { fetchResumeList, type ResumeListItem } from '@/lib/api/resume';
+import { fetchJobPosting } from '@/lib/api/job-search';
 import { createApplication, type ApplicationStatus } from '@/lib/api/tracker';
 
 interface ManualAddApplicationDialogProps {
@@ -35,11 +36,14 @@ export function ManualAddApplicationDialog({
   const { t } = useTranslations();
   const [resumes, setResumes] = useState<ResumeListItem[]>([]);
   const [resumeId, setResumeId] = useState('');
+  const [postingUrl, setPostingUrl] = useState('');
   const [jobDescription, setJobDescription] = useState('');
   const [company, setCompany] = useState('');
   const [role, setRole] = useState('');
   const [status, setStatus] = useState<ApplicationStatus>('applied');
   const [submitting, setSubmitting] = useState(false);
+  const [fetching, setFetching] = useState(false);
+  const [fetchedDetails, setFetchedDetails] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -61,11 +65,45 @@ export function ManualAddApplicationDialog({
   };
 
   const reset = () => {
+    setPostingUrl('');
     setJobDescription('');
     setCompany('');
     setRole('');
     setStatus('applied');
+    setFetchedDetails('');
     setError(null);
+  };
+
+  const handleFetch = async () => {
+    const url = postingUrl.trim();
+    if (!url || fetching) return;
+    setFetching(true);
+    setError(null);
+    setFetchedDetails('');
+    try {
+      const posting = await fetchJobPosting(url);
+      setJobDescription(posting.description);
+      setCompany((current) => current.trim() || posting.company || '');
+      setRole((current) => current.trim() || posting.title || '');
+      const parts = [
+        posting.title && `${t('tracker.manualAdd.role')}: ${posting.title}`,
+        posting.location && `${t('tracker.manualAdd.location')}: ${posting.location}`,
+        posting.skills.length > 0 &&
+          `${t('tracker.manualAdd.skills')}: ${posting.skills.slice(0, 5).join(', ')}`,
+      ].filter(Boolean);
+      setFetchedDetails(parts.join(' · '));
+    } catch {
+      setError(t('tracker.manualAdd.fetchFailed'));
+    } finally {
+      setFetching(false);
+    }
+  };
+
+  const handleFetchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      void handleFetch();
+    }
   };
 
   const handleSubmit = async () => {
@@ -93,8 +131,8 @@ export function ManualAddApplicationDialog({
     }
   };
 
-  // Only the empty-description error belongs to the field; the alert announces the rest.
-  const descriptionMissing = Boolean(error) && !jobDescription.trim();
+  // Only the empty-description validation error belongs to the field.
+  const descriptionMissing = error === t('tracker.manualAdd.validation') && !jobDescription.trim();
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -111,6 +149,47 @@ export function ManualAddApplicationDialog({
             value={resumeId}
             onChange={setResumeId}
           />
+
+          <div className="space-y-1">
+            <Label htmlFor="manual-job-url">{t('tracker.manualAdd.jobPostingUrl')}</Label>
+            <div className="flex gap-2">
+              <Input
+                id="manual-job-url"
+                type="url"
+                inputMode="url"
+                autoComplete="url"
+                value={postingUrl}
+                onChange={(e) => setPostingUrl(e.target.value)}
+                onKeyDown={handleFetchKeyDown}
+                placeholder={t('tracker.manualAdd.jobPostingUrlPlaceholder')}
+                disabled={fetching}
+                className="min-w-0 flex-1"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleFetch}
+                disabled={fetching || !postingUrl.trim()}
+                className="shrink-0"
+              >
+                {fetching ? (
+                  <>
+                    <SpinnerGap aria-hidden="true" className="animate-spin" />
+                    {t('tracker.manualAdd.fetching')}
+                  </>
+                ) : (
+                  t('tracker.manualAdd.fetch')
+                )}
+              </Button>
+            </div>
+          </div>
+
+          {fetchedDetails && (
+            <Alert id="manual-fetch-status" tone="success">
+              <p>{t('tracker.manualAdd.fetched')}</p>
+              <p className="mt-1 font-mono text-xs uppercase text-steel">{fetchedDetails}</p>
+            </Alert>
+          )}
 
           <div className="space-y-1">
             <Label htmlFor="manual-jd">{t('tracker.manualAdd.jobDescription')}</Label>

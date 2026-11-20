@@ -114,7 +114,7 @@ beforeEach(() => {
 });
 
 async function generate() {
-  fireEvent.change(screen.getByRole('textbox'), {
+  fireEvent.change(screen.getByRole('textbox', { name: 'tailor.pasteJobDescription' }), {
     target: { value: 'A software engineer role building useful tools with Python and SQL.' },
   });
   await act(async () => screen.getByRole('button', { name: 'tailor.generateTailored' }).click());

@@ -18,6 +18,7 @@ vi.mock('@/lib/i18n', () => ({ useTranslations: () => ({ t: (key: string) => key
 const LINKS: Array<[label: string, href: string]> = [
   ['nav.queue', '/queue'],
   ['nav.applicationTracker', '/tracker'],
+  ['nav.findJobs', '/find-jobs'],
   ['nav.agent', '/agent'],
 ];
 
@@ -33,8 +34,8 @@ describe('TopNav', () => {
 
     const nav = screen.getByRole('navigation', { name: 'nav.main' });
     const rail = screen.getByRole('link', { name: 'nav.dashboard' }).closest('aside');
-    // A compact, full-height icon rail on the left.
-    expect(rail).toHaveClass('w-12', 'h-dvh', 'shrink-0', 'border-r');
+    // A compact, full-height icon rail pinned to the viewport on the left.
+    expect(rail).toHaveClass('fixed', 'inset-y-0', 'left-0', 'w-12', 'h-dvh', 'border-r');
 
     for (const [label, href] of LINKS) {
       const link = screen.getByRole('link', { name: label });
@@ -45,6 +46,8 @@ describe('TopNav', () => {
       'href',
       '/dashboard'
     );
+    const hrefs = Array.from(nav.querySelectorAll('a')).map((link) => link.getAttribute('href'));
+    expect(hrefs.indexOf('/find-jobs')).toBeLessThan(hrefs.indexOf('/agent'));
     // Settings now lives in the gear menu, not in the main navigation row.
     expect(screen.queryByRole('link', { name: 'nav.settings' })).toBeNull();
   });

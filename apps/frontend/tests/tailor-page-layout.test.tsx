@@ -1,13 +1,15 @@
 import React from 'react';
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import TailorPage from '@/app/(default)/tailor/page';
 import { ATSScoreCard } from '@/components/tailor/ats-score-card';
+import { stashTailorIntake } from '@/lib/utils/tailor-intake';
 import type { ResumeListItem } from '@/lib/api/resume';
 
 const api = vi.hoisted(() => ({
   list: vi.fn(),
   push: vi.fn(),
+  fetchPosting: vi.fn(),
   llmConfigured: true,
 }));
 const router = { push: api.push, back: vi.fn() };
@@ -24,6 +26,7 @@ vi.mock('@/lib/api/resume', () => ({
 vi.mock('@/lib/api/config', () => ({
   fetchPromptConfig: async () => ({ prompt_options: [], default_prompt_id: 'keywords' }),
 }));
+vi.mock('@/lib/api/job-search', () => ({ fetchJobPosting: api.fetchPosting }));
 vi.mock('@/components/common/resume_previewer_context', () => ({
   useResumePreview: () => ({ setImprovedData: vi.fn() }),
 }));
@@ -57,8 +60,13 @@ const PICKER_NAME = /^tailor\.selectResume\b/;
 beforeEach(() => {
   vi.clearAllMocks();
   localStorage.clear();
+  window.history.replaceState({}, '', '/tailor');
   api.llmConfigured = true;
   api.list.mockResolvedValue([master('m1', true, 'DevRel')]);
+});
+
+afterEach(() => {
+  window.history.replaceState({}, '', '/tailor');
 });
 
 async function renderPage() {
@@ -122,7 +130,9 @@ describe('tailor page: narrow centred card', () => {
     await renderPage();
     const line = screen.getByText('tailor.tailoringLabel').parentElement as HTMLElement;
     expect(within(line).getByText('common.loading')).toBeInTheDocument();
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: JOB } });
+    fireEvent.change(screen.getByRole('textbox', { name: 'tailor.pasteJobDescription' }), {
+      target: { value: JOB },
+    });
     expect(generateButton()).toBeDisabled();
   });
 
@@ -134,21 +144,86 @@ describe('tailor page: narrow centred card', () => {
     // The counter stays on the field.
     expect(screen.getByText('tailor.charactersCount')).toBeInTheDocument();
   });
+
+  it('fetches a job posting by URL into the job description input', async () => {
+    api.fetchPosting.mockResolvedValue({
+      title: 'Laravel Developer',
+      company: 'Acme',
+      location: 'Lahore',
+      description: JOB,
+    });
+    await renderPage();
+
+    fireEvent.change(screen.getByRole('textbox', { name: 'tracker.manualAdd.jobPostingUrl' }), {
+      target: { value: 'https://example.com/jobs/laravel' },
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'tracker.manualAdd.fetch' }));
+    });
+
+    expect(api.fetchPosting).toHaveBeenCalledWith('https://example.com/jobs/laravel');
+    expect(screen.getByRole('textbox', { name: 'tailor.pasteJobDescription' })).toHaveValue(JOB);
+  });
+
+  it('auto-fetches a posting URL passed from Find Job', async () => {
+    const url = 'https://jobs.example/senior-laravel';
+    window.history.replaceState({}, '', `/tailor?jobUrl=${encodeURIComponent(url)}`);
+    api.fetchPosting.mockResolvedValue({
+      title: 'Senior Laravel Engineer',
+      company: 'Acme',
+      location: 'Karachi',
+      description: JOB,
+    });
+
+    await renderPage();
+
+    await waitFor(() => expect(api.fetchPosting).toHaveBeenCalledTimes(1));
+    expect(api.fetchPosting).toHaveBeenCalledWith(url);
+    expect(screen.getByRole('textbox', { name: 'tracker.manualAdd.jobPostingUrl' })).toHaveValue(
+      url
+    );
+    expect(screen.getByRole('textbox', { name: 'tailor.pasteJobDescription' })).toHaveValue(JOB);
+  });
+
+  it('keeps the cached posting text when a handed-off URL cannot be fetched', async () => {
+    const url = 'https://jobs.example/senior-laravel';
+    window.history.replaceState({}, '', `/tailor?jobUrl=${encodeURIComponent(url)}`);
+    stashTailorIntake({
+      url,
+      title: 'Senior Laravel Engineer',
+      company: 'Acme',
+      location: 'Karachi',
+      description: JOB,
+    });
+    api.fetchPosting.mockRejectedValue(new Error('403'));
+
+    await renderPage();
+
+    await waitFor(() => expect(api.fetchPosting).toHaveBeenCalledWith(url));
+    expect(screen.getByRole('textbox', { name: 'tailor.pasteJobDescription' })).toHaveValue(JOB);
+    expect(screen.queryByText('tracker.manualAdd.fetchFailed')).toBeNull();
+  });
 });
 
 describe('tailor page: Generate enablement is unchanged', () => {
   it('is disabled while the job description is empty or blank, enabled once filled', async () => {
     await renderPage();
     expect(generateButton()).toBeDisabled();
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: '   \n ' } });
+    fireEvent.change(screen.getByRole('textbox', { name: 'tailor.pasteJobDescription' }), {
+      target: { value: '   \n ' },
+    });
     expect(generateButton()).toBeDisabled();
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: JOB } });
+    fireEvent.change(screen.getByRole('textbox', { name: 'tailor.pasteJobDescription' }), {
+      target: { value: JOB },
+    });
     expect(generateButton()).toBeEnabled();
   });
 
   it('stays enabled for a short description (the 50-character rule runs on click)', async () => {
     await renderPage();
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'Too short' } });
+    fireEvent.change(screen.getByRole('textbox', { name: 'tailor.pasteJobDescription' }), {
+      target: { value: 'Too short' },
+    });
     expect(generateButton()).toBeEnabled();
     fireEvent.click(generateButton());
     expect(screen.getByText('tailor.errors.jobDescriptionTooShort')).toBeInTheDocument();
@@ -157,7 +232,9 @@ describe('tailor page: Generate enablement is unchanged', () => {
   it('is disabled and says why when no LLM is configured', async () => {
     api.llmConfigured = false;
     await renderPage();
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: JOB } });
+    fireEvent.change(screen.getByRole('textbox', { name: 'tailor.pasteJobDescription' }), {
+      target: { value: JOB },
+    });
     expect(screen.getByRole('button', { name: 'tailor.configureApiKeyFirst' })).toBeDisabled();
   });
 });
